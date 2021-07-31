@@ -47,6 +47,7 @@ namespace lsp
             static const size_t TRACKS_MAX              = 2;        // Maximum tracks per mesh/sample
             static const size_t SAMPLE_FILES            = 8;        // Number of sample files per trigger
             static const size_t BUFFER_SIZE             = 4096;     // Size of temporary buffer
+            static const size_t PLAYBACKS_MAX           = 8192;     // Maximum number of simultaneously playing samples
             static const float ACTIVITY_LIGHTING        = 0.1f;     // Activity lighting (seconds)
 
             static const float  DETECT_LEVEL_DFL        = GAIN_AMP_M_12_DB;     // Default detection level [G]
@@ -88,6 +89,16 @@ namespace lsp
             static const float  LPF_MAX                 = 20000.0f;
             static const float  LPF_DFL                 = 20000.0f;
             static const float  LPF_STEP                = 0.0025f;
+
+            static const float DRIFT_MIN                = 0.0f;     // Minimum delay
+            static const float DRIFT_DFL                = 0.0f;     // Default delay
+            static const float DRIFT_STEP               = 0.1f;     // Delay step
+            static const float DRIFT_MAX                = 100.0f;   // Maximum delay
+
+            static const float DYNA_MIN                 = 0.0f;     // Minimum dynamics
+            static const float DYNA_DFL                 = 0.0f;     // Default dynamics
+            static const float DYNA_STEP                = 0.05f;    // Dynamics step
+            static const float DYNA_MAX                 = 100.0f;   // Maximum dynamics
 
             static const size_t MODE_DFL                = 1;        // RMS
 

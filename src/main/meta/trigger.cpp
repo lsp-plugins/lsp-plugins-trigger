@@ -146,7 +146,7 @@ namespace lsp
             CONTROL("dt", "Detect time", U_MSEC, trigger_metadata::DETECT_TIME), \
             AMP_GAIN1("rrl", "Relative release level", trigger_metadata::RELEASE_LEVEL_DFL), \
             CONTROL("rt", "Release time", U_MSEC, trigger_metadata::RELEASE_TIME), \
-            CONTROL("dyna", "Dynamics", U_PERCENT, trigger_metadata::DYNAMICS), \
+            CONTROL("dyna", "Dynamics", U_PERCENT, trigger_metadata::DYNA), \
             AMP_GAIN("dtr1", "Dynamics range 1", GAIN_AMP_P_6_DB, 20.0f), \
             AMP_GAIN("dtr2", "Dynamics range 2", GAIN_AMP_M_36_DB, 20.0f), \
             CONTROL("react", "Reactivity", U_MSEC, trigger_metadata::REACTIVITY), \

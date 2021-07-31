@@ -1,0 +1,17 @@
+{
+	"trigger": {
+		"inst": "Instrument",
+		"samp": {
+			"0": "Échantillon 0",
+			"1": "Échantillon 1",
+			"2": "Échantillon 2",
+			"3": "Échantillon 3",
+			"4": "Échantillon 4",
+			"5": "Échantillon 5",
+			"6": "Échantillon 6",
+			"7": "Échantillon 7",
+			"none": "Aucun"
+		},
+		"trig": "Déclencheur"
+	}
+}

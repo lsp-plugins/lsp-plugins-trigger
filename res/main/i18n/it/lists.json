@@ -1,0 +1,18 @@
+{
+	"trigger": {
+		"inst": "Strumento",
+		"samp": {
+			"0": "Campione 0",
+			"1": "Campione 1",
+			"2": "Campione 2",
+			"3": "Campione 3",
+			"4": "Campione 4",
+			"5": "Campione 5",
+			"6": "Campione 6",
+			"7": "Campione 7",
+			"none": "Nessuno"
+		},
+		"trig": "Trigger"
+	}
+}
+

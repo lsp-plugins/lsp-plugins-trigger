@@ -1,7 +1,7 @@
 <plugin resizable="true">
 	<vbox spacing="4">
 		<!-- Area selector -->
-		<align hpos="0">
+		<align halign="-1">
 			<hbox spacing="8">
 				<label text="labels.working_area" />
 				<combo id="asel" halign="1" />
@@ -11,28 +11,28 @@
 		<!-- Trigger -->
 		<grid visibility=":asel ieq 0" rows="2" cols="4" transpose="true" expand="true">
 			<graph width="640" height="256" expand="true">
-				<center hpos="1" vpos="-1" visible="false" />
+				<origin hpos="1" vpos="-1" visible="false" />
 				
 				<!-- Gray grid -->
 				<ui:for id="t" first="0" last="4" step="1">
-					<marker value="${t}.25" color="g_dark_gray" basis="0" parallel="1" />
-					<marker value="${t}.5" color="g_gray" basis="0" parallel="1" />
-					<marker value="${t}.75" color="g_dark_gray" basis="0" parallel="1" />
+					<marker value="${t}.25" ox="0" oy="1" color="graph_alt_2" />
+					<marker value="${t}.5"  ox="0" oy="1" color="graph_alt_1" />
+					<marker value="${t}.75" ox="0" oy="1" color="graph_alt_2" />
 				</ui:for>
 			
-				<marker value="3.98107" color="g_gray" basis="1" parallel="0" /> <!-- +12 dB -->
-				<marker value="0.251189" color="g_gray" basis="1" parallel="0" /> <!-- -12 dB -->
-				<marker value="0.0158489" color="g_gray" basis="1" parallel="0" /> <!-- -36 dB -->
-				<marker value="0.001" color="g_gray" basis="1" parallel="0" /> <!-- -60 dB -->
+				<marker value="+12 db" ox="1" oy="0" color="graph_alt_1" />
+				<marker value="-12 db" ox="1" oy="0" color="graph_alt_1" />
+				<marker value="-36 db" ox="1" oy="0" color="graph_alt_1" />
+				<marker value="-60 db" ox="1" oy="0" color="graph_alt_1" />
 
 				<!-- Yellow grid -->
 				<ui:for id="t" first="1" last="4" step="1">
-					<marker value="${t}" color="g_yellow" basis="0" parallel="1" />
+					<marker value="${t}" ox="0" oy="1" color="graph_sec" />
 				</ui:for>
 
-				<marker value="1" color="g_yellow" basis="1" parallel="0" /> <!-- 0 dB -->
-				<marker value="0.0630957" color="g_yellow" basis="1" parallel="0" /> <!-- -24 dB -->
-				<marker value="0.00398107" color="g_yellow" basis="1" parallel="0" /> <!-- -48 dB -->
+				<marker value="0 db" ox="1" oy="0" color="graph_sec" />
+				<marker value="-24 db" ox="1" oy="0" color="graph_sec" />
+				<marker value="-48 db" ox="1" oy="0" color="graph_sec" />
 
 				<!-- Meshes -->
 				<mesh id="isgl" width="2" color="left_channel" visibility_id="isvl" />
@@ -41,34 +41,36 @@
 				<mesh id="tfg" width="2" color="green" visibility_id="tfv" />
 				
 				<!-- Boundaries -->
-				<marker value="15.8489" color="g_white" basis="1" parallel="0" /> <!-- +24 dB -->
-				<marker value="5" color="g_white" basis="0" parallel="1" /> <!-- 5 sec -->
+				<marker value="24 db" ox="1" oy="0" color="graph_prim" />
+				<marker value="5" ox="0" oy="1" color="graph_prim" />
 				
 				<!-- Axis -->
-				<axis min="0" max="5" color="g_white" angle="1.0" logarithmic="false" />
-				<axis min="0.000251189" max="15.8489" color="g_white" angle="0.5" logarithmic="true" />
+				<axis min="0" max="5" angle="1.0" log="false" color="graph_prim" />
+				<axis min="-72 db" max="24 db" angle="0.5" log="true" color="graph_prim" />
 				
 				<!-- Text -->
-				<text text="graph.units.s" coord="5;2.51e-4" halign="1" valign="1" />
+				<text x="5" y="-72 db" text="graph.units.s" halign="1" valign="1" color="graph_prim" />
 				<ui:for id="t" first="0" last="4" step="1">
-					<text text="${t}" coord="${t};2.51e-4" halign="-1" valign="1" color="white" />
-					<text text="${t}.5" coord="${t}.5;2.51e-4" halign="-1" valign="1" color="white" />
+					<text text="${t}" x="${t}" y="-72 db" halign="-1" valign="1" color="graph_prim" />
+					<text text="${t}.5" x="${t}.5" y="-72 db" halign="-1" valign="1" color="graph_prim" />
 				</ui:for>
 				
-				<text text="+12" coord="5;3.98107" halign="1" valign="-1" />
-				<text text="0" coord="5;1" halign="1" valign="1" />
-				<text text="-12" coord="5;0.251189" halign="1" valign="1" />
-				<text text="-24" coord="5;0.0630957" halign="1" valign="1" />
-				<text text="-36" coord="5;0.0158489" halign="1" valign="1" />
-				<text text="-48" coord="5;0.00398107" halign="1" valign="1" />
-				<text text="-60" coord="5;0.001" halign="1" valign="1" />
-				<text text="graph.units.db" coord="5;15.8489" halign="1" valign="-1" />
+				<text x="5" y="12 db" text="+12" halign="1" valign="-1" color="graph_prim" />
+				<ui:attributes x="5" halign="1" valign="1" color="graph_prim">
+					<text y="0 db" text="0" />
+					<text y="-12 db" text="-12" />
+					<text y="-24 db" text="-24" />
+					<text y="-36 db" text="-36" />
+					<text y="-48 db" text="-48" />
+					<text y="-60 db" text="-60" />
+				</ui:attributes>
+				<text x="5" y="24 db" text="graph.units.db" halign="1" valign="-1" color="graph_prim" />
 				
 				<!-- Markers -->
-				<marker id="dtr1" color="#0080ff" basis="1" parallel="0" />
-				<marker id="dtr2" color="#0080ff" basis="1" parallel="0" />
-				<marker id="dl" color="g_magenta" basis="1" parallel="0" />
-				<marker id="rl" color="g_magenta" basis="1" parallel="0" />
+				<marker ox="1" oy="0" id="dtr1" color="#0080ff" />
+				<marker ox="1" oy="0" id="dtr2" color="#0080ff" />
+				<marker ox="1" oy="0" id="dl" color="g_magenta" />
+				<marker ox="1" oy="0" id="rl" color="g_magenta" />
 			</graph>
 			<hbox fill="true">
 				<button id="pause" size="16" color="green" led="true" />

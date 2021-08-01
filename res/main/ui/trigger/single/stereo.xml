@@ -104,27 +104,27 @@
 				<button id="isvl" size="10" color="left_channel" led="true" />
 				<button id="isvr" size="10" color="right_channel" led="true" />
 			</grid>
-			<ledmeter vexpand="true" height.min="256"
-				id="isml" id2="ismr" activity_id="isvl" activity2_id="isvr"
-				stereo="true" angle="1" type="rms_peak"
-				min="0.000251189" max="15.8489" height="256"
-				color="left_channel" color2="right_channel">
+			<ledmeter vexpand="true" height.min="256" angle="1">
+				<ledchannel id="isml" min="-72 db" max="24 db" log="true" type="rms_peak"
+					peak.visibility="true" 
+					activity=":isvl" value.color="#ff4444" />
+				<ledchannel id="ismr" min="-72 db" max="24 db" log="true" type="rms_peak"
+					peak.visibility="true" 
+					activity=":isvr" value.color="#4444ff" />
 			</ledmeter>
 			<label text="labels.chan.in" />
 			
 			<!-- Sidechain signal meter -->
 			<button id="tfv" size="16" color="green" led="true" />
-			<ledmeter vexpand="true" height.min="256"
-				id="tfm" angle="1" logarithmic="true" min="0.000251189" max="15.8489"
-				color="green" pad_left="4" pad_right="4" activity_id="tfv">
+			<ledmeter vexpand="true" height.min="256" angle="1">
+				<ledchannel id="tfm" min="-72 db" max="24 db" log="true" activity=":tfv" value.color="#44ff44" />
 			</ledmeter>
 			<label text="labels.sc.SC" />
 			
 			<!-- Trigger signal meter -->
 			<button id="tlv" size="16" color="medium_green" led="true" />
-			<ledmeter vexpand="true" height.min="256"
-				id="tlm" angle="1" logarithmic="true" min="0.000251189" max="15.8489"
-				color="medium_green" pad_left="4" pad_right="4" activity_id="tlv">
+			<ledmeter vexpand="true" height.min="256" angle="1">
+				<ledchannel id="tlm" min="-72 db" max="24 db" log="true" activity=":tlv" value.color="#44cc44" />
 			</ledmeter>
 			<label text="labels.Tri_gger" />
 		</grid>

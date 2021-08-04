@@ -28,7 +28,7 @@ namespace lsp
     {
         //---------------------------------------------------------------------
         // Plugin UI factory
-        static const meta::plugin_t *uis[] =
+        static const meta::plugin_t *plugin_uis[] =
         {
             &meta::trigger_mono,
             &meta::trigger_stereo,
@@ -36,7 +36,7 @@ namespace lsp
             &meta::trigger_midi_stereo
         };
 
-        static ui::Factory factory(uis, 4);
+        static ui::Factory factory(plugin_uis, 4);
 
     } // namespace plugui
 } // namespace lsp

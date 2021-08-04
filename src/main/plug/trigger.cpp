@@ -946,6 +946,8 @@ namespace lsp
 
         void trigger::dump(dspu::IStateDumper *v) const
         {
+            plug::Module::dump(v);
+
             v->write_object("sSidechain", &sSidechain);
             v->write_object("sScEq", &sScEq);
             v->write("vTmp", vTmp);

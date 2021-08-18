@@ -16,24 +16,30 @@
 				
 				<!-- Gray grid -->
 				<ui:for id="t" first="0" last="4" step="1">
-					<marker v="${t}.25" ox="0" oy="1" color="graph_alt_2" />
-					<marker v="${t}.5"  ox="0" oy="1" color="graph_alt_1" />
-					<marker v="${t}.75" ox="0" oy="1" color="graph_alt_2" />
+					<ui:attributes ox="0" oy="1">
+						<marker v="${t}.25" color="graph_alt_2" />
+						<marker v="${t}.5" color="graph_alt_1" />
+						<marker v="${t}.75" color="graph_alt_2" />
+					</ui:attributes>
 				</ui:for>
 			
-				<marker v="+12 db" ox="1" oy="0" color="graph_alt_1" />
-				<marker v="-12 db" ox="1" oy="0" color="graph_alt_1" />
-				<marker v="-36 db" ox="1" oy="0" color="graph_alt_1" />
-				<marker v="-60 db" ox="1" oy="0" color="graph_alt_1" />
+				<ui:attributes ox="1" oy="0" color="graph_alt_1">
+					<marker v="+12 db" />
+					<marker v="-12 db" />
+					<marker v="-36 db" />
+					<marker v="-60 db" />
+				</ui:attributes>
 
 				<!-- Yellow grid -->
 				<ui:for id="t" first="1" last="4" step="1">
 					<marker v="${t}" ox="0" oy="1" color="graph_sec" />
 				</ui:for>
 
-				<marker v="0 db" ox="1" oy="0" color="graph_sec" />
-				<marker v="-24 db" ox="1" oy="0" color="graph_sec" />
-				<marker v="-48 db" ox="1" oy="0" color="graph_sec" />
+				<ui:attributes ox="1" oy="0" color="graph_sec">
+					<marker v="0 db" />
+					<marker v="-24 db" />
+					<marker v="-48 db" />
+				</ui:attributes>
 
 				<!-- Meshes -->
 				<mesh id="isgl" width="2" color="left_channel" visibility=":isvl" />
@@ -68,10 +74,12 @@
 				<text x="5" y="24 db" text="graph.units.db" halign="1" valign="-1" color="graph_prim" />
 				
 				<!-- Markers -->
-				<marker ox="1" oy="0" id="dtr1" color="#0080ff" />
-				<marker ox="1" oy="0" id="dtr2" color="#0080ff" />
-				<marker ox="1" oy="0" id="dl" color="#ff0000" />
-				<marker ox="1" oy="0" id="rl" color="#ff0000" />
+				<ui:attributes ox="1" oy="0">
+					<marker id="dtr1" color="#0080ff" />
+					<marker id="dtr2" color="#0080ff" />
+					<marker id="dl" color="#ff0000" />
+					<marker id="rl" color="#ff0000" />
+				</ui:attributes>
 			</graph>
 			<hbox fill="true">
 				<button id="pause" size="16" color="green" led="true" />

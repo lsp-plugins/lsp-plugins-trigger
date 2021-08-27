@@ -61,17 +61,16 @@
 					<text x="${t}" y="-72 db" text="${t}" halign="-1" valign="1" color="graph_prim" />
 					<text x="${t}.5" y="-72 db" text="${t}.5" halign="-1" valign="1" color="graph_prim" />
 				</ui:for>
-				
-				<text x="5" y="12 db" text="+12" halign="1" valign="-1" color="graph_prim" />
 				<ui:attributes x="5" halign="1" valign="1" color="graph_prim">
+					<text y="12 db" text="+12" />
 					<text y="0 db" text="0" />
 					<text y="-12 db" text="-12" />
 					<text y="-24 db" text="-24" />
 					<text y="-36 db" text="-36" />
 					<text y="-48 db" text="-48" />
 					<text y="-60 db" text="-60" />
+					<text x="5" y="24 db" text="graph.units.db" valign="-1" />
 				</ui:attributes>
-				<text x="5" y="24 db" text="graph.units.db" halign="1" valign="-1" color="graph_prim" />
 				
 				<!-- Markers -->
 				<ui:attributes ox="1" oy="0">
@@ -115,10 +114,10 @@
 			<ledmeter vexpand="true" height.min="256" angle="1">
 				<ledchannel id="isml" min="-72 db" max="24 db" log="true" type="rms_peak"
 					peak.visibility="true" 
-					activity=":isvl" value.color="#ff4444" />
+					activity=":isvl" value.color="left_channel" />
 				<ledchannel id="ismr" min="-72 db" max="24 db" log="true" type="rms_peak"
 					peak.visibility="true" 
-					activity=":isvr" value.color="#4444ff" />
+					activity=":isvr" value.color="right_channel" />
 			</ledmeter>
 			<label text="labels.chan.in" />
 			

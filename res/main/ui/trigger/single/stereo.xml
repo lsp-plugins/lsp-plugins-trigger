@@ -8,7 +8,6 @@
 			</hbox>
 		</align>
 
-
 		<!-- Trigger -->
 		<hbox visibility=":asel ieq 0" expand="true" spacing="4">
 			<vbox spacing="4" expand="true">
@@ -44,10 +43,10 @@
 						</ui:attributes>
 
 						<!-- Meshes -->
-						<mesh id="isgl" width="2" color="left_channel" visibility=":isvl"/>
-						<mesh id="isgr" width="2" color="right_channel" visibility=":isvr"/>
-						<mesh id="tlg" width="2" color="dark_cyan" visibility=":tlv"/>
-						<mesh id="tfg" width="2" color="cyan" visibility=":tfv"/>
+						<mesh id="isgl" width="2" color="left_channel" color.a="0.2" visibility=":isvl"/>
+						<mesh id="isgr" width="2" color="right_channel" color.a="0.2" visibility=":isvr"/>
+						<mesh id="tlg" width="2" color="blue" color.a="0.2" visibility=":tlv"/>
+						<mesh id="tfg" width="2" color="orange" color.a="0.2" visibility=":tfv"/>
 
 						<!-- Boundaries -->
 						<marker v="24 db" ox="1" oy="0" color="graph_prim" visible="false"/>
@@ -110,21 +109,20 @@
 			<!-- Input signal meters -->
 			<grid rows="3" cols="3" hfill="false" hspacing="4">
 				<ui:attributes bg.color="bg_schema">
-				<label text="labels.chan.in" padding="4"/>
-				<label text="labels.sc.SC" padding="4"/>
-				<label text="labels.Tri_gger" padding="4"/>
+					<label text="labels.chan.in" padding="4"/>
+					<label text="labels.sc.SC" padding="4"/>
+					<label text="labels.Tri_gger" padding="4"/>
 
-				<grid rows="2" cols="2" fill="false" hspacing="2">
-					<!-- <label text="labels.chan.L_eft" font_size="8"/> <label text="labels.chan.R_ight" font_size="8"/> -->
-					<button id="isvl" size="10" ui:inject="Button_left"  led="true"/>
-					<button id="isvr" size="10" ui:inject="Button_right"  led="true"/>
-				</grid>
+					<grid rows="2" cols="2" fill="false" hspacing="2">
+						<button id="isvl" size="10" ui:inject="Button_left" led="true"/>
+						<button id="isvr" size="10" ui:inject="Button_right" led="true"/>
+					</grid>
 
-				<button id="tfv" height="10" width="22" ui:inject="Button_green" led="true"/>
-				<button id="tlv" height="10" width="22" ui:inject="Button_green" led="true"/>
-			</ui:attributes>
+					<button id="tfv" height="10" width="22" ui:inject="Button_green" led="true"/>
+					<button id="tlv" height="10" width="22" ui:inject="Button_green" led="true"/>
+				</ui:attributes>
 
-				<ledmeter vexpand="true" height.min="256"  angle="1">
+				<ledmeter vexpand="true" height.min="256" angle="1">
 					<ledchannel id="isml" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" activity=":isvl" value.color="left_channel"/>
 					<ledchannel id="ismr" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" activity=":isvr" value.color="right_channel"/>
 				</ledmeter>
@@ -132,13 +130,13 @@
 				<!-- Sidechain signal meter -->
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="tfm" min="-72 db" max="24 db" log="true" activity=":tfv" value.color="#44ff44"/>
+					<ledchannel id="tfm" min="-72 db" max="24 db" log="true" activity=":tfv" value.color="orange"/>
 				</ledmeter>
 
 				<!-- Trigger signal meter -->
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="tlm" min="-72 db" max="24 db" log="true" activity=":tlv" value.color="#44cc44"/>
+					<ledchannel id="tlm" min="-72 db" max="24 db" log="true" activity=":tlv" value.color="blue"/>
 				</ledmeter>
 
 			</grid>
@@ -169,63 +167,96 @@
 						clipboard.makeup="mk[ssel]"
 						clipboard.predelay="pd[ssel]"/>
 
-					<grid rows="3" cols="8" vspacing="2">
-						<label text="labels.sedit.reverse"/>
-						<label text="labels.sedit.head_cut"/>
-						<label text="labels.sedit.tail_cut"/>
-						<label text="labels.sedit.fade_in"/>
-						<label text="labels.sedit.fade_out"/>
-						<label text="labels.sedit.makeup"/>
-						<label text="labels.sedit.predelay"/>
-						<label text="labels.sedit.listen"/>
+					<grid rows="3" cols="15" bg.color="bg" hspacing="2">
+						<label text="labels.sedit.reverse" bg.color="bg_schema" padding="6"/>
+						<cell rows="3">
+							<vsep bg.color="bg"/>
+						</cell>
+						<label text="labels.sedit.head_cut" bg.color="bg_schema" padding="6"/>
+						<cell rows="3">
+							<vsep bg.color="bg"/>
+						</cell>
+						<label text="labels.sedit.tail_cut" bg.color="bg_schema" padding="6"/>
+						<cell rows="3">
+							<vsep bg.color="bg"/>
+						</cell>
+						<label text="labels.sedit.fade_in" bg.color="bg_schema" padding="6"/>
+						<cell rows="3">
+							<vsep bg.color="bg"/>
+						</cell>
+						<label text="labels.sedit.fade_out" bg.color="bg_schema" padding="6"/>
+						<cell rows="3">
+							<vsep bg.color="bg"/>
+						</cell>
+						<label text="labels.sedit.makeup" bg.color="bg_schema" padding="6"/>
+						<cell rows="3">
+							<vsep bg.color="bg"/>
+						</cell>
+						<label text="labels.sedit.predelay" bg.color="bg_schema" padding="6"/>
+						<cell rows="3">
+							<vsep bg.color="bg"/>
+						</cell>
+						<label text="labels.sedit.listen" bg.color="bg_schema" padding="6"/>
 
-						<button id="rs[ssel]" size="32"/>
-						<knob id="hc[ssel]" size="20"/>
-						<knob id="tc[ssel]" size="20"/>
-						<knob id="fi[ssel]" size="20" scale_color="yellow"/>
-						<knob id="fo[ssel]" size="20" scale_color="yellow"/>
-						<knob id="mk[ssel]" size="20"/>
-						<knob id="pd[ssel]" size="20"/>
-						<button id="ls[ssel]" size="32" toggle="false"/>
+						<cell rows="2">
+							<vbox bg.color="bg_schema">
+								<button id="rs[ssel]" size="32"/>
+								<label padding.bottom="6"/>
+								<label padding.bottom="6"/>
+							</vbox>
+						</cell>
+						<knob id="hc[ssel]" size="20" bg.color="bg_schema" padding.bottom="6"/>
+						<knob id="tc[ssel]" size="20" bg.color="bg_schema" padding.bottom="6"/>
+						<knob id="fi[ssel]" size="20" scale.color="fade_in" bg.color="bg_schema" padding.bottom="6"/>
+						<knob id="fo[ssel]" size="20" scale.color="fade_out" bg.color="bg_schema" padding.bottom="6"/>
+						<knob id="mk[ssel]" size="20" bg.color="bg_schema" padding.bottom="6"/>
+						<knob id="pd[ssel]" size="20" bg.color="bg_schema" padding.bottom="6"/>
+						<cell rows="2">
+							<vbox bg.color="bg_schema">
+								<button id="ls[ssel]" size="32" ui:inject="Button_cyan" toggle="false"/>
+								<label padding.bottom="6"/>
+								<label padding.bottom="6"/>
+							</vbox>
+						</cell>
+						<value id="hc[ssel]" bg.color="bg_schema" padding.bottom="6"/>
+						<value id="tc[ssel]" bg.color="bg_schema" padding.bottom="6"/>
+						<value id="fi[ssel]" bg.color="bg_schema" padding.bottom="6"/>
+						<value id="fo[ssel]" bg.color="bg_schema" padding.bottom="6"/>
+						<value id="mk[ssel]" bg.color="bg_schema" padding.bottom="6"/>
+						<value id="pd[ssel]" bg.color="bg_schema" padding.bottom="6"/>
 
-						<led id="rs[ssel]"/>
-						<value id="hc[ssel]"/>
-						<value id="tc[ssel]"/>
-						<value id="fi[ssel]"/>
-						<value id="fo[ssel]"/>
-						<value id="mk[ssel]"/>
-						<value id="pd[ssel]"/>
-						<led id="ls[ssel]"/>
 					</grid>
 				</vbox>
 			</cgroup>
-			<group text="groups.sample_matrix" expand="true">
+			<group text="groups.sample_matrix" expand="true" ipadding="0">
 				<!-- Sample matrix -->
-				<grid rows="11" cols="9" transpose="true">
-					<label text="labels.sedit.sample_num" fill="true" halign="0"/>
-					<label text="labels.sedit.enabled" fill="true" halign="0"/>
-					<label text="labels.sedit.active" fill="true" halign="0"/>
-					<label text="labels.midi.velocity" fill="true" halign="0"/>
-					<label text="labels.units.:pc" fill="true" halign="0"/>
-					<label text="labels.signal.pan_left" fill="true" halign="0"/>
-					<label text="labels.units.:pc" fill="true" halign="0"/>
-					<label text="labels.signal.pan_right" fill="true" halign="0"/>
-					<label text="labels.units.:pc" fill="true" halign="0"/>
-					<label text="labels.sedit.listen" fill="true" halign="0"/>
-					<label text="labels.midi.note_on" fill="true" halign="0"/>
+				<grid rows="9" cols="17" transpose="true" hspacing="2" bg.color="bg">
+					<label text="labels.sedit.sample_num" fill="true" halign="0" bg.color="bg_schema" padding="6"/>
+					<label text="labels.sedit.enabled" fill="true" halign="0" bg.color="bg_schema"/>
+					<label text="labels.midi.velocity" fill="true" halign="0" bg.color="bg_schema"/>
+					<label text="labels.units.:pc" fill="true" halign="0" bg.color="bg_schema" padding.bottom="6"/>
+					<label text="labels.signal.pan_left" fill="true" halign="0" bg.color="bg_schema"/>
+					<label text="labels.units.:pc" fill="true" halign="0" bg.color="bg_schema" padding.bottom="6"/>
+					<label text="labels.signal.pan_right" fill="true" halign="0" bg.color="bg_schema"/>
+					<label text="labels.units.:pc" fill="true" halign="0" bg.color="bg_schema" padding.bottom="6"/>
+					<label text="labels.sedit.listen" fill="true" halign="0" bg.color="bg_schema"/>
+					<cell rows="9">
+						<vsep/>
+					</cell>
 
 					<ui:for id="i" first="0" last="7">
-						<label text="${i}"/>
-						<button id="on_${i}" color="yellow" led="true" size="16"/>
-						<led id="ac_${i}" color="yellow" size="6"/>
-						<knob id="vl_${i}" size="20" scale_color="magenta"/>
-						<value id="vl_${i}" detailed="false"/>
-						<knob id="pl_${i}" size="20" balance="0.5" scale_color="red"/>
-						<value id="pl_${i}" detailed="false"/>
-						<knob id="pr_${i}" size="20" balance="0.5" scale_color="cyan"/>
-						<value id="pr_${i}" detailed="false"/>
-						<button id="ls_${i}" size="32" toggle="false"/>
-						<led id="no_${i}"/>
+						<label text="${i}" bg.color="bg_schema"/>
+						<button id="on_${i}" width="32" height="12" ui:inject="Button_yellow" led="true" bg.color="bg_schema" padding="6"/>
+						<knob id="vl_${i}" size="20" scale.color="velocity" bg.color="bg_schema"/>
+						<value id="vl_${i}" detailed="false" bg.color="bg_schema" padding.bottom="6"/>
+						<knob id="pl_${i}" size="20" balance="0.5" scale.color="left_channel" bg.color="bg_schema"/>
+						<value id="pl_${i}" detailed="false" bg.color="bg_schema" padding.bottom="6"/>
+						<knob id="pr_${i}" size="20" balance="0.5" scale.color="right_channel" bg.color="bg_schema"/>
+						<value id="pr_${i}" detailed="false" bg.color="bg_schema" padding.bottom="6"/>
+						<button id="ls_${i}" size="32" ui:inject="Button_cyan" toggle="false" bg.color="bg_schema" padding.bottom="6"/>
+						<cell rows="9">
+							<vsep/>
+						</cell>
 					</ui:for>
 				</grid>
 			</group>
@@ -234,100 +265,127 @@
 		<!-- Common parameters -->
 		<hbox spacing="4">
 			<!-- Controls -->
-			<group text="groups.plug.trigger">
-				<hbox expand="true">
-					<!-- Sidechain -->
-					<grid rows="3" cols="5" expand="true" spacing="2">
-						<label text="labels.sc.preamp"/>
-						<label text="labels.mode"/>
-						<label text="labels.sc.reactivity"/>
-						<label text="labels.flt.HPF"/>
-						<label text="labels.flt.LPF"/>
+			<group text="groups.plug.trigger" expand="true" ipadding="0">
+				<!-- Trigger -->
+				<grid rows="4" cols="13" expand="true" transpose="true" hspacing="2" bg.color="bg">
 
-						<knob id="preamp"/>
-						<vbox fill="false">
-							<combo id="mode" fill="true"/>
-							<label text="labels.source"/>
-							<combo id="ssrc" fill="true"/>
-						</vbox>
-						<knob id="react"/>
-						<vbox>
-							<combo id="shpm"/>
-							<knob id="shpf" size="20" bright="(:shpm igt 0) ? 1 : 0.5"/>
-						</vbox>
-						<vbox>
-							<combo id="slpm"/>
-							<knob id="slpf" size="20" bright="(:slpm igt 0) ? 1 : 0.5"/>
-						</vbox>
+					<cell rows="4">
+						<grid rows="2" cols="1" bg.color="bg" vspacing="4">
+							<vbox padding="6" bg.color="bg_schema">
+								<label text="labels.mode"/>
+								<combo id="mode" fill="true"/>
+							</vbox>
+							<vbox padding="6" bg.color="bg_schema">
+								<label text="labels.source"/>
+								<combo id="ssrc" fill="true"/>
+							</vbox>
+						</grid>
+					</cell>
 
-						<value id="preamp"/>
-						<hbox fill="false">
-							<led id="tla"/>
-							<label text="labels.active"/>
-						</hbox>
-						<value id="react"/>
-						<value id="shpf" bright="(:shpm igt 0) ? 1 : 0.5"/>
-						<value id="slpf" bright="(:slpm igt 0) ? 1 : 0.5"/>
-					</grid>
+					<cell rows="4"><vsep/></cell>
 
-					<vsep/>
+					<cell rows="4">
+						<grid rows="4" cols="3" transpose="true" bg.color="bg" hspacing="2">
+							<label text="labels.sc.preamp" padding="6" bg.color="bg_schema" width.min="49"/>
+							<knob id="preamp" bg.color="bg_schema" padding.bottom="4"/>
+							<value id="preamp" bg.color="bg_schema" padding.bottom="4"/>
+							<cell cols="3">
+								<hbox padding.top="4" bg.color="bg">
+									<label bg.color="bg_schema" expand="true"/>
+									<label text="labels.active" bg.color="bg_schema" padding="6"/>
+									<led id="tla" bg.color="bg_schema" size="8" padding="6"/>
+									<label bg.color="bg_schema" expand="true"/>
+								</hbox>
+							</cell>
+							<cell rows="3"><vsep/></cell>
+							<label text="labels.sc.reactivity" padding="6" bg.color="bg_schema"/>
+							<knob id="react" bg.color="bg_schema"/>
+							<value id="react" bg.color="bg_schema"/>
+						</grid>
+					</cell>
 
-					<grid rows="4" cols="2" expand="true" spacing="2">
-						<cell cols="2"><label text="labels.attack"/></cell>
-						<label text="labels.thresh_old"/>
-						<label text="labels.time"/>
+					<cell rows="4"><vsep/></cell>
 
-						<knob id="dl" scale_color="magenta" size="20"/>
-						<knob id="dt" size="20"/>
+					<label text="labels.flt.HPF" padding="6" bg.color="bg_schema"/>
+					<combo id="shpm" bg.color="bg_schema" padding.left="6" padding.right="6"/>
+					<knob id="shpf" size="20" bright="(:shpm igt 0) ? 1 : 0.5" bg.color="bg_schema"/>
+					<value id="shpf" bright="(:shpm igt 0) ? 1 : 0.5" bg.color="bg_schema" width.min="30"/>
 
-						<value id="dl"/>
-						<value id="dt"/>
-					</grid>
+					<cell rows="4"><vsep/></cell>
 
-					<vsep/>
+					<label text="labels.flt.LPF" padding="6" bg.color="bg_schema"/>
+					<combo id="slpm" bg.color="bg_schema" padding.left="6" padding.right="6"/>
+					<knob id="slpf" size="20" bright="(:slpm igt 0) ? 1 : 0.5" bg.color="bg_schema"/>
+					<value id="slpf" bright="(:slpm igt 0) ? 1 : 0.5" bg.color="bg_schema" width.min="30"/>
 
-					<grid rows="4" cols="2" expand="true" spacing="2">
-						<cell cols="2"><label text="labels.release"/></cell>
-						<label text="labels.thresh_old"/>
-						<label text="labels.time"/>
+					<cell rows="4"><vsep/></cell>
 
-						<knob id="rrl" scale_color="magenta" size="20"/>
-						<knob id="rt" size="20"/>
+					<cell rows="4" bg.color="bg_schema">
+						<grid rows="4" cols="2" transpose="true">
+							<ui:attributes padding="6">
+								<cell cols="2"><label text="labels.attack"/></cell>
+								<label text="labels.thresh_old"/>
+								<knob id="dl" scale.color="magenta" size="20"/>
+								<value id="dl" width.min="31"/>
+								<label text="labels.time"/>
+								<knob id="dt" size="20"/>
+								<value id="dt" width.min="31"/>
+							</ui:attributes>
+						</grid>
+					</cell>
 
-						<value id="rrl"/>
-						<value id="rt"/>
-					</grid>
+					<cell rows="4"><vsep/></cell>
 
-					<vsep/>
-					<grid rows="4" cols="3" expand="true" spacing="2">
-						<cell cols="3"><label text="labels.dynamics"/></cell>
-						<label text="labels.spread"/>
-						<label text="labels.range_id" text:id="1"/>
-						<label text="labels.range_id" text:id="2"/>
+					<cell rows="4" bg.color="bg_schema">
+						<grid rows="4" cols="2" transpose="true">
+							<ui:attributes padding="6">
+								<cell cols="2"><label text="labels.release"/></cell>
+								<label text="labels.thresh_old"/>
+								<knob id="rrl" scale.color="magenta" size="20"/>
+								<value id="rrl" width.min="31"/>
+								<label text="labels.time"/>
+								<knob id="rt" size="20"/>
+								<value id="rt" width.min="31"/>
+							</ui:attributes>
+						</grid>
+					</cell>
 
-						<knob id="dyna" scale_color="#0080ff" size="20"/>
-						<knob id="dtr1" scale_color="#0080ff" size="20"/>
-						<knob id="dtr2" scale_color="#0080ff" size="20"/>
+					<cell rows="4"><vsep/></cell>
 
-						<value id="dyna"/>
-						<value id="dtr1"/>
-						<value id="dtr2"/>
-					</grid>
-				</hbox>
+					<cell rows="4" bg.color="bg_schema">
+						<grid rows="4" cols="3" transpose="true">
+							<ui:attributes padding="6">
+								<cell cols="3"><label text="labels.dynamics"/></cell>
+								<label text="labels.spread"/>
+								<knob id="dyna" scale.color="#0080ff" size="20"/>
+								<value id="dyna" width.min="35"/>
+								<label text="labels.range_id" text:id="1"/>
+								<knob id="dtr1" scale.color="#0080ff" size="20"/>
+								<value id="dtr1" width.min="35"/>
+								<label text="labels.range_id" text:id="2"/>
+								<knob id="dtr2" scale_color="#0080ff" size="20"/>
+								<value id="dtr2" width.min="35"/>
+							</ui:attributes>
+						</grid>
+					</cell>
+				</grid>
 			</group>
-			<group text="groups.audio_channel">
+
+			<group text="groups.audio_channel" ipadding="0">
 				<grid rows="3" cols="3">
-					<label text="labels.signal.dry"/>
-					<label text="labels.signal.wet"/>
-					<label text="labels.output"/>
+					<ui:attributes padding="6">
+						<label text="labels.signal.dry"/>
+						<label text="labels.signal.wet"/>
+						<label text="labels.output"/>
 
-					<knob id="dry"/>
-					<knob id="wet"/>
-					<knob id="g_out"/>
+						<knob id="dry"/>
+						<knob id="wet"/>
+						<knob id="g_out"/>
 
-					<value id="dry"/>
-					<value id="wet"/>
-					<value id="g_out"/>
+						<value id="dry"/>
+						<value id="wet"/>
+						<value id="g_out"/>
+					</ui:attributes>
 				</grid>
 			</group>
 		</hbox>

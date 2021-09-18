@@ -298,7 +298,7 @@
 
 						<cell rows="4"><vsep/></cell>
 
-						<ui:with bg.color="bg_schema" bright="(:shpm igt 0) ? 1 : 0.75" bg.bright="(:shpm igt 0) ? 1.0 : 0.85">
+						<ui:with bg.color="bg_schema" bright="(:shpm igt 0) ? 1 : 0.75" bg.bright="(:shpm igt 0) ? 1.0 : 0.8">
 						<label text="labels.flt.HPF" padding="6"/>
 						<combo id="shpm" pad.l="6" pad.r="6"/>
 						<knob id="shpf" size="20"/>
@@ -307,7 +307,7 @@
 
 						<cell rows="4"><vsep/></cell>
 
-						<ui:with bg.color="bg_schema" bright="(:slpm igt 0) ? 1 : 0.75" bg.bright="(:slpm igt 0) ? 1.0 : 0.85">
+						<ui:with bg.color="bg_schema" bright="(:slpm igt 0) ? 1 : 0.75" bg.bright="(:slpm igt 0) ? 1.0 : 0.8">
 						<label text="labels.flt.LPF" padding="6"/>
 						<combo id="slpm" bg.color="bg_schema" pad.l="6" pad.r="6"/>
 						<knob id="slpf" size="20"/>

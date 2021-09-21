@@ -44,7 +44,7 @@
 
 							<!-- Meshes -->
 							<mesh id="isg" width="2" color="mono" visibility=":isv"/>
-							<mesh id="tlg" width="2" color="blue" visibility=":tlv"/>
+							<mesh id="tlg" width="2" color="graph_mesh" visibility=":tlv"/>
 							<mesh id="tfg" width="2" color="orange" visibility=":tfv"/>
 
 							<!-- Boundaries -->
@@ -74,10 +74,10 @@
 
 							<!-- Markers -->
 							<ui:with ox="1" oy="0">
-								<marker id="dtr1" color="#0080ff"/>
-								<marker id="dtr2" color="#0080ff"/>
-								<marker id="dl" color="#ff0000"/>
-								<marker id="rl" color="#ff0000"/>
+								<marker id="dtr1" color="blue"/>
+								<marker id="dtr2" color="blue"/>
+								<marker id="dl" color="treshold"/>
+								<marker id="rl" color="treshold"/>
 							</ui:with>
 						</graph>
 					</group>
@@ -93,7 +93,7 @@
 								<label text="labels.mus.octave"/>
 								<combo id="oct" width="20"/>
 								<label text="labels.midi.midi_num"/>
-								<midinote id="mn" note_id="note" octave_id="oct" tcolor="green"/>
+								<midinote id="mn" note_id="note" octave_id="oct"/>
 							</hbox>
 						</align>
 						<align halign="1" fill="true">
@@ -115,7 +115,7 @@
 
 						<button id="isv" height="10" width="22" ui:inject="Button_mono" led="true"/>
 						<button id="tfv" height="10" width="22" ui:inject="Button_orange" led="true"/>
-						<button id="tlv" height="10" width="22" ui:inject="Button_blue" led="true"/>
+						<button id="tlv" height="10" width="22" ui:inject="Button_cyan" led="true"/>
 					</ui:with>
 
 					<ledmeter vexpand="true" height.min="256" angle="1">
@@ -131,7 +131,7 @@
 					<!-- Trigger signal meter -->
 
 					<ledmeter vexpand="true" height.min="256" angle="1">
-						<ledchannel id="tlm" min="-72 db" max="24 db" log="true" activity=":tlv" value.color="blue"/>
+						<ledchannel id="tlm" min="-72 db" max="24 db" log="true" activity=":tlv" value.color="graph_mesh"/>
 					</ledmeter>
 				</grid>
 			</hbox>
@@ -301,7 +301,7 @@
 						<ui:with bg.color="bg_schema" bright="(:shpm igt 0) ? 1 : 0.75" bg.bright="(:shpm igt 0) ? 1.0 : 0.8">
 						<label text="labels.flt.HPF" padding="6"/>
 						<combo id="shpm" pad.l="6" pad.r="6"/>
-						<knob id="shpf" size="20"/>
+						<knob id="shpf" size="20" scolor="(:shpm igt 0) ? 'kscale' : 'kscale_inactive'"/>
 						<value id="shpf" width.min="30"/>
 					  </ui:with>
 
@@ -310,7 +310,7 @@
 						<ui:with bg.color="bg_schema" bright="(:slpm igt 0) ? 1 : 0.75" bg.bright="(:slpm igt 0) ? 1.0 : 0.8">
 						<label text="labels.flt.LPF" padding="6"/>
 						<combo id="slpm" bg.color="bg_schema" pad.l="6" pad.r="6"/>
-						<knob id="slpf" size="20"/>
+						<knob id="slpf" size="20" scolor="(:slpm igt 0) ? 'kscale' : 'kscale_inactive'"/>
 						<value id="slpf" width.min="30"/>
 						</ui:with>
 
@@ -321,7 +321,7 @@
 								<ui:with padding="6">
 									<cell cols="2"><label text="labels.attack"/></cell>
 									<label text="labels.thresh_old"/>
-									<knob id="dl" scolor="magenta" size="20"/>
+									<knob id="dl" scolor="treshold" size="20"/>
 									<value id="dl" width.min="31"/>
 									<label text="labels.time"/>
 									<knob id="dt" size="20"/>
@@ -337,7 +337,7 @@
 								<ui:with padding="6">
 									<cell cols="2"><label text="labels.release"/></cell>
 									<label text="labels.thresh_old"/>
-									<knob id="rrl" scolor="magenta" size="20"/>
+									<knob id="rrl" scolor="treshold" size="20"/>
 									<value id="rrl" width.min="31"/>
 									<label text="labels.time"/>
 									<knob id="rt" size="20"/>
@@ -353,13 +353,13 @@
 								<ui:with padding="6">
 									<cell cols="3"><label text="labels.dynamics"/></cell>
 									<label text="labels.spread"/>
-									<knob id="dyna" scolor="#0080ff" size="20"/>
+									<knob id="dyna" scolor="blue" size="20"/>
 									<value id="dyna" width.min="35"/>
 									<label text="labels.range_id" text:id="1"/>
-									<knob id="dtr1" scolor="#0080ff" size="20"/>
+									<knob id="dtr1" scolor="blue" size="20"/>
 									<value id="dtr1" width.min="35"/>
 									<label text="labels.range_id" text:id="2"/>
-									<knob id="dtr2" scale_color="#0080ff" size="20"/>
+									<knob id="dtr2" scolor="blue" size="20"/>
 									<value id="dtr2" width.min="35"/>
 								</ui:with>
 							</grid>

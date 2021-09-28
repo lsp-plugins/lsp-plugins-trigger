@@ -76,8 +76,8 @@
 							<ui:with ox="1" oy="0">
 								<marker id="dtr1" color="blue"/>
 								<marker id="dtr2" color="blue"/>
-								<marker id="dl" color="treshold"/>
-								<marker id="rl" color="treshold"/>
+								<marker id="dl" color="threshold"/>
+								<marker id="rl" color="threshold"/>
 							</ui:with>
 						</graph>
 					</group>
@@ -321,7 +321,7 @@
 								<ui:with padding="6">
 									<cell cols="2"><label text="labels.attack"/></cell>
 									<label text="labels.thresh_old"/>
-									<knob id="dl" scolor="treshold" size="20"/>
+									<knob id="dl" scolor="threshold" size="20"/>
 									<value id="dl" width.min="31"/>
 									<label text="labels.time"/>
 									<knob id="dt" size="20"/>
@@ -337,7 +337,7 @@
 								<ui:with padding="6">
 									<cell cols="2"><label text="labels.release"/></cell>
 									<label text="labels.thresh_old"/>
-									<knob id="rrl" scolor="treshold" size="20"/>
+									<knob id="rrl" scolor="threshold" size="20"/>
 									<value id="rrl" width.min="31"/>
 									<label text="labels.time"/>
 									<knob id="rt" size="20"/>

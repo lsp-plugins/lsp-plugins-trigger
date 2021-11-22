@@ -187,10 +187,10 @@ namespace lsp
             }
         }
 
-        void trigger::init(plug::IWrapper *wrapper)
+        void trigger::init(plug::IWrapper *wrapper, plug::IPort **ports)
         {
             // Pass wrapper
-            plug::Module::init(wrapper);
+            plug::Module::init(wrapper, ports);
 
             if (!sSidechain.init(nChannels, meta::trigger_metadata::REACTIVITY_MAX))
                 return;
@@ -241,8 +241,8 @@ namespace lsp
             lsp_trace("Binding audio inputs...");
             for (size_t i=0; i<nChannels; ++i)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[i].pIn        = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[i].pIn        = ports[port_id++];
                 vChannels[i].vCtl       = ctlbuf;
                 ctlbuf                 += meta::trigger_metadata::BUFFER_SIZE;
             }
@@ -251,125 +251,125 @@ namespace lsp
             lsp_trace("Binding audio outputs...");
             for (size_t i=0; i<nChannels; ++i)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[i].pOut       = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[i].pOut       = ports[port_id++];
             }
 
             // Bind meters
             if (nChannels > 1)
             {
                 lsp_trace("Binding source switch port...");
-                TRACE_PORT(vPorts[port_id]);
-                pSource             = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                pSource             = ports[port_id++];
             }
 
             lsp_trace("Binding audio meters...");
             for (size_t i=0; i<nChannels; ++i)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[i].pGraph     = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[i].pGraph     = ports[port_id++];
             }
             for (size_t i=0; i<nChannels; ++i)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[i].pMeter     = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[i].pMeter     = ports[port_id++];
             }
             for (size_t i=0; i<nChannels; ++i)
             {
-                TRACE_PORT(vPorts[port_id]);
-                vChannels[i].pVisible   = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                vChannels[i].pVisible   = ports[port_id++];
             }
 
             // Bind MIDI ports
             if (bMidiPorts)
             {
                 lsp_trace("Binding MIDI ports...");
-                TRACE_PORT(vPorts[port_id]);
-                pMidiIn     = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                pMidiOut    = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                pChannel    = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                pNote       = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                pOctave     = vPorts[port_id++];
-                TRACE_PORT(vPorts[port_id]);
-                pMidiNote   = vPorts[port_id++];
+                TRACE_PORT(ports[port_id]);
+                pMidiIn     = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                pMidiOut    = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                pChannel    = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                pNote       = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                pOctave     = ports[port_id++];
+                TRACE_PORT(ports[port_id]);
+                pMidiNote   = ports[port_id++];
             }
 
             // Skip area selector
             lsp_trace("Skipping Area selector...");
-            TRACE_PORT(vPorts[port_id]);
+            TRACE_PORT(ports[port_id]);
             port_id     ++;
 
             // Bind ports
             lsp_trace("Binding Global ports...");
-            TRACE_PORT(vPorts[port_id]);
-            pBypass     = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pDry        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pWet        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pGain       = vPorts[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pBypass     = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pDry        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pWet        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pGain       = ports[port_id++];
 
             lsp_trace("Binding mode port...");
-            TRACE_PORT(vPorts[port_id]);
-            pMode               = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pPause              = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pClear              = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pPreamp             = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pScHpfMode          =   vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pScHpfFreq          =   vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pScLpfMode          =   vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pScLpfFreq          =   vPorts[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pMode               = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pPause              = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pClear              = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pPreamp             = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pScHpfMode          =   ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pScHpfFreq          =   ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pScLpfMode          =   ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pScLpfFreq          =   ports[port_id++];
 
-            TRACE_PORT(vPorts[port_id]);
-            pDetectLevel        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pDetectTime         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pReleaseLevel       = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pReleaseTime        = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pDynamics           = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pDynaRange1         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pDynaRange2         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pReactivity         = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pReleaseValue       = vPorts[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pDetectLevel        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pDetectTime         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pReleaseLevel       = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pReleaseTime        = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pDynamics           = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pDynaRange1         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pDynaRange2         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pReactivity         = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pReleaseValue       = ports[port_id++];
 
             lsp_trace("Binding meters...");
-            TRACE_PORT(vPorts[port_id]);
-            pFunction           = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pFunctionLevel      = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pFunctionActive     = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pActive             = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pVelocity           = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pVelocityLevel      = vPorts[port_id++];
-            TRACE_PORT(vPorts[port_id]);
-            pVelocityActive     = vPorts[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pFunction           = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pFunctionLevel      = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pFunctionActive     = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pActive             = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pVelocity           = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pVelocityLevel      = ports[port_id++];
+            TRACE_PORT(ports[port_id]);
+            pVelocityActive     = ports[port_id++];
 
             // Bind kernel
             lsp_trace("Binding kernel ports...");
-            port_id             = sKernel.bind(vPorts, port_id, false);
+            port_id             = sKernel.bind(ports, port_id, false);
         }
 
         inline void trigger::update_counters()

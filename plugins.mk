@@ -19,5 +19,11 @@
 #
 
 # Variables that describe dependencies
-PLUGIN_DEPENDENCIES     = LSP_PLUGINS_TRIGGER
 PLUGIN_PACKAGE_NAME     = lsp-plugins
+
+PLUGIN_SHARED = \
+  LSP_PLUGINS_SHARED
+
+PLUGIN_DEPENDENCIES = LSP Trigger Plugin Series
+  LSP_PLUGINS_PLUGIN_TEMPLATE
+

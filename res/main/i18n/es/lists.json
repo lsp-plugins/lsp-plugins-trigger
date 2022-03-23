@@ -1,0 +1,18 @@
+{
+	"trigger": {
+		"inst": "Instrumento",
+		"samp": {
+			"0": "Muestra 0",
+			"1": "Muestra 1",
+			"2": "Muestra 2",
+			"3": "Muestra 3",
+			"4": "Muestra 4",
+			"5": "Muestra 5",
+			"6": "Muestra 6",
+			"7": "Muestra 7",
+			"none": "Ninguno"
+		},
+		"trig": "Disparador"
+	}
+}
+

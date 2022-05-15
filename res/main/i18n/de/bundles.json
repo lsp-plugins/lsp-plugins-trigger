@@ -1,0 +1,7 @@
+{
+	"trigger": {
+		"name": "Trigger",
+		"description": "Dieses Plugin implementiert Trigger mit Mono In- \nund Output. Ein zusätzlicher MIDI-Output ermöglicht das \nWeitergeben von Noten, die vom Trigger kommen. Es sind \nbis zu acht Samples möglich, die mit unterschiedlicher Anschlagsdynamik \nangesprochen werden können."
+	}
+}
+

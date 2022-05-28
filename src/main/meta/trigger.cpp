@@ -96,6 +96,7 @@ namespace lsp
 
         #define T_SAMPLE_FILE(gain)         \
             PATH("sf", "Sample file"),      \
+            CONTROL("pi", "Sample pitch", U_SEMITONES, trigger_metadata::SAMPLE_PITCH), \
             CONTROL("hc", "Sample head cut", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             CONTROL("tc", "Sample tail cut", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             CONTROL("fi", "Sample fade in", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \

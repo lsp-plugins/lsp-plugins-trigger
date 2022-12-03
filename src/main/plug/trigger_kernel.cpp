@@ -270,17 +270,6 @@ namespace lsp
                 }
             }
 
-            // Allocate buffer
-            lsp_trace("Allocate buffer size=%d", int(meta::trigger_metadata::BUFFER_SIZE));
-            float *buf              = new float[meta::trigger_metadata::BUFFER_SIZE];
-            if (buf == NULL)
-            {
-                destroy_state();
-                return false;
-            }
-            lsp_trace("buffer = %p", buf);
-            vBuffer                 = buf;
-
             // Initialize toggle
             sListen.init();
 
@@ -371,25 +360,22 @@ namespace lsp
             pActivity       = activity;
         }
 
+        void trigger_kernel::destroy_sample(dspu::Sample * &sample)
+        {
+            if (sample == NULL)
+                return;
+
+            sample->destroy();
+            delete sample;
+            lsp_trace("Destroyed sample %p", sample);
+            sample  = NULL;
+        }
+
         void trigger_kernel::unload_afile(afile_t *af)
         {
             // Destroy original sample if present
-            if (af->pOriginal != NULL)
-            {
-                af->pOriginal->destroy();
-                delete af->pOriginal;
-                lsp_trace("destroyed sample %p", af->pOriginal);
-                af->pOriginal = NULL;
-            }
-
-            // Destroy processed sample if present
-            if (af->pProcessed != NULL)
-            {
-                af->pProcessed->destroy();
-                delete af->pProcessed;
-                lsp_trace("destroyed sample %p", af->pProcessed);
-                af->pProcessed = NULL;
-            }
+            destroy_sample(af->pOriginal);
+            destroy_sample(af->pProcessed);
 
             // Destroy pointer to thumbnails
             if (af->vThumbs[0])
@@ -432,9 +418,7 @@ namespace lsp
             while (gc_list != NULL)
             {
                 dspu::Sample *next = gc_list->gc_next();
-                gc_list->destroy();
-                delete gc_list;
-                lsp_trace("Destroyed sample %p", gc_list);
+                destroy_sample(gc_list);
                 gc_list = next;
             }
         }
@@ -442,21 +426,12 @@ namespace lsp
         void trigger_kernel::perform_gc()
         {
             dspu::Sample *gc_list = lsp::atomic_swap(&pGCList, NULL);
+            lsp_trace("gc_list = %p", gc_list);
             destroy_samples(gc_list);
         }
 
         void trigger_kernel::destroy_state()
         {
-            // Destroy audio files
-            if (vFiles != NULL)
-            {
-                for (size_t i=0; i<nFiles;++i)
-                    destroy_afile(&vFiles[i]);
-            }
-
-            // Perform pending gabrage collection
-            perform_gc();
-
             // Perform garbage collection for each channel
             for (size_t i=0; i<nChannels; ++i)
             {
@@ -466,6 +441,16 @@ namespace lsp
                 destroy_samples(sp->gc());
                 sp->destroy(false);
             }
+
+            // Destroy audio files
+            if (vFiles != NULL)
+            {
+                for (size_t i=0; i<nFiles;++i)
+                    destroy_afile(&vFiles[i]);
+            }
+
+            // Perform pending gabrage collection
+            perform_gc();
 
             // Drop all preallocated data
             free_aligned(pData);
@@ -652,13 +637,7 @@ namespace lsp
             dspu::Sample *source    = new dspu::Sample();
             if (source == NULL)
                 return STATUS_NO_MEM;
-            lsp_finally {
-                if (source != NULL)
-                {
-                    source->destroy();
-                    delete source;
-                }
-            };
+            lsp_finally { destroy_sample(source); };
 
             status_t status = source->load(fname, meta::trigger_metadata::SAMPLE_LENGTH_MAX * 0.001f);
             if (status != STATUS_OK)
@@ -736,6 +715,9 @@ namespace lsp
 
             // Initialize target sample
             dspu::Sample *out   = new dspu::Sample();
+            if (out == NULL)
+                return STATUS_NO_MEM;
+            lsp_finally { destroy_sample(out); };
             if (!out->init(channels, max_samples, max_samples))
             {
                 lsp_warn("Error initializing playback sample");

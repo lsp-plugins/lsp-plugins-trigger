@@ -173,6 +173,7 @@ namespace lsp
                 static void         unload_afile(afile_t *af);
                 static void         destroy_afile(afile_t *af);
                 static void         destroy_samples(dspu::Sample *gc_list);
+                static void         destroy_sample(dspu::Sample * &sample);
 
             protected:
                 void        destroy_state();

@@ -206,7 +206,12 @@ namespace lsp
             for (size_t i=0; i<meta::trigger_metadata::TRACKS_MAX; ++i)
             {
                 channel_t *c        = &vChannels[i];
+
+                c->sBypass.construct();
+                c->sGraph.construct();
                 c->vCtl             = NULL;
+                c->bVisible         = false;
+
                 c->pIn              = NULL;
                 c->pOut             = NULL;
                 c->pGraph           = NULL;

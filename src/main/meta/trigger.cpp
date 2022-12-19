@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_TRIGGER_VERSION_MAJOR                   1
 #define LSP_PLUGINS_TRIGGER_VERSION_MINOR                   0
-#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   6
+#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   7
 
 #define LSP_PLUGINS_TRIGGER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -247,7 +247,7 @@ namespace lsp
             NULL,
             LSP_PLUGINS_TRIGGER_VERSION,
             trigger_classes,
-            E_INLINE_DISPLAY | E_DUMP_STATE,
+            E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_mono_ports,
             "trigger/single/mono.xml",
             NULL,
@@ -269,7 +269,7 @@ namespace lsp
             NULL,
             LSP_PLUGINS_TRIGGER_VERSION,
             trigger_classes,
-            E_INLINE_DISPLAY | E_DUMP_STATE,
+            E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_stereo_ports,
             "trigger/single/stereo.xml",
             NULL,
@@ -291,7 +291,7 @@ namespace lsp
             NULL,
             LSP_PLUGINS_TRIGGER_VERSION,
             trigger_classes,
-            E_INLINE_DISPLAY | E_DUMP_STATE,
+            E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_mono_midi_ports,
             "trigger/single/mono.xml",
             NULL,
@@ -313,7 +313,7 @@ namespace lsp
             NULL,
             LSP_PLUGINS_TRIGGER_VERSION,
             trigger_classes,
-            E_INLINE_DISPLAY | E_DUMP_STATE,
+            E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_stereo_midi_ports,
             "trigger/single/stereo.xml",
             NULL,

@@ -71,9 +71,9 @@ namespace lsp
 
                 typedef struct channel_t
                 {
-                    float              *vCtl;           // Control chain
                     dspu::Bypass        sBypass;        // Bypass
                     dspu::MeterGraph    sGraph;         // Metering graph
+                    float              *vCtl;           // Control chain
                     bool                bVisible;       // Visibility flag
 
                     plug::IPort        *pIn;            // Input port

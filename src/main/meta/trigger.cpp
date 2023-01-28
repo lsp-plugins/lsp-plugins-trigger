@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_TRIGGER_VERSION_MAJOR                   1
 #define LSP_PLUGINS_TRIGGER_VERSION_MINOR                   0
-#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   7
+#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   8
 
 #define LSP_PLUGINS_TRIGGER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -220,7 +220,9 @@ namespace lsp
             PORTS_END
         };
 
-        static const int trigger_classes[] = { C_DYNAMICS, -1 };
+        static const int plugin_classes[]           = { C_DYNAMICS, -1 };
+        static const int clap_features_mono[]       = { CF_AUDIO_EFFECT, CF_UTILITY, CF_MONO, -1 };
+        static const int clap_features_stereo[]     = { CF_AUDIO_EFFECT, CF_UTILITY, CF_STEREO, -1 };
 
         const meta::bundle_t trigger_bundle =
         {
@@ -245,8 +247,10 @@ namespace lsp
             "zghv",
             0,
             NULL,
+            LSP_CLAP_URI("trigger_mono"),
             LSP_PLUGINS_TRIGGER_VERSION,
-            trigger_classes,
+            plugin_classes,
+            clap_features_mono,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_mono_ports,
             "trigger/single/mono.xml",
@@ -267,8 +271,10 @@ namespace lsp
             "zika",
             0,
             NULL,
+            LSP_CLAP_URI("trigger_stereo"),
             LSP_PLUGINS_TRIGGER_VERSION,
-            trigger_classes,
+            plugin_classes,
+            clap_features_stereo,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_stereo_ports,
             "trigger/single/stereo.xml",
@@ -289,8 +295,10 @@ namespace lsp
             "t4yz",
             0,
             NULL,
+            LSP_CLAP_URI("trigger_midi_mono"),
             LSP_PLUGINS_TRIGGER_VERSION,
-            trigger_classes,
+            plugin_classes,
+            clap_features_mono,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_mono_midi_ports,
             "trigger/single/mono.xml",
@@ -311,8 +319,10 @@ namespace lsp
             "9cqf",
             0,
             NULL,
+            LSP_CLAP_URI("trigger_midi_stereo"),
             LSP_PLUGINS_TRIGGER_VERSION,
-            trigger_classes,
+            plugin_classes,
+            clap_features_stereo,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_stereo_midi_ports,
             "trigger/single/stereo.xml",
@@ -321,6 +331,6 @@ namespace lsp
             &trigger_bundle
         };
 
-    } // namespace meta
-} // namespace lsp
+    } /* namespace meta */
+} /* namespace lsp */
 

@@ -20,6 +20,7 @@
  */
 
 #include <private/plugins/trigger.h>
+#include <lsp-plug.in/common/debug.h>
 #include <lsp-plug.in/dsp/dsp.h>
 #include <lsp-plug.in/dsp-units/units.h>
 #include <lsp-plug.in/stdlib/math.h>

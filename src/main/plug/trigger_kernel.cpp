@@ -725,7 +725,7 @@ namespace lsp
             // Re-render playback sample from temporary sample
             for (size_t j=0; j<channels; ++j)
             {
-                float *dst          = out->getBuffer(j);
+                float *dst          = out->channel(j);
                 const float *src    = temp.channel(j);
 
                 if (af->bReverse)

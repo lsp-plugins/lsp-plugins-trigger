@@ -901,7 +901,7 @@ namespace lsp
                         path->accept();
                     }
                 }
-                else if ((path != NULL) && (path->accepted()) && (af->pLoader->completed()))
+                else if ((path->accepted()) && (af->pLoader->completed()))
                 {
                     // Commit the result
                     af->nStatus     = af->pLoader->code();

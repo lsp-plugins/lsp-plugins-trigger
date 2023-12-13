@@ -239,6 +239,7 @@ namespace lsp
         {
             "Triggersensor Mono",
             "Trigger Mono",
+            "Trigger Mono",
             "TS1M",
             &developers::v_sadovnikov,
             "trigger_mono",
@@ -262,6 +263,7 @@ namespace lsp
         const plugin_t trigger_stereo =
         {
             "Triggersensor Stereo",
+            "Trigger Stereo",
             "Trigger Stereo",
             "TS1S",
             &developers::v_sadovnikov,
@@ -287,6 +289,7 @@ namespace lsp
         {
             "Triggersensor MIDI Mono",
             "Trigger MIDI Mono",
+            "Trigger MIDI Mono",
             "TSM1M",
             &developers::v_sadovnikov,
             "trigger_midi_mono",
@@ -310,6 +313,7 @@ namespace lsp
         const plugin_t trigger_midi_stereo =
         {
             "Triggersensor MIDI Stereo",
+            "Trigger MIDI Stereo",
             "Trigger MIDI Stereo",
             "TSM1S",
             &developers::v_sadovnikov,

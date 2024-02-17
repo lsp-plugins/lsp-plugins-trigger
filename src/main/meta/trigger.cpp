@@ -102,15 +102,15 @@ namespace lsp
             CONTROL("fi", "Sample fade in", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             CONTROL("fo", "Sample fade out", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             AMP_GAIN10("mk", "Sample makeup gain", 1.0f), \
-            { "vl", "Sample velocity max",  U_PERCENT, R_CONTROL, F_IN | F_LOWER | F_UPPER | F_STEP | F_LOWERING, 0.0f, 100.0f, 0.0f, 0.25, NULL }, \
+            { "vl", "Sample velocity max",  U_PERCENT, R_CONTROL, F_LOWER | F_UPPER | F_STEP | F_LOWERING, 0.0f, 100.0f, 0.0f, 0.25, NULL }, \
             CONTROL("pd", "Sample pre-delay", U_MSEC, trigger_metadata::PREDELAY), \
-            { "on", "Sample enabled", U_BOOL, R_CONTROL, F_IN, 0, 0, 1.0f, 0, NULL }, \
+            SWITCH("on", "Sample enabled", 1.0f), \
             TRIGGER("ls", "Sample listen"), \
             SWITCH("rs", "Sample reverse", 0.0f), \
             gain, \
             BLINK("ac", "Sample activity"), \
             BLINK("no", "Sample note on event"), \
-            { "fl", "Sample length", U_MSEC, R_METER, F_OUT | F_LOWER | F_UPPER | F_STEP, \
+            { "fl", "Sample length", U_MSEC, R_METER, F_LOWER | F_UPPER | F_STEP, \
                     trigger_metadata::SAMPLE_LENGTH_MIN, trigger_metadata::SAMPLE_LENGTH_MAX, 0, trigger_metadata::SAMPLE_LENGTH_STEP, NULL }, \
             STATUS("fs", "Sample load status"), \
             MESH("fd", "Sample file contents", trigger_metadata::TRACKS_MAX, trigger_metadata::MESH_SIZE)
@@ -166,7 +166,7 @@ namespace lsp
             COMBO("chan", "Channel", trigger_metadata::MIDI_CHANNEL_DFL, midi_channels), \
             COMBO("note", "Note", trigger_metadata::MIDI_NOTE_DFL, notes), \
             COMBO("oct", "Octave", trigger_metadata::MIDI_OCTAVE_DFL, octaves), \
-            { "mn", "MIDI Note #", U_NONE, R_METER, F_OUT | F_LOWER | F_UPPER | F_INT, 0, 127, 0, 0, NULL }
+            { "mn", "MIDI Note #", U_NONE, R_METER, F_LOWER | F_UPPER | F_INT, 0, 127, 0, 0, NULL }
 
         static const port_t sample_file_mono_ports[] =
         {

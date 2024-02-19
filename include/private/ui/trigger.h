@@ -25,8 +25,6 @@
 #include <lsp-plug.in/plug-fw/ui.h>
 #include <lsp-plug.in/fmt/Hydrogen.h>
 
-#include <private/ui/sfz.h>
-
 namespace lsp
 {
     namespace plugui

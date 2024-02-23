@@ -116,14 +116,14 @@ namespace lsp
             MESH("fd", "Sample file contents", trigger_metadata::TRACKS_MAX, trigger_metadata::MESH_SIZE)
 
         #define T_METERS_MONO                   \
-            MESH("isg", "Input signal graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
+            MESH("isg", "Input signal graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             METER_GAIN20("ism", "Input signal meter"), \
             SWITCH("isv", "Input signal display", 1.0f)
 
         #define T_METERS_STEREO                 \
             COMBO("ssrc", "Signal source", 0, trigger_sources), \
-            MESH("isgl", "Input signal graph left", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
-            MESH("isgr", "Input signal graph right", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
+            MESH("isgl", "Input signal graph left", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
+            MESH("isgr", "Input signal graph right", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             METER_GAIN20("isml", "Input signal meter left"), \
             METER_GAIN20("ismr", "Input signal meter right"), \
             SWITCH("isvl", "Input signal left display", 1.0f), \
@@ -156,7 +156,7 @@ namespace lsp
             METER_GAIN20("tfm", "Trigger function meter"), \
             SWITCH("tfv", "Trigger function display", 1.0f), \
             BLINK("tla", "Trigger activity"), \
-            MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
+            MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             METER_GAIN20("tlm", "Trigger level meter"), \
             SWITCH("tlv", "Trigger level display", 1.0f), \
             TRIGGER("lstn", "Trigger listen"), \

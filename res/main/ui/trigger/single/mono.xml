@@ -43,8 +43,8 @@
 						</ui:with>
 
 						<!-- Meshes -->
-						<mesh id="isg" width="2" color="mono" visibility=":isv"/>
-						<mesh id="tlg" width="2" color="graph_mesh" visibility=":tlv"/>
+						<mesh id="isg" width="0" color="mono" fcolor="mono" fcolor.a="0.8" fill="true" visibility=":isv"/>
+						<mesh id="tlg" width="2" color="graph_mesh" fcolor="graph_mesh" fcolor.a="0.8" fill="true" visibility=":tlv"/>
 						<mesh id="tfg" width="2" color="orange" visibility=":tfv"/>
 
 						<!-- Boundaries -->
@@ -76,8 +76,8 @@
 						<ui:with ox="1" oy="0">
 							<marker id="dtr1" color="blue"/>
 							<marker id="dtr2" color="blue"/>
-							<marker id="dl" color="threshold"/>
-							<marker id="rl" color="threshold"/>
+							<marker id="rl" width="2" pointer="vsize" color="release" lcolor="release" ox="1" oy="0" lborder="25" color.a="0.1" lcolor.a="0.8"/>
+							<marker id="dl" editable="true" width="3" pointer="vsize" color="threshold" hcolor="threshold" lcolor="threshold" hlcolor="threshold" ox="1" oy="0" lborder="50" hlborder="50" color.a="0.1" hcolor.a="0.0" lcolor.a="0.8" hlcolor.a="0.6"/>
 						</ui:with>
 					</graph>
 				</group>
@@ -119,19 +119,19 @@
 				</ui:with>
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="ism" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" activity=":isv" value.color="mono"/>
+					<ledchannel id="ism" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" value.color="mono"/>
 				</ledmeter>
 
 				<!-- Sidechain signal meter -->
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="tfm" min="-72 db" max="24 db" log="true" activity=":tfv" value.color="sidechain"/>
+					<ledchannel id="tfm" min="-72 db" max="24 db" log="true" value.color="sidechain"/>
 				</ledmeter>
 
 				<!-- Trigger signal meter -->
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="tlm" min="-72 db" max="24 db" log="true" activity=":tlv" value.color="graph_mesh"/>
+					<ledchannel id="tlm" min="-72 db" max="24 db" log="true" value.color="graph_mesh"/>
 				</ledmeter>
 			</grid>
 		</hbox>
@@ -354,7 +354,7 @@
 							<ui:with padding="6">
 								<cell cols="2"><label text="labels.release"/></cell>
 								<label text="labels.thresh_old"/>
-								<knob id="rrl" scolor="threshold" size="20"/>
+								<knob id="rrl" scolor="release" size="20"/>
 								<value id="rrl" width.min="31"/>
 								<label text="labels.time"/>
 								<knob id="rt" size="20"/>

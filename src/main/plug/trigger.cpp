@@ -746,10 +746,20 @@ namespace lsp
                     plug::mesh_t *mesh  = c->pGraph->buffer<plug::mesh_t>();
                     if ((mesh != NULL) && (mesh->isEmpty()))
                     {
+                        float *x = mesh->pvData[0];
+                        float *y = mesh->pvData[1];
+
                         // Fill mesh with new values
-                        dsp::copy(mesh->pvData[0], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(mesh->pvData[1], c->sGraph.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&x[1], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&y[1], c->sGraph.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+
+                        x[0] = x[1];
+                        y[0] = 0.0f;
+
+                        x[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = x[meta::trigger_metadata::HISTORY_MESH_SIZE];
+                        y[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = 0.0f;
+
+                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE + 2);
                     }
                 }
 
@@ -781,9 +791,19 @@ namespace lsp
                     plug::mesh_t *mesh = pVelocity->buffer<plug::mesh_t>();
                     if ((mesh != NULL) && (mesh->isEmpty()))
                     {
-                        dsp::copy(mesh->pvData[0], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(mesh->pvData[1], sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        float *x = mesh->pvData[0];
+                        float *y = mesh->pvData[1];
+
+                        dsp::copy(&x[1], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&y[1], sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+
+                        x[0] = x[1];
+                        y[0] = 0.0f;
+
+                        x[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = x[meta::trigger_metadata::HISTORY_MESH_SIZE];
+                        y[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = 0.0f;
+
+                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE +2);
                     }
                 }
 

@@ -56,8 +56,8 @@ namespace lsp
         {
             { "Peak",       "sidechain.peak"           },
             { "RMS",        "sidechain.rms"            },
-            { "Low-Pass",   "sidechain.lowpass"        },
-            { "Uniform",    "sidechain.uniform"        },
+            { "LPf",        "sidechain.lpf"            },
+            { "SMA",        "sidechain.sma"            },
             { NULL, NULL }
         };
 
@@ -134,6 +134,7 @@ namespace lsp
             BYPASS,                 \
             DRY_GAIN(1.0f),         \
             WET_GAIN(1.0f),         \
+            PERCENTS("drywet", "Dry/Wet balance", 100.0f, 0.1f), \
             OUT_GAIN, \
             COMBO("mode", "Detection mode", trigger_metadata::MODE_DFL, trigger_modes), \
             SWITCH("pause", "Pause graph analysis", 0.0f), \

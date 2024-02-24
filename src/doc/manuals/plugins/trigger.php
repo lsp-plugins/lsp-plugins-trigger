@@ -34,8 +34,8 @@ There are up to eight samples available to play for different note velocities.</
 	<ul>
 		<li><b>Peak</b> - peak mode</li>
 		<li><b>RMS</b> - root mean square of the input signal</li>
-		<li><b>Low-pass</b> - input signal processed by low-pass filter</li>
-		<li><b>Uniform</b> - input signal processed by uniform filter</li>
+		<li><b>LPF</b> - input signal processed by one pole low-pass filter</li>
+		<li><b>SMA</b> - input signal processed by SMA (Simple Moving Average) filter</li>
 	</ul>
 	<?php if ($stereo) { ?>
 	<li><b>Source</b> - part of the input signal to use for sidechain processing:</li>
@@ -86,5 +86,6 @@ There are up to eight samples available to play for different note velocities.</
 <ul>
 	<li><b>Dry</b> - the gain of the input signal passed to the audio inputs of the plugin.</li>
 	<li><b>Wet</b> - the gain of the processed signal.</li>
+	<li><b>Dry/Wet</b> - the knob that controls the balance between the mixed dry and wet signal (see <b>Dry</b> and <b>Wet</b>) and the dry (unprocessed) signal.</li>
 	<li><b>Output gain</b> - the overall output gain of the plugin.</li>
 </ul>

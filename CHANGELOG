@@ -3,6 +3,7 @@
 *******************************************************************************
 
 === 1.0.19 ===
+* Added Dry/Wet balance control.
 * Added MIDI codes display for velocity.
 * Updated build scripts and dependencies.
 

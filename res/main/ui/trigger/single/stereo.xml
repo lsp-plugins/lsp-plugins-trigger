@@ -400,18 +400,21 @@
 			</group>
 
 			<group text="groups.audio_channel" ipadding="0">
-				<grid rows="3" cols="3">
+				<grid rows="3" cols="4">
 					<ui:with padding="6">
 						<label text="labels.signal.dry"/>
 						<label text="labels.signal.wet"/>
+						<label text="labels.signal.drywet"/>
 						<label text="labels.output"/>
 
 						<knob id="dry" scolor="dry"/>
 						<knob id="wet" scolor="wet"/>
+						<knob id="drywet" scolor="drywet"/>
 						<knob id="g_out"/>
 
 						<value id="dry"/>
 						<value id="wet"/>
+						<value id="drywet"/>
 						<value id="g_out"/>
 					</ui:with>
 				</grid>

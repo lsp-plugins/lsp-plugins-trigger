@@ -27,7 +27,7 @@
 #include <lsp-plug.in/dsp-units/misc/fade.h>
 #include <lsp-plug.in/dsp/dsp.h>
 
-#define TRACE_PORT(p) lsp_trace("  port id=%s", (p)->metadata()->id);
+#include <lsp-plug.in/shared/debug.h>
 
 namespace lsp
 {
@@ -167,12 +167,9 @@ namespace lsp
             );
 
             // Allocate files
-            vFiles                      = reinterpret_cast<afile_t *>(ptr);
-            ptr                        += afile_szof;
-            vActive                     = reinterpret_cast<afile_t **>(ptr);
-            ptr                        += vactive_szof;
-            vBuffer                     = reinterpret_cast<float *>(ptr);
-            ptr                        += vbuffer_szof;
+            vFiles                      = advance_ptr_bytes<afile_t>(ptr, afile_szof);
+            vActive                     = advance_ptr_bytes<afile_t *>(ptr, vactive_szof);
+            vBuffer                     = advance_ptr_bytes<float>(ptr, vbuffer_szof);
 
             for (size_t i=0; i<files; ++i)
             {
@@ -279,21 +276,16 @@ namespace lsp
         size_t trigger_kernel::bind(plug::IPort **ports, size_t port_id, bool dynamics)
         {
             lsp_trace("Binding listen toggle...");
-            TRACE_PORT(ports[port_id]);
-            pListen             = ports[port_id++];
+            BIND_PORT(pListen);
 
             if (dynamics)
             {
                 lsp_trace("Binding dynamics and drifting...");
-                TRACE_PORT(ports[port_id]);
-                pDynamics           = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                pDrift              = ports[port_id++];
+                BIND_PORT(pDynamics);
+                BIND_PORT(pDrift);
             }
 
-            lsp_trace("Skipping sample selector port...");
-            TRACE_PORT(ports[port_id]);
-            port_id++;
+            SKIP_PORT("Sample selector");
 
             // Iterate each file
             for (size_t i=0; i<nFiles; ++i)
@@ -302,47 +294,27 @@ namespace lsp
 
                 afile_t *af             = &vFiles[i];
                 // Allocate files
-                TRACE_PORT(ports[port_id]);
-                af->pFile               = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pPitch              = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pHeadCut            = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pTailCut            = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pFadeIn             = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pFadeOut            = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pMakeup             = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pVelocity           = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pPreDelay           = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pOn                 = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pListen             = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pReverse            = ports[port_id++];
+                BIND_PORT(af->pFile);
+                BIND_PORT(af->pPitch);
+                BIND_PORT(af->pHeadCut);
+                BIND_PORT(af->pTailCut);
+                BIND_PORT(af->pFadeIn);
+                BIND_PORT(af->pFadeOut);
+                BIND_PORT(af->pMakeup);
+                BIND_PORT(af->pVelocity);
+                BIND_PORT(af->pPreDelay);
+                BIND_PORT(af->pOn);
+                BIND_PORT(af->pListen);
+                BIND_PORT(af->pReverse);
 
                 for (size_t j=0; j<nChannels; ++j)
-                {
-                    TRACE_PORT(ports[port_id]);
-                    af->pGains[j]           = ports[port_id++];
-                }
+                    BIND_PORT(af->pGains[j]);
 
-                TRACE_PORT(ports[port_id]);
-                af->pActive             = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pNoteOn             = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pLength             = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pStatus             = ports[port_id++];
-                TRACE_PORT(ports[port_id]);
-                af->pMesh               = ports[port_id++];
+                BIND_PORT(af->pActive);
+                BIND_PORT(af->pNoteOn);
+                BIND_PORT(af->pLength);
+                BIND_PORT(af->pStatus);
+                BIND_PORT(af->pMesh);
             }
 
             // Initialize randomizer
@@ -356,7 +328,6 @@ namespace lsp
         void trigger_kernel::bind_activity(plug::IPort *activity)
         {
             lsp_trace("Binding activity...");
-            TRACE_PORT(activity);
             pActivity       = activity;
         }
 

@@ -600,12 +600,10 @@ namespace lsp
 
         void trigger::trigger_on(size_t timestamp, float level)
         {
-            lsp_trace("midi_out = %p", pMidiOut);
             if (pMidiOut != NULL)
             {
                 // We need to emit the NoteOn event
                 plug::midi_t *midi  = pMidiOut->buffer<plug::midi_t>();
-                lsp_trace("midi buffer = %p", midi);
                 if (midi != NULL)
                 {
                     // Create event

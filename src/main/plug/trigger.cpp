@@ -794,16 +794,23 @@ namespace lsp
                         float *x = mesh->pvData[0];
                         float *y = mesh->pvData[1];
 
-                        dsp::copy(&x[1], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(&y[1], sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&x[2], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&y[2], sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
 
-                        x[0] = x[1];
+                        x[0] = x[2] + 0.5f;
+                        x[1] = x[0];
                         y[0] = 0.0f;
+                        y[1] = y[2];
 
-                        x[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = x[meta::trigger_metadata::HISTORY_MESH_SIZE];
-                        y[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = 0.0f;
+                        x += meta::trigger_metadata::HISTORY_MESH_SIZE + 2;
+                        y += meta::trigger_metadata::HISTORY_MESH_SIZE + 2;
 
-                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE +2);
+                        x[0] = x[-1] - 0.5f;
+                        y[0] = y[-1];
+                        x[1] = x[0];
+                        y[1] = 0.0f;
+
+                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE + 4);
                     }
                 }
 

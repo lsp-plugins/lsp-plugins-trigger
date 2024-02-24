@@ -156,7 +156,7 @@ namespace lsp
             METER_GAIN20("tfm", "Trigger function meter"), \
             SWITCH("tfv", "Trigger function display", 1.0f), \
             BLINK("tla", "Trigger activity"), \
-            MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
+            MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 4), \
             METER_GAIN20("tlm", "Trigger level meter"), \
             SWITCH("tlv", "Trigger level display", 1.0f), \
             TRIGGER("lstn", "Trigger listen"), \

@@ -385,7 +385,7 @@
 							<ui:with padding="6">
 								<cell cols="3"><label text="labels.dynamics"/></cell>
 								<label text="labels.spread"/>
-								<knob id="dyna" scolor="blue" size="20"/>
+								<knob id="dyna" scolor="blue" size="20" bg.color="red"/>
 								<value id="dyna" width.min="35"/>
 								<label text="labels.range_id" text:id="1"/>
 								<knob id="dtr1" scolor="blue" size="20"/>
@@ -400,11 +400,17 @@
 			</group>
 
 			<group text="groups.audio_channel" ipadding="0">
-				<grid rows="3" cols="4">
+				<grid rows="3" cols="6">
 					<ui:with padding="6">
 						<label text="labels.signal.dry"/>
 						<label text="labels.signal.wet"/>
-						<label text="labels.signal.drywet"/>
+					</ui:with>
+
+					<cell rows="3"><vsep pad.h="2" hreduce="true"/></cell>
+					<label text="labels.signal.drywet" padding="6"/>
+					<cell rows="3"><vsep pad.h="2" hreduce="true"/></cell>
+
+					<ui:with padding="6">
 						<label text="labels.output"/>
 
 						<knob id="dry" scolor="dry"/>

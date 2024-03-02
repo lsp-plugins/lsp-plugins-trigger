@@ -78,7 +78,10 @@ namespace lsp
                 if (velocity == NULL)
                     return STATUS_NO_MEM;
                 if ((res = velocity->init("midivel", port)) != STATUS_OK)
+                {
+                    delete velocity;
                     return res;
+                }
                 if ((res = pWrapper->bind_custom_port(velocity)) != STATUS_OK)
                 {
                     delete velocity;
@@ -88,5 +91,5 @@ namespace lsp
 
             return STATUS_OK;
         }
-    } // namespace plugui
-} // namespace lsp
+    } /* namespace plugui */
+} /* namespace lsp */

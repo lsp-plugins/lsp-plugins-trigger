@@ -385,7 +385,7 @@
 							<ui:with padding="6">
 								<cell cols="3"><label text="labels.dynamics"/></cell>
 								<label text="labels.spread"/>
-								<knob id="dyna" scolor="blue" size="20" bg.color="red"/>
+								<knob id="dyna" scolor="blue" size="20"/>
 								<value id="dyna" width.min="35"/>
 								<label text="labels.range_id" text:id="1"/>
 								<knob id="dtr1" scolor="blue" size="20"/>

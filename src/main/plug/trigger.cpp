@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2023 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2023 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -20,23 +20,19 @@
  */
 
 #include <private/plugins/trigger.h>
+#include <lsp-plug.in/common/alloc.h>
 #include <lsp-plug.in/common/debug.h>
 #include <lsp-plug.in/dsp/dsp.h>
 #include <lsp-plug.in/dsp-units/units.h>
 #include <lsp-plug.in/stdlib/math.h>
 
+#include <lsp-plug.in/shared/debug.h>
 #include <lsp-plug.in/shared/id_colors.h>
 
 namespace lsp
 {
     namespace plugins
     {
-        static plug::IPort *TRACE_PORT(plug::IPort *p)
-        {
-            lsp_trace("  port id=%s", (p)->metadata()->id);
-            return p;
-        }
-
         //-------------------------------------------------------------------------
         // Plugin factory
         typedef struct plugin_settings_t
@@ -146,6 +142,7 @@ namespace lsp
             pBypass             = NULL;
             pDry                = NULL;
             pWet                = NULL;
+            pDryWet             = NULL;
             pGain               = NULL;
             pPause              = NULL;
             pClear              = NULL;
@@ -249,10 +246,8 @@ namespace lsp
                 return;
             dsp::fill_zero(ctlbuf, allocate);
 
-            vTimePoints         = ctlbuf;
-            ctlbuf             += meta::trigger_metadata::HISTORY_MESH_SIZE;
-            vTmp                = ctlbuf;
-            ctlbuf             += meta::trigger_metadata::BUFFER_SIZE;
+            vTimePoints         = advance_ptr<float>(ctlbuf, meta::trigger_metadata::HISTORY_MESH_SIZE);
+            vTmp                = advance_ptr<float>(ctlbuf, meta::trigger_metadata::BUFFER_SIZE);
 
             // Fill time dots with values
             float step          = meta::trigger_metadata::HISTORY_TIME / meta::trigger_metadata::HISTORY_MESH_SIZE;
@@ -269,84 +264,80 @@ namespace lsp
             lsp_trace("Binding audio inputs...");
             for (size_t i=0; i<nChannels; ++i)
             {
-                vChannels[i].pIn        = TRACE_PORT(ports[port_id++]);
-                vChannels[i].vCtl       = ctlbuf;
-                ctlbuf                 += meta::trigger_metadata::BUFFER_SIZE;
+                BIND_PORT(vChannels[i].pIn);
+                vChannels[i].vCtl       = advance_ptr<float>(ctlbuf, meta::trigger_metadata::BUFFER_SIZE);
             }
 
             // Bind audio outputs
             lsp_trace("Binding audio outputs...");
             for (size_t i=0; i<nChannels; ++i)
-                vChannels[i].pOut       = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(vChannels[i].pOut);
 
             // Bind meters
             if (nChannels > 1)
-            {
-                lsp_trace("Binding source switch port...");
-                pSource             = TRACE_PORT(ports[port_id++]);
-            }
+                BIND_PORT(pSource);
 
             lsp_trace("Binding audio meters...");
             for (size_t i=0; i<nChannels; ++i)
-                vChannels[i].pGraph     = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(vChannels[i].pGraph);
 
             for (size_t i=0; i<nChannels; ++i)
-                vChannels[i].pMeter     = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(vChannels[i].pMeter);
 
             for (size_t i=0; i<nChannels; ++i)
-                vChannels[i].pVisible   = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(vChannels[i].pVisible);
 
             // Bind MIDI ports
             if (bMidiPorts)
             {
                 lsp_trace("Binding MIDI ports...");
-                pMidiIn     = TRACE_PORT(ports[port_id++]);
-                pMidiOut    = TRACE_PORT(ports[port_id++]);
-                pChannel    = TRACE_PORT(ports[port_id++]);
-                pNote       = TRACE_PORT(ports[port_id++]);
-                pOctave     = TRACE_PORT(ports[port_id++]);
-                pMidiNote   = TRACE_PORT(ports[port_id++]);
+                BIND_PORT(pMidiIn);
+                BIND_PORT(pMidiOut);
+                BIND_PORT(pChannel);
+                BIND_PORT(pNote);
+                BIND_PORT(pOctave);
+                BIND_PORT(pMidiNote);
             }
 
             // Skip area selector
-            lsp_trace("Skipping Area selector...");
-            TRACE_PORT(ports[port_id++]); // Skip area selector
+            SKIP_PORT("Area selector"); // Skip area selector
 
             // Bind ports
             lsp_trace("Binding Global ports...");
-            pBypass     = TRACE_PORT(ports[port_id++]);
-            pDry        = TRACE_PORT(ports[port_id++]);
-            pWet        = TRACE_PORT(ports[port_id++]);
-            pGain       = TRACE_PORT(ports[port_id++]);
+            BIND_PORT(pBypass);
+            BIND_PORT(pDry);
+            BIND_PORT(pWet);
+            BIND_PORT(pDryWet);
+            BIND_PORT(pGain);
 
             lsp_trace("Binding mode port...");
-            pMode               = TRACE_PORT(ports[port_id++]);
-            pPause              = TRACE_PORT(ports[port_id++]);
-            pClear              = TRACE_PORT(ports[port_id++]);
-            pPreamp             = TRACE_PORT(ports[port_id++]);
-            pScHpfMode          = TRACE_PORT(ports[port_id++]);
-            pScHpfFreq          = TRACE_PORT(ports[port_id++]);
-            pScLpfMode          = TRACE_PORT(ports[port_id++]);
-            pScLpfFreq          = TRACE_PORT(ports[port_id++]);
+            BIND_PORT(pMode);
+            BIND_PORT(pPause);
+            BIND_PORT(pClear);
+            BIND_PORT(pPreamp);
+            BIND_PORT(pScHpfMode);
+            BIND_PORT(pScHpfFreq);
+            BIND_PORT(pScLpfMode);
+            BIND_PORT(pScLpfFreq);
 
-            pDetectLevel        = TRACE_PORT(ports[port_id++]);
-            pDetectTime         = TRACE_PORT(ports[port_id++]);
-            pReleaseLevel       = TRACE_PORT(ports[port_id++]);
-            pReleaseTime        = TRACE_PORT(ports[port_id++]);
-            pDynamics           = TRACE_PORT(ports[port_id++]);
-            pDynaRange1         = TRACE_PORT(ports[port_id++]);
-            pDynaRange2         = TRACE_PORT(ports[port_id++]);
-            pReactivity         = TRACE_PORT(ports[port_id++]);
-            pReleaseValue       = TRACE_PORT(ports[port_id++]);
+            BIND_PORT(pDetectLevel);
+            BIND_PORT(pDetectTime);
+            BIND_PORT(pReleaseLevel);
+            BIND_PORT(pReleaseTime);
+            BIND_PORT(pDynamics);
+            BIND_PORT(pDynaRange1);
+            BIND_PORT(pDynaRange2);
+            BIND_PORT(pReactivity);
+            BIND_PORT(pReleaseValue);
 
             lsp_trace("Binding meters...");
-            pFunction           = TRACE_PORT(ports[port_id++]);
-            pFunctionLevel      = TRACE_PORT(ports[port_id++]);
-            pFunctionActive     = TRACE_PORT(ports[port_id++]);
-            pActive             = TRACE_PORT(ports[port_id++]);
-            pVelocity           = TRACE_PORT(ports[port_id++]);
-            pVelocityLevel      = TRACE_PORT(ports[port_id++]);
-            pVelocityActive     = TRACE_PORT(ports[port_id++]);
+            BIND_PORT(pFunction);
+            BIND_PORT(pFunctionLevel);
+            BIND_PORT(pFunctionActive);
+            BIND_PORT(pActive);
+            BIND_PORT(pVelocity);
+            BIND_PORT(pVelocityLevel);
+            BIND_PORT(pVelocityActive);
 
             // Bind kernel
             lsp_trace("Binding kernel ports...");
@@ -524,9 +515,14 @@ namespace lsp
             fDynaTop        = pDynaRange1->value();
             fDynaBottom     = pDynaRange2->value();
 
+
             float out_gain  = pGain->value();
-            fDry            = pDry->value() * out_gain;
-            fWet            = pWet->value() * out_gain;
+            float drywet    = pDryWet->value() * 0.01f;
+            float dry_gain  = pDry->value();
+            float wet_gain  = pWet->value();
+            fDry            = (dry_gain * drywet + 1.0f - drywet) * out_gain;
+            fWet            = wet_gain * drywet * out_gain;
+
             bFunctionActive = pFunctionActive->value() >= 0.5f;
             bVelocityActive = pVelocityActive->value() >= 0.5f;
 
@@ -600,12 +596,10 @@ namespace lsp
 
         void trigger::trigger_on(size_t timestamp, float level)
         {
-            lsp_trace("midi_out = %p", pMidiOut);
             if (pMidiOut != NULL)
             {
                 // We need to emit the NoteOn event
                 plug::midi_t *midi  = pMidiOut->buffer<plug::midi_t>();
-                lsp_trace("midi buffer = %p", midi);
                 if (midi != NULL)
                 {
                     // Create event
@@ -682,7 +676,7 @@ namespace lsp
                 // Update meter
                 if ((ins[i] != NULL) && (c->pMeter != NULL))
                 {
-                    float level = (c->bVisible) ? dsp::abs_max(ins[i], samples) * preamp : 0.0f;
+                    float level         = dsp::abs_max(ins[i], samples) * preamp;
                     c->pMeter->set_value(level);
                 }
             }
@@ -746,10 +740,20 @@ namespace lsp
                     plug::mesh_t *mesh  = c->pGraph->buffer<plug::mesh_t>();
                     if ((mesh != NULL) && (mesh->isEmpty()))
                     {
+                        float *x = mesh->pvData[0];
+                        float *y = mesh->pvData[1];
+
                         // Fill mesh with new values
-                        dsp::copy(mesh->pvData[0], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(mesh->pvData[1], c->sGraph.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&x[1], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&y[1], c->sGraph.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+
+                        x[0] = x[1];
+                        y[0] = 0.0f;
+
+                        x[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = x[meta::trigger_metadata::HISTORY_MESH_SIZE];
+                        y[meta::trigger_metadata::HISTORY_MESH_SIZE + 1] = 0.0f;
+
+                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE + 2);
                     }
                 }
 
@@ -781,9 +785,26 @@ namespace lsp
                     plug::mesh_t *mesh = pVelocity->buffer<plug::mesh_t>();
                     if ((mesh != NULL) && (mesh->isEmpty()))
                     {
-                        dsp::copy(mesh->pvData[0], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(mesh->pvData[1], sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        float *x = mesh->pvData[0];
+                        float *y = mesh->pvData[1];
+
+                        dsp::copy(&x[2], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        dsp::copy(&y[2], sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+
+                        x[0] = x[2] + 0.5f;
+                        x[1] = x[0];
+                        y[0] = 0.0f;
+                        y[1] = y[2];
+
+                        x += meta::trigger_metadata::HISTORY_MESH_SIZE + 2;
+                        y += meta::trigger_metadata::HISTORY_MESH_SIZE + 2;
+
+                        x[0] = x[-1] - 0.5f;
+                        y[0] = y[-1];
+                        x[1] = x[0];
+                        y[1] = 0.0f;
+
+                        mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE + 4);
                     }
                 }
 

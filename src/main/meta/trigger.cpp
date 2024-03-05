@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_TRIGGER_VERSION_MAJOR                   1
 #define LSP_PLUGINS_TRIGGER_VERSION_MINOR                   0
-#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   18
+#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   19
 
 #define LSP_PLUGINS_TRIGGER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -56,8 +56,8 @@ namespace lsp
         {
             { "Peak",       "sidechain.peak"           },
             { "RMS",        "sidechain.rms"            },
-            { "Low-Pass",   "sidechain.lowpass"        },
-            { "Uniform",    "sidechain.uniform"        },
+            { "LPf",        "sidechain.lpf"            },
+            { "SMA",        "sidechain.sma"            },
             { NULL, NULL }
         };
 
@@ -102,28 +102,28 @@ namespace lsp
             CONTROL("fi", "Sample fade in", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             CONTROL("fo", "Sample fade out", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             AMP_GAIN10("mk", "Sample makeup gain", 1.0f), \
-            { "vl", "Sample velocity max",  U_PERCENT, R_CONTROL, F_IN | F_LOWER | F_UPPER | F_STEP | F_LOWERING, 0.0f, 100.0f, 0.0f, 0.25, NULL }, \
+            { "vl", "Sample velocity max",  U_PERCENT, R_CONTROL, F_LOWER | F_UPPER | F_STEP | F_LOWERING, 0.0f, 100.0f, 0.0f, 0.25, NULL }, \
             CONTROL("pd", "Sample pre-delay", U_MSEC, trigger_metadata::PREDELAY), \
-            { "on", "Sample enabled", U_BOOL, R_CONTROL, F_IN, 0, 0, 1.0f, 0, NULL }, \
+            SWITCH("on", "Sample enabled", 1.0f), \
             TRIGGER("ls", "Sample listen"), \
             SWITCH("rs", "Sample reverse", 0.0f), \
             gain, \
             BLINK("ac", "Sample activity"), \
             BLINK("no", "Sample note on event"), \
-            { "fl", "Sample length", U_MSEC, R_METER, F_OUT | F_LOWER | F_UPPER | F_STEP, \
+            { "fl", "Sample length", U_MSEC, R_METER, F_LOWER | F_UPPER | F_STEP, \
                     trigger_metadata::SAMPLE_LENGTH_MIN, trigger_metadata::SAMPLE_LENGTH_MAX, 0, trigger_metadata::SAMPLE_LENGTH_STEP, NULL }, \
             STATUS("fs", "Sample load status"), \
             MESH("fd", "Sample file contents", trigger_metadata::TRACKS_MAX, trigger_metadata::MESH_SIZE)
 
         #define T_METERS_MONO                   \
-            MESH("isg", "Input signal graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
+            MESH("isg", "Input signal graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             METER_GAIN20("ism", "Input signal meter"), \
             SWITCH("isv", "Input signal display", 1.0f)
 
         #define T_METERS_STEREO                 \
             COMBO("ssrc", "Signal source", 0, trigger_sources), \
-            MESH("isgl", "Input signal graph left", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
-            MESH("isgr", "Input signal graph right", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
+            MESH("isgl", "Input signal graph left", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
+            MESH("isgr", "Input signal graph right", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             METER_GAIN20("isml", "Input signal meter left"), \
             METER_GAIN20("ismr", "Input signal meter right"), \
             SWITCH("isvl", "Input signal left display", 1.0f), \
@@ -134,6 +134,7 @@ namespace lsp
             BYPASS,                 \
             DRY_GAIN(1.0f),         \
             WET_GAIN(1.0f),         \
+            PERCENTS("drywet", "Dry/Wet balance", 100.0f, 0.1f), \
             OUT_GAIN, \
             COMBO("mode", "Detection mode", trigger_metadata::MODE_DFL, trigger_modes), \
             SWITCH("pause", "Pause graph analysis", 0.0f), \
@@ -156,7 +157,7 @@ namespace lsp
             METER_GAIN20("tfm", "Trigger function meter"), \
             SWITCH("tfv", "Trigger function display", 1.0f), \
             BLINK("tla", "Trigger activity"), \
-            MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
+            MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 4), \
             METER_GAIN20("tlm", "Trigger level meter"), \
             SWITCH("tlv", "Trigger level display", 1.0f), \
             TRIGGER("lstn", "Trigger listen"), \
@@ -166,7 +167,7 @@ namespace lsp
             COMBO("chan", "Channel", trigger_metadata::MIDI_CHANNEL_DFL, midi_channels), \
             COMBO("note", "Note", trigger_metadata::MIDI_NOTE_DFL, notes), \
             COMBO("oct", "Octave", trigger_metadata::MIDI_OCTAVE_DFL, octaves), \
-            { "mn", "MIDI Note #", U_NONE, R_METER, F_OUT | F_LOWER | F_UPPER | F_INT, 0, 127, 0, 0, NULL }
+            { "mn", "MIDI Note #", U_NONE, R_METER, F_LOWER | F_UPPER | F_INT, 0, 127, 0, 0, NULL }
 
         static const port_t sample_file_mono_ports[] =
         {
@@ -246,6 +247,8 @@ namespace lsp
             LSP_LV2_URI("trigger_mono"),
             LSP_LV2UI_URI("trigger_mono"),
             "zghv",
+            LSP_VST3_UID("ts1m    zghv"),
+            LSP_VST3UI_UID("ts1m    zghv"),
             0,
             NULL,
             LSP_CLAP_URI("trigger_mono"),
@@ -271,6 +274,8 @@ namespace lsp
             LSP_LV2_URI("trigger_stereo"),
             LSP_LV2UI_URI("trigger_stereo"),
             "zika",
+            LSP_VST3_UID("ts1s    zika"),
+            LSP_VST3UI_UID("ts1s    zika"),
             0,
             NULL,
             LSP_CLAP_URI("trigger_stereo"),
@@ -296,6 +301,8 @@ namespace lsp
             LSP_LV2_URI("trigger_midi_mono"),
             LSP_LV2UI_URI("trigger_midi_mono"),
             "t4yz",
+            LSP_VST3_UID("tsm1m   t4yz"),
+            LSP_VST3UI_UID("tsm1m   t4yz"),
             0,
             NULL,
             LSP_CLAP_URI("trigger_midi_mono"),
@@ -321,6 +328,8 @@ namespace lsp
             LSP_LV2_URI("trigger_midi_stereo"),
             LSP_LV2UI_URI("trigger_midi_stereo"),
             "9cqf",
+            LSP_VST3_UID("tsm1s   9cqf"),
+            LSP_VST3UI_UID("tsm1s   9cqf"),
             0,
             NULL,
             LSP_CLAP_URI("trigger_midi_stereo"),

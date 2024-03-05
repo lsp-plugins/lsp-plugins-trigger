@@ -43,9 +43,9 @@
 						</ui:with>
 
 						<!-- Meshes -->
-						<mesh id="isgl" width="2" color="left" visibility=":isvl"/>
-						<mesh id="isgr" width="2" color="right" visibility=":isvr"/>
-						<mesh id="tlg" width="2" color="graph_mesh" visibility=":tlv"/>
+						<mesh id="isgl" width="0" color="left_in" fcolor="left_in" fcolor.a="0.8" fill="true" visibility=":isvl"/>
+						<mesh id="isgr" width="0" color="right_in" fcolor="right_in" fcolor.a="0.8" fill="true" visibility=":isvr"/>
+						<mesh id="tlg" width="2" color="graph_mesh" fcolor="graph_mesh" fcolor.a="0.8" fill="true" visibility=":tlv"/>
 						<mesh id="tfg" width="2" color="orange" visibility=":tfv"/>
 
 						<!-- Boundaries -->
@@ -77,8 +77,8 @@
 						<ui:with ox="1" oy="0">
 							<marker id="dtr1" color="blue"/>
 							<marker id="dtr2" color="blue"/>
-							<marker id="dl" color="threshold"/>
-							<marker id="rl" color="threshold"/>
+							<marker id="rl" width="2" pointer="vsize" color="release" lcolor="release" ox="1" oy="0" lborder="25" color.a="0.1" lcolor.a="0.8"/>
+							<marker id="dl" editable="true" width="3" pointer="vsize" color="threshold" hcolor="threshold" lcolor="threshold" hlcolor="threshold" ox="1" oy="0" lborder="50" hlborder="50" color.a="0.1" hcolor.a="0.0" lcolor.a="0.8" hlcolor.a="0.6"/>
 						</ui:with>
 					</graph>
 				</group>
@@ -123,20 +123,20 @@
 				</ui:with>
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="isml" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" activity=":isvl" value.color="left"/>
-					<ledchannel id="ismr" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" activity=":isvr" value.color="right"/>
+					<ledchannel id="isml" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" value.color="left"/>
+					<ledchannel id="ismr" min="-72 db" max="24 db" log="true" type="rms_peak" peak.visibility="true" value.color="right"/>
 				</ledmeter>
 
 				<!-- Sidechain signal meter -->
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="tfm" min="-72 db" max="24 db" log="true" activity=":tfv" value.color="sidechain"/>
+					<ledchannel id="tfm" min="-72 db" max="24 db" log="true" value.color="sidechain"/>
 				</ledmeter>
 
 				<!-- Trigger signal meter -->
 
 				<ledmeter vexpand="true" height.min="256" angle="1">
-					<ledchannel id="tlm" min="-72 db" max="24 db" log="true" activity=":tlv" value.color="graph_mesh"/>
+					<ledchannel id="tlm" min="-72 db" max="24 db" log="true" value.color="graph_mesh"/>
 				</ledmeter>
 
 			</grid>
@@ -172,59 +172,58 @@
 
 					<grid rows="3" cols="17" bg.color="bg" hspacing="2">
 						<ui:with width.min="50">
-						<label text="labels.sedit.reverse" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.pitch" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.head_cut" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.tail_cut" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.fade_in" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.fade_out" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.makeup" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.predelay" bg.color="bg_schema" padding="6"/>
-						<cell rows="3">
-							<vsep bg.color="bg"/>
-						</cell>
-						<label text="labels.sedit.listen" bg.color="bg_schema" padding="6"/>
+							<label text="labels.sedit.reverse" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.pitch" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.head_cut" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.tail_cut" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.fade_in" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.fade_out" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.makeup" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.predelay" bg.color="bg_schema" padding="6"/>
+							<cell rows="3">
+								<vsep bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.listen" bg.color="bg_schema" padding="6"/>
 
-						<cell rows="2">
-							<vbox bg.color="bg_schema">
-								<button id="rs[ssel]" size="32"/>
-								<label pad.b="6"/>
-								<label pad.b="6"/>
-							</vbox>
-						</cell>
+							<cell rows="2">
+								<vbox bg.color="bg_schema">
+									<button id="rs[ssel]" size="32"/>
+									<label pad.b="6"/>
+									<label pad.b="6"/>
+								</vbox>
+							</cell>
 						</ui:with>
 
-
 						<ui:with size="20" bg.color="bg_schema" pad="6" pad.t="0">
-						<knob id="pi[ssel]" />
-						<knob id="hc[ssel]" />
-						<knob id="tc[ssel]" />
-						<knob id="fi[ssel]" scolor="fade_in" />
-						<knob id="fo[ssel]" scolor="fade_out" />
-						<knob id="mk[ssel]" />
-						<knob id="pd[ssel]" />
-					  </ui:with>
+							<knob id="pi[ssel]"/>
+							<knob id="hc[ssel]"/>
+							<knob id="tc[ssel]"/>
+							<knob id="fi[ssel]" scolor="fade_in"/>
+							<knob id="fo[ssel]" scolor="fade_out"/>
+							<knob id="mk[ssel]"/>
+							<knob id="pd[ssel]"/>
+						</ui:with>
 						<cell rows="2">
 							<vbox bg.color="bg_schema">
 								<button id="ls[ssel]" size="32" ui:inject="Button_cyan" toggle="false"/>
@@ -250,7 +249,7 @@
 						<label text="labels.sedit.sample_num" fill="true" halign="0" padding="6"/>
 						<label text="labels.sedit.enabled" fill="true" halign="0"/>
 						<label text="labels.midi.velocity" fill="true" halign="0"/>
-						<label text="labels.units.:pc" fill="true" halign="0" pad.b="6"/>
+						<label text="labels.midi.code" fill="true" halign="0"/>
 						<label text="labels.signal.pan_left" fill="true" halign="0"/>
 						<label text="labels.units.:pc" fill="true" halign="0" pad.b="6"/>
 						<label text="labels.signal.pan_right" fill="true" halign="0"/>
@@ -266,7 +265,10 @@
 							<label text="${i}"/>
 							<button id="on_${i}" width="32" height="12" ui:inject="Button_yellow" led="true" padding="6"/>
 							<knob id="vl_${i}" size="20" scolor="velocity"/>
-							<value id="vl_${i}" detailed="false" pad.b="6"/>
+							<vbox vfill="false" pad.b="6">
+								<value id="midivel_${i}" detailed="false"/>
+								<value id="vl_${i}" detailed="true" sline="true"/>
+							</vbox>
 							<knob id="pl_${i}" size="20" balance="0.5" scolor="balance_l"/>
 							<value id="pl_${i}" detailed="false" pad.b="6"/>
 							<knob id="pr_${i}" size="20" balance="0.5" scolor="balance_r"/>
@@ -367,7 +369,7 @@
 							<ui:with padding="6">
 								<cell cols="2"><label text="labels.release"/></cell>
 								<label text="labels.thresh_old"/>
-								<knob id="rrl" scolor="threshold" size="20"/>
+								<knob id="rrl" scolor="release" size="20"/>
 								<value id="rrl" width.min="31"/>
 								<label text="labels.time"/>
 								<knob id="rt" size="20"/>
@@ -398,22 +400,31 @@
 			</group>
 
 			<group text="groups.audio_channel" ipadding="0">
-				<grid rows="3" cols="3">
+				<grid rows="3" cols="6">
 					<ui:with padding="6">
 						<label text="labels.signal.dry"/>
 						<label text="labels.signal.wet"/>
+					</ui:with>
+
+					<cell rows="3"><vsep pad.h="2" hreduce="true"/></cell>
+					<label text="labels.signal.drywet" padding="6"/>
+					<cell rows="3"><vsep pad.h="2" hreduce="true"/></cell>
+
+					<ui:with padding="6">
 						<label text="labels.output"/>
 
 						<knob id="dry" scolor="dry"/>
 						<knob id="wet" scolor="wet"/>
+						<knob id="drywet" scolor="drywet"/>
 						<knob id="g_out"/>
 
 						<value id="dry"/>
 						<value id="wet"/>
+						<value id="drywet"/>
 						<value id="g_out"/>
 					</ui:with>
 				</grid>
 			</group>
 		</hbox>
-		</vbox>
+	</vbox>
 </plugin>

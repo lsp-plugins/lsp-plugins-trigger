@@ -3,6 +3,7 @@
 *******************************************************************************
 
 === 1.0.22 ===
+* Fixed not working MIDI channel setup.
 * Updated build scripts and dependencies.
 
 === 1.0.21 ===

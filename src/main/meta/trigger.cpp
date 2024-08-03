@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_TRIGGER_VERSION_MAJOR                   1
 #define LSP_PLUGINS_TRIGGER_VERSION_MINOR                   0
-#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   21
+#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   22
 
 #define LSP_PLUGINS_TRIGGER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -244,14 +244,17 @@ namespace lsp
             "TS1M",
             &developers::v_sadovnikov,
             "trigger_mono",
-            LSP_LV2_URI("trigger_mono"),
-            LSP_LV2UI_URI("trigger_mono"),
-            "zghv",
-            LSP_VST3_UID("ts1m    zghv"),
-            LSP_VST3UI_UID("ts1m    zghv"),
-            0,
-            NULL,
-            LSP_CLAP_URI("trigger_mono"),
+            {
+                LSP_LV2_URI("trigger_mono"),
+                LSP_LV2UI_URI("trigger_mono"),
+                "zghv",
+                LSP_VST3_UID("ts1m    zghv"),
+                LSP_VST3UI_UID("ts1m    zghv"),
+                0,
+                NULL,
+                LSP_CLAP_URI("trigger_mono"),
+                LSP_GST_UID("trigger_mono"),
+            },
             LSP_PLUGINS_TRIGGER_VERSION,
             plugin_classes,
             clap_features_mono,
@@ -271,14 +274,17 @@ namespace lsp
             "TS1S",
             &developers::v_sadovnikov,
             "trigger_stereo",
-            LSP_LV2_URI("trigger_stereo"),
-            LSP_LV2UI_URI("trigger_stereo"),
-            "zika",
-            LSP_VST3_UID("ts1s    zika"),
-            LSP_VST3UI_UID("ts1s    zika"),
-            0,
-            NULL,
-            LSP_CLAP_URI("trigger_stereo"),
+            {
+                LSP_LV2_URI("trigger_stereo"),
+                LSP_LV2UI_URI("trigger_stereo"),
+                "zika",
+                LSP_VST3_UID("ts1s    zika"),
+                LSP_VST3UI_UID("ts1s    zika"),
+                0,
+                NULL,
+                LSP_CLAP_URI("trigger_stereo"),
+                LSP_GST_UID("trigger_stereo"),
+            },
             LSP_PLUGINS_TRIGGER_VERSION,
             plugin_classes,
             clap_features_stereo,
@@ -298,14 +304,17 @@ namespace lsp
             "TSM1M",
             &developers::v_sadovnikov,
             "trigger_midi_mono",
-            LSP_LV2_URI("trigger_midi_mono"),
-            LSP_LV2UI_URI("trigger_midi_mono"),
-            "t4yz",
-            LSP_VST3_UID("tsm1m   t4yz"),
-            LSP_VST3UI_UID("tsm1m   t4yz"),
-            0,
-            NULL,
-            LSP_CLAP_URI("trigger_midi_mono"),
+            {
+                LSP_LV2_URI("trigger_midi_mono"),
+                LSP_LV2UI_URI("trigger_midi_mono"),
+                "t4yz",
+                LSP_VST3_UID("tsm1m   t4yz"),
+                LSP_VST3UI_UID("tsm1m   t4yz"),
+                0,
+                NULL,
+                LSP_CLAP_URI("trigger_midi_mono"),
+                LSP_GST_UID("trigger_midi_mono"),
+            },
             LSP_PLUGINS_TRIGGER_VERSION,
             plugin_classes,
             clap_features_mono,
@@ -325,14 +334,17 @@ namespace lsp
             "TSM1S",
             &developers::v_sadovnikov,
             "trigger_midi_stereo",
-            LSP_LV2_URI("trigger_midi_stereo"),
-            LSP_LV2UI_URI("trigger_midi_stereo"),
-            "9cqf",
-            LSP_VST3_UID("tsm1s   9cqf"),
-            LSP_VST3UI_UID("tsm1s   9cqf"),
-            0,
-            NULL,
-            LSP_CLAP_URI("trigger_midi_stereo"),
+            {
+                LSP_LV2_URI("trigger_midi_stereo"),
+                LSP_LV2UI_URI("trigger_midi_stereo"),
+                "9cqf",
+                LSP_VST3_UID("tsm1s   9cqf"),
+                LSP_VST3UI_UID("tsm1s   9cqf"),
+                0,
+                NULL,
+                LSP_CLAP_URI("trigger_midi_stereo"),
+                LSP_GST_UID("trigger_midi_stereo"),
+            },
             LSP_PLUGINS_TRIGGER_VERSION,
             plugin_classes,
             clap_features_stereo,

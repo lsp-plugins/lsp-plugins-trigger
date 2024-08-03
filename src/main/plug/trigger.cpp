@@ -477,7 +477,8 @@ namespace lsp
             if (bMidiPorts)
             {
                 nNote       = (pOctave->value() * 12) + pNote->value();
-                lsp_trace("trigger note=%d", int(nNote));
+                nChannel    = pChannel->value();
+                lsp_trace("trigger note=%d, channel=%d", int(nNote), int(nChannel));
             }
 
             // Update sidechain settings

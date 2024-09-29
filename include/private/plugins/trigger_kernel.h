@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -93,7 +93,7 @@ namespace lsp
             protected:
                 struct afile_t
                 {
-                    size_t              nID;                                            // ID of sample
+                    uint32_t            nID;                                            // ID of sample
                     AFLoader           *pLoader;                                        // Audio file loader task
                     AFRenderer         *pRenderer;                                      // Audio file renderer task
                     dspu::Toggle        sListen;                                        // Listen toggle
@@ -102,8 +102,8 @@ namespace lsp
                     dspu::Sample       *pProcessed;                                     // Processed sample
                     float              *vThumbs[meta::trigger_metadata::TRACKS_MAX];    // List of thumbnails
 
-                    size_t              nUpdateReq;                                     // Update request
-                    size_t              nUpdateResp;                                    // Update response
+                    uint32_t            nUpdateReq;                                     // Update request
+                    uint32_t            nUpdateResp;                                    // Update response
                     bool                bSync;                                          // Sync flag
                     float               fVelocity;                                      // Velocity
                     float               fPitch;                                         // Pitch (st)

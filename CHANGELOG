@@ -3,6 +3,7 @@
 *******************************************************************************
 
 === 1.0.23 ===
+* Mono samples are now played as stereo samples with duplicated left channel.
 * Updated build scripts and dependencies.
 
 === 1.0.22 ===

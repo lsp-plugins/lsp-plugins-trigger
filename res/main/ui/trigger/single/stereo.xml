@@ -13,7 +13,7 @@
 			<vbox spacing="4" expand="true">
 				<!-- Trigger Graph -->
 				<group ui:inject="GraphGroup" ipadding="0" text="labels.graphs.trigger" expand="true">
-					<graph width.min="640" height.min="256" expand="true" fill="true">
+					<graph width.min="1008" height.min="330" expand="true" fill="true">
 						<origin hpos="1" vpos="-1" visible="false"/>
 						<!-- Gray grid -->
 						<ui:for id="t" first="0" last="4" step="1">
@@ -147,62 +147,92 @@
 			<cgroup id="ssel" expand="true" active="0">
 				<vbox>
 					<!-- File editor -->
-					<asample
-						expand="true"
-						id="sf[ssel]"
-						mesh_id="fd[ssel]"
-						path.id="_ui_dlg_sample_path"
-						ftype.id="_ui_dlg_sample_ftype"
-						hcut=":hc[ssel]"
-						tcut=":tc[ssel]"
-						fadein=":fi[ssel]"
-						fadeout=":fo[ssel]"
-						length=":fl[ssel]"
-						status=":fs[ssel]"
-						width.min="320"
-						height.min="160"
-						load.preview="true"
-						clipboard.pitch="pi[ssel]"
-						clipboard.head_cut="hc[ssel]"
-						clipboard.tail_cut="tc[ssel]"
-						clipboard.fade_in="fi[ssel]"
-						clipboard.fade_out="fo[ssel]"
-						clipboard.makeup="mk[ssel]"
-						clipboard.predelay="pd[ssel]"/>
+					<hbox width.min="650" height.min="256">
+						<asample
+							expand="true"
+							id="sf[ssel]"
+							mesh_id="fd[ssel]"
+							path.id="_ui_dlg_sample_path"
+							ftype.id="_ui_dlg_sample_ftype"
+							hcut=":hc[ssel]"
+							tcut=":tc[ssel]"
+							fadein=":fi[ssel]"
+							fadeout=":fo[ssel]"
+							length=":fl[ssel]"
+							status=":fs[ssel]"
+							width.min="320"
+							height.min="160"
+							load.preview="true"
+							clipboard.pitch="pi[ssel]"
+							clipboard.head_cut="hc[ssel]"
+							clipboard.tail_cut="tc[ssel]"
+							clipboard.fade_in="fi[ssel]"
+							clipboard.fade_out="fo[ssel]"
+							clipboard.makeup="mk[ssel]"
+							clipboard.predelay="pd[ssel]"/>
+
+						<!-- Sample list -->
+						<void bg.color="bg_graph" pad.h="2" hreduce="true" visibility="(:fs[ssel] ine 1)"/>
+
+						<vbox vexpand="true" visibility="(:fs[ssel] ine 1)">
+							<void bg.color="bg_graph" pad.v="2" vreduce="true"/>
+							<afolder id="sf[ssel]" expand="true" width.min="199"/>
+							<void bg.color="bg_graph" pad.v="2" vreduce="true"/>
+
+							<ui:with fill="true">
+								<hbox pad.h="6" pad.v="4" spacing="4" bg.color="bg_schema">
+									<ui:with height="22">
+										<anavigator id="sf[ssel]" text="icons.navigation_big.first_alt" action="first"/>
+										<anavigator id="sf[ssel]" text="icons.navigation_big.last_alt" action="last"/>
+										<void hexpand="true"/>
+										<anavigator id="sf[ssel]" text="icons.navigation_big.previous" action="previous"/>
+										<anavigator id="sf[ssel]" text="icons.navigation_big.next" action="next"/>
+										<void hexpand="true"/>
+
+										<anavigator id="sf[ssel]" text="icons.random.dice_fill" action="random"/>
+										<void hexpand="true"/>
+										<anavigator id="sf[ssel]" text="icons.actions.cancel_alt" action="clear"/>
+									</ui:with>
+								</hbox>
+							</ui:with>
+						</vbox>
+					</hbox>
+
+					<void bg.color="bg_graph" pad.v="2" vreduce="true"/>
 
 					<grid rows="3" cols="17" bg.color="bg" hspacing="2">
 						<ui:with width.min="50">
 							<label text="labels.sedit.reverse" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.pitch" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.head_cut" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.tail_cut" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.fade_in" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.fade_out" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.makeup" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.predelay" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
-								<vsep bg.color="bg"/>
+								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.listen" bg.color="bg_schema" padding="6"/>
 
@@ -257,12 +287,12 @@
 						<label text="labels.sedit.listen" fill="true" halign="0"/>9
 					</ui:with>
 					<cell rows="9">
-						<vsep/>
+						<vsep hreduce="true" />
 					</cell>
 
 					<ui:for id="i" first="0" last="7">
 						<ui:with bg.color="bg_schema" expand="true">
-							<label text="${i}"/>
+							<label text="${:i+1}"/>
 							<button id="on_${i}" width="32" height="12" ui:inject="Button_yellow" led="true" padding="6"/>
 							<knob id="vl_${i}" size="20" scolor="velocity"/>
 							<vbox vfill="false" pad.b="6">
@@ -279,7 +309,7 @@
 							</vbox>
 						</ui:with>
 						<cell rows="9">
-							<vsep/>
+							<vsep hreduce="true" />
 						</cell>
 					</ui:for>
 				</grid>
@@ -306,7 +336,7 @@
 						</grid>
 					</cell>
 
-					<cell rows="4"><vsep/></cell>
+					<cell rows="4"><vsep hreduce="true" /></cell>
 
 					<cell rows="4">
 						<grid rows="4" cols="3" transpose="true" bg.color="bg" hspacing="2">
@@ -321,14 +351,14 @@
 									<label bg.color="bg_schema" expand="true"/>
 								</hbox>
 							</cell>
-							<cell rows="3"><vsep/></cell>
+							<cell rows="3"><vsep hreduce="true" /></cell>
 							<label text="labels.sc.reactivity" padding="6" bg.color="bg_schema"/>
 							<knob id="react" bg.color="bg_schema"/>
 							<value id="react" bg.color="bg_schema"/>
 						</grid>
 					</cell>
 
-					<cell rows="4"><vsep/></cell>
+					<cell rows="4"><vsep hreduce="true" /></cell>
 
 					<ui:with bg.color="bg_schema" bright="(:shpm igt 0) ? 1 : 0.75" bg.bright="(:shpm igt 0) ? 1.0 : :const_bg_darken">
 						<label text="labels.flt.HPF" padding="6"/>
@@ -337,7 +367,7 @@
 						<value id="shpf" width.min="30"/>
 					</ui:with>
 
-					<cell rows="4"><vsep/></cell>
+					<cell rows="4"><vsep hreduce="true" /></cell>
 
 					<ui:with bg.color="bg_schema" bright="(:slpm igt 0) ? 1 : 0.75" bg.bright="(:slpm igt 0) ? 1.0 : :const_bg_darken">
 						<label text="labels.flt.LPF" padding="6"/>
@@ -346,7 +376,7 @@
 						<value id="slpf" width.min="30"/>
 					</ui:with>
 
-					<cell rows="4"><vsep/></cell>
+					<cell rows="4"><vsep hreduce="true" /></cell>
 
 					<cell rows="4" bg.color="bg_schema">
 						<grid rows="4" cols="2" transpose="true">
@@ -362,7 +392,7 @@
 						</grid>
 					</cell>
 
-					<cell rows="4"><vsep/></cell>
+					<cell rows="4"><vsep hreduce="true" /></cell>
 
 					<cell rows="4" bg.color="bg_schema">
 						<grid rows="4" cols="2" transpose="true">
@@ -378,7 +408,7 @@
 						</grid>
 					</cell>
 
-					<cell rows="4"><vsep/></cell>
+					<cell rows="4"><vsep hreduce="true" /></cell>
 
 					<cell rows="4" bg.color="bg_schema">
 						<grid rows="4" cols="3" transpose="true">
@@ -406,9 +436,9 @@
 						<label text="labels.signal.wet"/>
 					</ui:with>
 
-					<cell rows="3"><vsep pad.h="2" hreduce="true"/></cell>
+					<cell rows="3"><vsep hreduce="true"  pad.h="2"/></cell>
 					<label text="labels.signal.drywet" padding="6"/>
-					<cell rows="3"><vsep pad.h="2" hreduce="true"/></cell>
+					<cell rows="3"><vsep hreduce="true"  pad.h="2"/></cell>
 
 					<ui:with padding="6">
 						<label text="labels.output"/>

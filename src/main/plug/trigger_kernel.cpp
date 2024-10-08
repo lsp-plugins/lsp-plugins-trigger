@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2021 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2021 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -614,7 +614,7 @@ namespace lsp
                 lsp_trace("load failed: status=%d (%s)", status, get_status(status));
                 return status;
             }
-            size_t channels         = lsp_min(nChannels, source->channels());
+            const size_t channels   = lsp_min(nChannels, source->channels());
             if (!source->set_channels(channels))
             {
                 lsp_trace("failed to resize source sample to %d channels", int(channels));
@@ -738,6 +738,11 @@ namespace lsp
         {
             lsp_trace("id=%d, gain=%f, delay=%d", int(af->nID), gain, int(delay));
 
+            // Obtain the sample that will be used for playback
+            dspu::Sample *s = vChannels[0].get(af->nID);
+            if (s == NULL)
+                return;
+
             // Scale the final output gain
             gain    *= af->fMakeup;
 
@@ -751,18 +756,22 @@ namespace lsp
                 for (size_t i=0; i<nChannels; ++i)
                 {
                     size_t j=i^1; // j = (i + 1) % 2
+                    const size_t channel = i % s->channels();
+
                     lsp_trace("channels[%d].play(%d, %d, %f, %d)", int(i), int(af->nID), int(i), gain * af->fGains[i], int(delay));
-                    vChannels[i].play(af->nID, i, gain * af->fGains[i], delay);
+                    vChannels[i].play(af->nID, channel, gain * af->fGains[i], delay);
                     lsp_trace("channels[%d].play(%d, %d, %f, %d)", int(j), int(i), int(af->nID), gain * (1.0f - af->fGains[i]), int(delay));
-                    vChannels[j].play(af->nID, i, gain * (1.0f - af->fGains[i]), delay);
+                    vChannels[j].play(af->nID, channel, gain * (1.0f - af->fGains[i]), delay);
                 }
             }
             else
             {
                 for (size_t i=0; i<nChannels; ++i)
                 {
+                    const size_t channel = i % s->channels();
+
                     lsp_trace("channels[%d].play(%d, %d, %f, %d)", int(i), int(af->nID), int(i), gain * af->fGains[i], int(delay));
-                    vChannels[i].play(af->nID, i, gain * af->fGains[i], delay);
+                    vChannels[i].play(af->nID, channel, gain * af->fGains[i], delay);
                 }
             }
         }
@@ -1017,7 +1026,7 @@ namespace lsp
                 if (af->sListen.pending())
                 {
                     // Play sample
-                    play_sample(af, 0.5f, 0); // Listen at mid-velocity
+                    play_sample(af, 1.0f, 0);
 
                     // Update states
                     af->sListen.commit();
@@ -1078,7 +1087,7 @@ namespace lsp
 
                 // Store file thumbnails to mesh
                 plug::mesh_t *mesh  = reinterpret_cast<plug::mesh_t *>(af->pMesh->buffer());
-                if ((mesh == NULL) || (!mesh->isEmpty()) || (!af->bSync) || (!af->pLoader->idle()))
+                if ((mesh == NULL) || (!mesh->isEmpty()) || (!af->bSync) || (!af->pLoader->idle()) || (!af->pRenderer->idle()))
                     continue;
 
                 if ((channels > 0) && (af->vThumbs[0] != NULL))

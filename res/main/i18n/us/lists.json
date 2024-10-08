@@ -2,14 +2,14 @@
 	"trigger": {
 		"inst": "Instrument",
 		"samp": {
-			"0": "Sample 0",
-			"1": "Sample 1",
-			"2": "Sample 2",
-			"3": "Sample 3",
-			"4": "Sample 4",
-			"5": "Sample 5",
-			"6": "Sample 6",
-			"7": "Sample 7",
+			"0": "Sample 1",
+			"1": "Sample 2",
+			"2": "Sample 3",
+			"3": "Sample 4",
+			"4": "Sample 5",
+			"5": "Sample 6",
+			"6": "Sample 7",
+			"7": "Sample 8",
 			"none": "None"
 		},
 		"trig": "Trigger"

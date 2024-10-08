@@ -2,6 +2,11 @@
 * RECENT CHANGES
 *******************************************************************************
 
+=== 1.0.23 ===
+* Added directory contents view and navigation of currently loaded sample.
+* Mono samples are now played as stereo samples with duplicated left channel.
+* Updated build scripts and dependencies.
+
 === 1.0.22 ===
 * Fixed not working MIDI channel setup.
 * Updated build scripts and dependencies.

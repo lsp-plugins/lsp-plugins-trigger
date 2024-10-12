@@ -35,39 +35,42 @@ namespace lsp
     {
         //-------------------------------------------------------------------------
         // Plugin factory
-        typedef struct plugin_settings_t
+        inline namespace
         {
-            const meta::plugin_t   *metadata;
-            uint8_t                 channels;
-            bool                    midi;
-        } plugin_settings_t;
+            typedef struct plugin_settings_t
+            {
+                const meta::plugin_t   *metadata;
+                uint8_t                 channels;
+                bool                    midi;
+            } plugin_settings_t;
 
-        static const meta::plugin_t *plugins[] =
-        {
-            &meta::trigger_mono,
-            &meta::trigger_stereo,
-            &meta::trigger_midi_mono,
-            &meta::trigger_midi_stereo
-        };
+            static const meta::plugin_t *plugins[] =
+            {
+                &meta::trigger_mono,
+                &meta::trigger_stereo,
+                &meta::trigger_midi_mono,
+                &meta::trigger_midi_stereo
+            };
 
-        static const plugin_settings_t plugin_settings[] =
-        {
-            { &meta::trigger_mono,          1, false    },
-            { &meta::trigger_stereo,        2, false    },
-            { &meta::trigger_midi_mono,     1, true     },
-            { &meta::trigger_midi_stereo,   2, true     },
-            { NULL, 0, false }
-        };
+            static const plugin_settings_t plugin_settings[] =
+            {
+                { &meta::trigger_mono,          1, false    },
+                { &meta::trigger_stereo,        2, false    },
+                { &meta::trigger_midi_mono,     1, true     },
+                { &meta::trigger_midi_stereo,   2, true     },
+                { NULL, 0, false }
+            };
 
-        static plug::Module *plugin_factory(const meta::plugin_t *meta)
-        {
-            for (const plugin_settings_t *s = plugin_settings; s->metadata != NULL; ++s)
-                if (s->metadata == meta)
-                    return new trigger(s->metadata, s->channels, s->midi);
-            return NULL;
-        }
+            static plug::Module *plugin_factory(const meta::plugin_t *meta)
+            {
+                for (const plugin_settings_t *s = plugin_settings; s->metadata != NULL; ++s)
+                    if (s->metadata == meta)
+                        return new trigger(s->metadata, s->channels, s->midi);
+                return NULL;
+            }
 
-        static plug::Factory factory(plugin_factory, plugins, 4);
+            static plug::Factory factory(plugin_factory, plugins, 4);
+        } /* inline namespace */
 
         //-------------------------------------------------------------------------
 

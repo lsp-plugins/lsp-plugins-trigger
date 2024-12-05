@@ -144,10 +144,10 @@
 
 		<!-- Instrument editor -->
 		<hbox visibility=":asel ieq 1" spacing="4" expand="true">
-			<cgroup id="ssel" expand="true" active="0">
+			<tgroup id="ssel" expand="true" active="0">
 				<vbox>
 					<!-- File editor -->
-					<hbox width.min="650" height.min="256">
+					<hbox expand="true" width.min="650" height.min="256">
 						<asample
 							expand="true"
 							id="sf[ssel]"
@@ -268,7 +268,7 @@
 						</ui:with>
 					</grid>
 				</vbox>
-			</cgroup>
+			</tgroup>
 			<group text="groups.sample_matrix" expand="true" ipadding="0">
 				<!-- Sample matrix -->
 				<grid rows="11" cols="17" transpose="true" hspacing="2" bg.color="bg">

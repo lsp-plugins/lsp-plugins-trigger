@@ -3,6 +3,7 @@
 *******************************************************************************
 
 === 1.0.25 ===
+* Replaced CcomboGroup with TabGroup when selecting samples.
 * Added button that allows to stop sample preview listening.
 
 === 1.0.24 ===

@@ -97,10 +97,12 @@ namespace lsp
                     AFLoader           *pLoader;                                        // Audio file loader task
                     AFRenderer         *pRenderer;                                      // Audio file renderer task
                     dspu::Toggle        sListen;                                        // Listen toggle
+                    dspu::Toggle        sStop;                                          // Stop toggle
                     dspu::Blink         sNoteOn;                                        // Note on led
                     dspu::Sample       *pOriginal;                                      // Source sample (original, as from source file)
                     dspu::Sample       *pProcessed;                                     // Processed sample
                     float              *vThumbs[meta::trigger_metadata::TRACKS_MAX];    // List of thumbnails
+                    dspu::Playback      vPlaybacks[4];                                  // Playbacks
 
                     uint32_t            nUpdateReq;                                     // Update request
                     uint32_t            nUpdateResp;                                    // Update response
@@ -129,6 +131,7 @@ namespace lsp
                     plug::IPort        *pVelocity;                                      // Velocity range top
                     plug::IPort        *pPreDelay;                                      // Pre-delay
                     plug::IPort        *pListen;                                        // Listen trigger
+                    plug::IPort        *pStop;                                          // Stop trigger
                     plug::IPort        *pReverse;                                       // Reverse sample
                     plug::IPort        *pGains[meta::trigger_metadata::TRACKS_MAX];     // List of gain ports
                     plug::IPort        *pLength;                                        // Length of the file
@@ -147,7 +150,6 @@ namespace lsp
                 dspu::SamplePlayer  vChannels[meta::trigger_metadata::TRACKS_MAX];      // List of channels
                 dspu::Bypass        vBypass[meta::trigger_metadata::TRACKS_MAX];        // List of bypasses
                 dspu::Blink         sActivity;                                          // Note on led for instrument
-                dspu::Toggle        sListen;                                            // Listen toggle
                 dspu::Randomizer    sRandom;                                            // Randomizer
                 GCTask              sGCTask;                                            // Garbage collection task
 
@@ -165,7 +167,6 @@ namespace lsp
                 plug::IPort        *pDynamics;                                          // Dynamics port
                 plug::IPort        *pDrift;                                             // Time drifting port
                 plug::IPort        *pActivity;                                          // Activity port
-                plug::IPort        *pListen;                                            // Listen trigger
                 uint8_t            *pData;                                              // Pointer to aligned data
 
 
@@ -190,6 +191,8 @@ namespace lsp
                 void        process_listen_events();
                 void        play_samples(float **outs, const float **ins, size_t samples);
                 void        output_parameters(size_t samples);
+                void        listen_sample(afile_t *af);
+                void        cancel_listen(afile_t *af);
 
                 template <class T>
                 static void commit_afile_value(afile_t *af, T & field, plug::IPort *port);

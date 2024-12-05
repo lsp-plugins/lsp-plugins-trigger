@@ -3,7 +3,7 @@
 *******************************************************************************
 
 === 1.0.25 ===
-
+* Added button that allows to stop sample preview listening.
 
 === 1.0.24 ===
 * Fixed compilation on modern compilers.

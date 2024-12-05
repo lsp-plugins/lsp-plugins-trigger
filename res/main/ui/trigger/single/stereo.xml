@@ -236,13 +236,7 @@
 							</cell>
 							<label text="labels.sedit.listen" bg.color="bg_schema" padding="6"/>
 
-							<cell rows="2">
-								<vbox bg.color="bg_schema">
-									<button id="rs[ssel]" size="32"/>
-									<label pad.b="6"/>
-									<label pad.b="6"/>
-								</vbox>
-							</cell>
+							<button bg.color="bg_schema" id="rs[ssel]" size="32"/>
 						</ui:with>
 
 						<ui:with size="20" bg.color="bg_schema" pad="6" pad.t="0">
@@ -254,39 +248,44 @@
 							<knob id="mk[ssel]"/>
 							<knob id="pd[ssel]"/>
 						</ui:with>
-						<cell rows="2">
-							<vbox bg.color="bg_schema">
-								<button id="ls[ssel]" size="32" ui:inject="Button_cyan" toggle="false"/>
-								<label pad.b="6"/>
-								<label pad.b="6"/>
-							</vbox>
-						</cell>
-						<value id="pi[ssel]" bg.color="bg_schema" pad.b="6"/>
-						<value id="hc[ssel]" bg.color="bg_schema" pad.b="6"/>
-						<value id="tc[ssel]" bg.color="bg_schema" pad.b="6"/>
-						<value id="fi[ssel]" bg.color="bg_schema" pad.b="6"/>
-						<value id="fo[ssel]" bg.color="bg_schema" pad.b="6"/>
-						<value id="mk[ssel]" bg.color="bg_schema" pad.b="6"/>
-						<value id="pd[ssel]" bg.color="bg_schema" pad.b="6"/>
-
+						<hbox bg.color="bg_schema" spacing="2">
+							<ui:with font.name="lsp-icons" font.size="16" size="32" ui:inject="Button_cyan" toggle="false">
+								<button id="ls[ssel]" text="icons.playback.play" />
+								<button id="lc[ssel]" text="icons.playback.stop" />
+							</ui:with>
+						</hbox>
+						
+						<ui:with bg.color="bg_schema" pad.b="6">
+							<void />
+							<value id="pi[ssel]" />
+							<value id="hc[ssel]" />
+							<value id="tc[ssel]" />
+							<value id="fi[ssel]" />
+							<value id="fo[ssel]" />
+							<value id="mk[ssel]" />
+							<value id="pd[ssel]" />
+							<void />
+						</ui:with>
 					</grid>
 				</vbox>
 			</cgroup>
 			<group text="groups.sample_matrix" expand="true" ipadding="0">
 				<!-- Sample matrix -->
-				<grid rows="9" cols="17" transpose="true" hspacing="2" bg.color="bg">
-					<ui:with bg.color="bg_schema">
-						<label text="labels.sedit.sample_num" fill="true" halign="0" padding="6"/>
-						<label text="labels.sedit.enabled" fill="true" halign="0"/>
-						<label text="labels.midi.velocity" fill="true" halign="0"/>
-						<label text="labels.midi.code" fill="true" halign="0"/>
-						<label text="labels.signal.pan_left" fill="true" halign="0"/>
-						<label text="labels.units.:pc" fill="true" halign="0" pad.b="6"/>
-						<label text="labels.signal.pan_right" fill="true" halign="0"/>
-						<label text="labels.units.:pc" fill="true" halign="0" pad.b="6"/>
-						<label text="labels.sedit.listen" fill="true" halign="0"/>9
+				<grid rows="11" cols="17" transpose="true" hspacing="2" bg.color="bg">
+					<ui:with bg.color="bg_schema" fill="true" halign="0">
+						<label text="labels.sedit.sample_num" padding="6"/>
+						<label text="labels.sedit.enabled" />
+						<label text="labels.midi.velocity" />
+						<label text="labels.midi.code" />
+						<label text="labels.signal.pan_left" />
+						<label text="labels.units.:pc" />
+						<label text="labels.signal.pan_right" />
+						<label text="labels.units.:pc" pad.b="6"/>
+						<label text="labels.sedit.listen" />
+						<label text="labels.sedit.stop" />
+						<void />
 					</ui:with>
-					<cell rows="9">
+					<cell rows="11">
 						<vsep hreduce="true" />
 					</cell>
 
@@ -303,12 +302,17 @@
 							<value id="pl_${i}" detailed="false" pad.b="6"/>
 							<knob id="pr_${i}" size="20" balance="0.5" scolor="balance_r"/>
 							<value id="pr_${i}" detailed="false" pad.b="6"/>
-							<vbox expand="false">
-								<button id="ls_${i}" size="32" ui:inject="Button_cyan" toggle="false" pad.b="6"/>
-								<led id="no_${i}" pad.b="6" width="32" height="6"/>
-							</vbox>
+							<button id="ls_${i}"
+								font.name="lsp-icons" font.size="16"
+								text="icons.playback.play"
+								size="32" ui:inject="Button_cyan" toggle="false" pad.b="6"/>
+							<button id="lc_${i}"
+								font.name="lsp-icons" font.size="16"
+								text="icons.playback.stop"
+								size="32" ui:inject="Button_cyan" toggle="false" pad.b="6" />
+							<led id="no_${i}" pad.b="6" width="32" height="6"/>
 						</ui:with>
-						<cell rows="9">
+						<cell rows="11">
 							<vsep hreduce="true" />
 						</cell>
 					</ui:for>

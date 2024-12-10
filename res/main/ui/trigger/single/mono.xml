@@ -193,7 +193,7 @@
 
 					<void bg.color="bg_graph" pad.v="2" vreduce="true"/>
 
-					<grid rows="3" cols="17" bg.color="bg" hspacing="2">
+					<grid rows="3" cols="19" bg.color="bg" hspacing="2">
 						<ui:with width.min="50">
 							<label text="labels.sedit.reverse" bg.color="bg_schema" padding="6"/>
 							<cell rows="3">
@@ -228,9 +228,13 @@
 								<vsep hreduce="true"  bg.color="bg"/>
 							</cell>
 							<label text="labels.sedit.listen" bg.color="bg_schema" padding="6"/>
-
-							<button id="rs[ssel]" bg.color="bg_schema" size="32"/>
+							<cell rows="3">
+								<vsep hreduce="true" bg.color="bg"/>
+							</cell>
+							<label text="labels.sedit.stop" bg.color="bg_schema" padding="6"/>
 						</ui:with>
+
+						<button bg.color="bg_schema" id="rs[ssel]" font.size="16" size="32" ui:inject="Button_cyan" font.name="lsp-icons" text="icons.actions.reverse"/>
 
 						<ui:with size="20" bg.color="bg_schema" pad="6" pad.t="0">
 							<knob id="pi[ssel]"/>
@@ -241,12 +245,12 @@
 							<knob id="mk[ssel]"/>
 							<knob id="pd[ssel]"/>
 						</ui:with>
-						<hbox bg.color="bg_schema" spacing="2">
-							<ui:with font.name="lsp-icons" font.size="16" size="32" ui:inject="Button_cyan" toggle="false">
-								<button id="ls[ssel]" text="icons.playback.play" />
-								<button id="lc[ssel]" text="icons.playback.stop" />
-							</ui:with>
-						</hbox>
+
+						<ui:with bg.color="bg_schema" font.name="lsp-icons" font.size="16" size="32" ui:inject="Button_cyan" toggle="false">
+							<button id="ls[ssel]" text="icons.playback.play"/>
+							<button id="lc[ssel]" text="icons.playback.stop"/>
+						</ui:with>
+
 						<ui:with bg.color="bg_schema" pad.b="6">
 							<void />
 							<value id="pi[ssel]" />
@@ -256,6 +260,7 @@
 							<value id="fo[ssel]" />
 							<value id="mk[ssel]" />
 							<value id="pd[ssel]" />
+							<void />
 							<void />
 						</ui:with>
 					</grid>

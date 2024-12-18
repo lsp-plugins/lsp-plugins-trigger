@@ -65,8 +65,8 @@ There are up to eight samples available to play for different note velocities.</
 	<li><b>Fade in</b> - the time to be faded from the beginning of the current sample.</li>
 	<li><b>Fade out</b> - the time to be faded from the end of the current sample.</li>
 	<li><b>Makeup</b> - the makeup gain of the sample volume.</li>
-	<li><b>Pre-delay</b> - the time delay between the MIDI note has triggered and the start of the sample's playback</li>
-	<li><b>Listen</b> - the button that forces the sample playback of the selected sample</li>
+	<li><b>Pre-delay</b> - the time delay between the MIDI note has triggered and the start of the sample's playback.</li>
+	<li><b>Listen</b> - buttons that plays or stop preview of selected sample.</li>
 </ul>
 <p><b>'Sample matrix' section:</b></p>
 <ul>
@@ -79,7 +79,8 @@ There are up to eight samples available to play for different note velocities.</
 	<?php } else { ?>
 	<li><b>Gain</b> - the additional gain adjust for the corresponding sample.</li>
 	<?php } ?>
-	<li><b>Listen</b> - the button that forces the playback of the corresponding sample.</li>
+	<li><b>Listen</b> - the button that plays preview of the corresponding sample.</li>
+	<li><b>Stop</b> - the button that stops preview of the sample preview.</li>
 	<li><b>Note on</b> - indicates that the playback event of the correponding sample has triggered.</li>
 </ul>
 <p><b>'Audio channel' section:</b></p>

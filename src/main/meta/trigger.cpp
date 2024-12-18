@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_TRIGGER_VERSION_MAJOR                   1
 #define LSP_PLUGINS_TRIGGER_VERSION_MINOR                   0
-#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   24
+#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   25
 
 #define LSP_PLUGINS_TRIGGER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -106,6 +106,7 @@ namespace lsp
             CONTROL("pd", "Sample pre-delay", U_MSEC, trigger_metadata::PREDELAY), \
             SWITCH("on", "Sample enabled", 1.0f), \
             TRIGGER("ls", "Sample listen"), \
+            TRIGGER("lc", "Sample listen stop"), \
             SWITCH("rs", "Sample reverse", 0.0f), \
             gain, \
             BLINK("ac", "Sample activity"), \
@@ -160,7 +161,6 @@ namespace lsp
             MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 4), \
             METER_GAIN20("tlm", "Trigger level meter"), \
             SWITCH("tlv", "Trigger level display", 1.0f), \
-            TRIGGER("lstn", "Trigger listen"), \
             PORT_SET("ssel", "Sample selector", trigger_sample_selectors, sample)
 
         #define T_MIDI_PORTS                    \

@@ -125,7 +125,6 @@ namespace lsp
             pDynamics       = NULL;
             pDrift          = NULL;
             pActivity       = NULL;
-            pListen         = NULL;
             pData           = NULL;
         }
 
@@ -180,11 +179,15 @@ namespace lsp
                 af->pRenderer               = NULL;
 
                 af->sListen.construct();
+                af->sStop.construct();
                 af->sNoteOn.construct();
                 af->pOriginal               = NULL;
                 af->pProcessed              = NULL;
                 for (size_t j=0; j<meta::trigger_metadata::TRACKS_MAX; ++j)
                     af->vThumbs[j]              = NULL;
+
+                for (size_t i=0; i<4; ++i)
+                    af->vPlaybacks[i].construct();
 
                 af->nUpdateReq              = 0;
                 af->nUpdateResp             = 0;
@@ -198,6 +201,7 @@ namespace lsp
                 af->bReverse                = false;
                 af->fPreDelay               = meta::trigger_metadata::PREDELAY_DFL;
                 af->sListen.init();
+                af->sStop.init();
                 af->bOn                     = true;
                 af->fMakeup                 = 1.0f;
                 af->fLength                 = 0.0f;
@@ -214,6 +218,7 @@ namespace lsp
                 af->pPreDelay               = NULL;
                 af->pOn                     = NULL;
                 af->pListen                 = NULL;
+                af->pStop                   = NULL;
                 af->pReverse                = NULL;
                 af->pLength                 = NULL;
                 af->pStatus                 = NULL;
@@ -267,17 +272,11 @@ namespace lsp
                 }
             }
 
-            // Initialize toggle
-            sListen.init();
-
             return true;
         }
 
         size_t trigger_kernel::bind(plug::IPort **ports, size_t port_id, bool dynamics)
         {
-            lsp_trace("Binding listen toggle...");
-            BIND_PORT(pListen);
-
             if (dynamics)
             {
                 lsp_trace("Binding dynamics and drifting...");
@@ -305,6 +304,7 @@ namespace lsp
                 BIND_PORT(af->pPreDelay);
                 BIND_PORT(af->pOn);
                 BIND_PORT(af->pListen);
+                BIND_PORT(af->pStop);
                 BIND_PORT(af->pReverse);
 
                 for (size_t j=0; j<nChannels; ++j)
@@ -360,7 +360,11 @@ namespace lsp
         void trigger_kernel::destroy_afile(afile_t *af)
         {
             af->sListen.destroy();
+            af->sStop.destroy();
             af->sNoteOn.destroy();
+
+            for (size_t i=0; i<4; ++i)
+                af->vPlaybacks[i].destroy();
 
             // Delete audio file loader
             if (af->pLoader != NULL)
@@ -466,10 +470,6 @@ namespace lsp
 
         void trigger_kernel::update_settings()
         {
-            // Process listen toggle
-            if (pListen != NULL)
-                sListen.submit(pListen->value());
-
             // Process file load requests
             for (size_t i=0; i<nFiles; ++i)
             {
@@ -518,6 +518,7 @@ namespace lsp
                 // Listen trigger
     //            lsp_trace("submit listen%d = %f", int(i), af->pListen->getValue());
                 af->sListen.submit(af->pListen->value());
+                af->sStop.submit(af->pStop->value());
     //            lsp_trace("listen[%d].pending = %s", int(i), (af->sListen.pending()) ? "true" : "false");
 
                 // Makeup gain + mix gain
@@ -760,7 +761,7 @@ namespace lsp
 
                     lsp_trace("channels[%d].play(%d, %d, %f, %d)", int(i), int(af->nID), int(i), gain * af->fGains[i], int(delay));
                     vChannels[i].play(af->nID, channel, gain * af->fGains[i], delay);
-                    lsp_trace("channels[%d].play(%d, %d, %f, %d)", int(j), int(i), int(af->nID), gain * (1.0f - af->fGains[i]), int(delay));
+                    lsp_trace("channels[%d].play(%d, %d, %f, %d)", int(j), int(af->nID), int(i), gain * (1.0f - af->fGains[i]), int(delay));
                     vChannels[j].play(af->nID, channel, gain * (1.0f - af->fGains[i]), delay);
                 }
             }
@@ -1007,14 +1008,52 @@ namespace lsp
             #endif /* LSP_TRACE */
         }
 
+        void trigger_kernel::listen_sample(afile_t *af)
+        {
+            lsp_trace("id=%d", int(af->nID));
+
+            // Obtain the sample that will be used for playback
+            dspu::Sample *s = vChannels[0].get(af->nID);
+            if (s == NULL)
+                return;
+
+            // Scale the final output gain
+            const float gain    = af->fMakeup;
+            size_t index        = 0;
+
+            dspu::PlaySettings ps;
+
+            if (nChannels == 1)
+            {
+                ps.set_channel(af->nID, 0);
+                ps.set_playback(0, 0, gain * af->fGains[0]);
+                af->vPlaybacks[index++]     = vChannels[0].play(&ps);
+            }
+            else
+            {
+                ps.set_channel(af->nID, 0);
+                ps.set_playback(0, 0, gain * af->fGains[0]);
+                af->vPlaybacks[index++]     = vChannels[0].play(&ps);
+                ps.set_playback(0, 0, gain * (1.0f - af->fGains[0]));
+                af->vPlaybacks[index++]     = vChannels[1].play(&ps);
+
+                ps.set_channel(af->nID, 1);
+                ps.set_playback(0, 0, gain * (1.0f - af->fGains[1]));
+                af->vPlaybacks[index++]     = vChannels[0].play(&ps);
+                ps.set_playback(0, 0, gain * af->fGains[1]);
+                af->vPlaybacks[index++]     = vChannels[1].play(&ps);
+            }
+        }
+
+        void trigger_kernel::cancel_listen(afile_t *af)
+        {
+            const size_t fadeout = dspu::millis_to_samples(nSampleRate, 5);
+            for (size_t i=0; i<4; ++i)
+                af->vPlaybacks[i].cancel(fadeout, 0);
+        }
+
         void trigger_kernel::process_listen_events()
         {
-            if (sListen.pending())
-            {
-                trigger_on(0, 0.5f);
-                sListen.commit();
-            }
-
             for (size_t i=0; i<nFiles; ++i)
             {
                 // Get descriptor
@@ -1022,15 +1061,22 @@ namespace lsp
                 if (af->pFile == NULL)
                     continue;
 
-                // Trigger the event
+                // Trigger the listen event
                 if (af->sListen.pending())
                 {
                     // Play sample
-                    play_sample(af, 1.0f, 0);
+                    cancel_listen(af);
+                    listen_sample(af);
 
                     // Update states
                     af->sListen.commit();
                     af->sNoteOn.blink();
+                }
+
+                if (af->sStop.pending())
+                {
+                    cancel_listen(af);
+                    af->sStop.commit();
                 }
             }
         }
@@ -1111,9 +1157,13 @@ namespace lsp
             v->write_object("pLoader", f->pLoader);
             v->write_object("pRenderer", f->pRenderer);
             v->write_object("sListen", &f->sListen);
+            v->write_object("sStop", &f->sStop);
             v->write_object("sNoteOn", &f->sNoteOn);
             v->write_object("pOriginal", f->pOriginal);
             v->write_object("pProcessed", f->pProcessed);
+            v->write("vThumbs", f->vThumbs);
+
+            v->write_object_array("vPlaybacks", f->vPlaybacks, 4);
 
             v->write("nUpdateReq", f->nUpdateReq);
             v->write("nUpdateResp", f->nUpdateResp);
@@ -1142,6 +1192,7 @@ namespace lsp
             v->write("pVelocity", f->pVelocity);
             v->write("pPreDelay", f->pPreDelay);
             v->write("pListen", f->pListen);
+            v->write("pStop", f->pStop);
             v->write("pReverse", f->pReverse);
             v->writev("pGains", f->pGains, meta::trigger_metadata::TRACKS_MAX);
             v->write("pLength", f->pLength);
@@ -1172,7 +1223,6 @@ namespace lsp
             v->write_object_array("vChannels", vChannels, meta::trigger_metadata::TRACKS_MAX);
             v->write_object_array("vBypass", vBypass, meta::trigger_metadata::TRACKS_MAX);
             v->write_object("sActivity", &sActivity);
-            v->write_object("sListen", &sListen);
             v->write_object("sRandom", &sRandom);
             v->write_object("sGCTask", &sGCTask);
 
@@ -1190,7 +1240,6 @@ namespace lsp
             v->write("pDynamics", pDynamics);
             v->write("pDrift", pDrift);
             v->write("pActivity", pActivity);
-            v->write("pListen", pListen);
             v->write("pData", pData);
         }
     } /* namespace plugins */

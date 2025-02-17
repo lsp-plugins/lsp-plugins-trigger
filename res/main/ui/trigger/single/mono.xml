@@ -3,7 +3,7 @@
 		<!-- Area selector -->
 		<align halign="-1" fill="true">
 			<hbox pad.l="6" pad.r="6" pad.t="4" pad.b="4" spacing="8" fill="false" bg.color="bg_schema">
-				<label text="labels.working_area"/>
+				<label text="labels.workspace"/>
 				<combo id="asel" halign="1"/>
 			</hbox>
 		</align>
@@ -92,7 +92,7 @@
 							<combo id="note" width="20"/>
 							<label text="labels.mus.octave"/>
 							<combo id="oct" width="20"/>
-							<label text="labels.midi.midi_num"/>
+							<label text="labels.midi.midi_number"/>
 							<midinote id="mn" note_id="note" octave_id="oct"/>
 						</hbox>
 					</align>
@@ -270,7 +270,7 @@
 				<!-- Sample matrix -->
 				<grid rows="9" cols="17" transpose="true" hspacing="2" bg.color="bg">
 					<ui:with bg.color="bg_schema" fill="true" halign="0">
-						<label text="labels.sedit.sample_num" padding="6"/>
+						<label text="labels.sedit.sample" padding="6"/>
 						<label text="labels.sedit.enabled" />
 						<label text="labels.midi.velocity" />
 						<label text="labels.midi.code" />

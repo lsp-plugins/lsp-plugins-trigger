@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -690,9 +690,7 @@ namespace lsp
             for (size_t offset = 0; offset < samples; )
             {
                 // Calculate amount of samples to process
-                size_t to_process = samples - offset;
-                if (to_process > meta::trigger_metadata::BUFFER_SIZE)
-                    to_process  = meta::trigger_metadata::BUFFER_SIZE;
+                const size_t to_process = lsp_min(samples - offset, meta::trigger_metadata::BUFFER_SIZE);
 
                 // Prepare the control chain
                 for (size_t i=0; i<nChannels; ++i)

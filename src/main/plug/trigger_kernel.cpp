@@ -1086,12 +1086,12 @@ namespace lsp
             if (ins != NULL)
             {
                 for (size_t i=0; i<nChannels; ++i)
-                    vChannels[i].process(outs[i], ins[i], samples);
+                    vChannels[i].process(outs[i], ins[i], samples, dspu::SAMPLER_ALL);
             }
             else
             {
                 for (size_t i=0; i<nChannels; ++i)
-                    vChannels[i].process(outs[i], NULL, samples);
+                    vChannels[i].process(outs[i], samples, dspu::SAMPLER_ALL);
             }
         }
 

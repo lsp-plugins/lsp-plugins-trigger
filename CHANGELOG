@@ -2,6 +2,10 @@
 * RECENT CHANGES
 *******************************************************************************
 
+=== 1.0.26 ===
+* Several updates of text labels.
+* Updated build scripts and dependencies.
+
 === 1.0.25 ===
 * Replaced CcomboGroup with TabGroup when selecting samples.
 * Added button that allows to stop sample preview listening.

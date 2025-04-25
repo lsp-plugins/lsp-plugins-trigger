@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -861,17 +861,13 @@ namespace lsp
                 if (af->pFile == NULL)
                     continue;
 
-                // Do nothing if rendering is in progress
-                if (!af->pRenderer->idle())
-                    continue;
-
                 // Get path
                 plug::path_t *path = af->pFile->buffer<plug::path_t>();
                 if (path == NULL)
                     continue;
 
                 // If there is new load request and loader is idle, then wake up the loader
-                if ((path->pending()) && (af->pLoader->idle()))
+                if ((path->pending()) && (af->pLoader->idle()) && (af->pRenderer->idle()))
                 {
                     // Try to submit task
                     if (pExecutor->submit(af->pLoader))
@@ -908,12 +904,8 @@ namespace lsp
                 if (af->pFile == NULL)
                     continue;
 
-                // Do nothing if loader is in progress
-                if (!af->pLoader->idle())
-                    continue;
-
                 // Get path and check task state
-                if ((af->nUpdateReq != af->nUpdateResp) && (af->pRenderer->idle()))
+                if ((af->nUpdateReq != af->nUpdateResp) && (af->pRenderer->idle()) && (af->pLoader->idle()))
                 {
                     if (af->pOriginal == NULL)
                     {

@@ -82,6 +82,16 @@ namespace lsp
             static constexpr float  REACTIVITY_DFL          = 20;       // Default reactivity [ms]
             static constexpr float  REACTIVITY_STEP         = 0.01;     // Reactivity step
 
+            static constexpr float  MAXVEL_MIN              = 0.0f;     // Minimum sample velocity [%]
+            static constexpr float  MAXVEL_MAX              = 100.0f;   // Maximum sample velocity [%]
+            static constexpr float  MAXVEL_DFL              = 0.0f;     // Default sample velocity [%]
+            static constexpr float  MAXVEL_STEP             = 0.25f;    // Sample velocity step [%]
+
+            static constexpr float  MIDINOTE_MIN            = 0.0f;     // MIDI note meter minimum value
+            static constexpr float  MIDINOTE_MAX            = 127.0f;   // MIDI note meter maximum value
+            static constexpr float  MIDINOTE_DFL            = 0.0f;     // MIDI note meter default value
+            static constexpr float  MIDINOTE_STEP           = 1.0f;     // MIDI note meter step
+
             static constexpr float  HISTORY_TIME            = 5.0f;     // Amount of time to display history [s]
             static constexpr size_t HISTORY_MESH_SIZE       = 640;      // 640 dots for history
 

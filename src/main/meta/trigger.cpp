@@ -141,9 +141,9 @@ namespace lsp
             TRIGGER("clear", "Clear graph analysis"), \
             AMP_GAIN100("preamp", "Signal pre-amplification", 1.0f), \
             COMBO("shpm", "High-pass filter mode", 0, trigger_filter_slope),      \
-            LOG_CONTROL("shpf", "High-pass filter frequency", U_HZ, trigger_metadata::HPF),   \
+            LOG_CONTROL("shpf", "High-pass filter frequency", "HPF freq", U_HZ, trigger_metadata::HPF),   \
             COMBO("slpm", "Low-pass filter mode", 0, trigger_filter_slope),      \
-            LOG_CONTROL("slpf", "Low-pass filter frequency", U_HZ, trigger_metadata::LPF), \
+            LOG_CONTROL("slpf", "Low-pass filter frequency", "LPF freq", U_HZ, trigger_metadata::LPF), \
             AMP_GAIN10("dl", "Detect level", trigger_metadata::DETECT_LEVEL_DFL), \
             CONTROL("dt", "Detect time", U_MSEC, trigger_metadata::DETECT_TIME), \
             AMP_GAIN1("rrl", "Relative release level", trigger_metadata::RELEASE_LEVEL_DFL), \

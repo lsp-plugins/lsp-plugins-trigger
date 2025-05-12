@@ -102,7 +102,7 @@ namespace lsp
             CONTROL("fi", "Sample fade in", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             CONTROL("fo", "Sample fade out", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             AMP_GAIN10("mk", "Sample makeup gain", 1.0f), \
-            LOW_CONTROL("vl", "Sample velocity max", U_PERCENT, trigger_metadata::MAXVEL), \
+            LOW_CONTROL("vl", "Sample velocity max", NULL, U_PERCENT, trigger_metadata::MAXVEL), \
             CONTROL("pd", "Sample pre-delay", U_MSEC, trigger_metadata::PREDELAY), \
             SWITCH("on", "Sample enabled", NULL, 1.0f), \
             TRIGGER("ls", "Sample listen", NULL), \

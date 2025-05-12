@@ -96,14 +96,14 @@ namespace lsp
 
         #define T_SAMPLE_FILE(gain)         \
             PATH("sf", "Sample file"),      \
-            CONTROL("pi", "Sample pitch", U_SEMITONES, trigger_metadata::SAMPLE_PITCH), \
-            CONTROL("hc", "Sample head cut", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            CONTROL("tc", "Sample tail cut", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            CONTROL("fi", "Sample fade in", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            CONTROL("fo", "Sample fade out", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            CONTROL("pi", "Sample pitch", NULL, U_SEMITONES, trigger_metadata::SAMPLE_PITCH), \
+            CONTROL("hc", "Sample head cut", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            CONTROL("tc", "Sample tail cut", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            CONTROL("fi", "Sample fade in", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            CONTROL("fo", "Sample fade out", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             AMP_GAIN10("mk", "Sample makeup gain", 1.0f), \
             LOW_CONTROL("vl", "Sample velocity max", NULL, U_PERCENT, trigger_metadata::MAXVEL), \
-            CONTROL("pd", "Sample pre-delay", U_MSEC, trigger_metadata::PREDELAY), \
+            CONTROL("pd", "Sample pre-delay", NULL, U_MSEC, trigger_metadata::PREDELAY), \
             SWITCH("on", "Sample enabled", NULL, 1.0f), \
             TRIGGER("ls", "Sample listen", NULL), \
             TRIGGER("lc", "Sample listen stop", NULL), \
@@ -145,13 +145,13 @@ namespace lsp
             COMBO("slpm", "Low-pass filter mode", "LPF mode", 0, trigger_filter_slope),      \
             LOG_CONTROL("slpf", "Low-pass filter frequency", "LPF freq", U_HZ, trigger_metadata::LPF), \
             AMP_GAIN10("dl", "Detect level", trigger_metadata::DETECT_LEVEL_DFL), \
-            CONTROL("dt", "Detect time", U_MSEC, trigger_metadata::DETECT_TIME), \
+            CONTROL("dt", "Detect time", "Det time", U_MSEC, trigger_metadata::DETECT_TIME), \
             AMP_GAIN1("rrl", "Relative release level", trigger_metadata::RELEASE_LEVEL_DFL), \
-            CONTROL("rt", "Release time", U_MSEC, trigger_metadata::RELEASE_TIME), \
-            CONTROL("dyna", "Dynamics", U_PERCENT, trigger_metadata::DYNAMICS), \
+            CONTROL("rt", "Release time", "Rel time", U_MSEC, trigger_metadata::RELEASE_TIME), \
+            CONTROL("dyna", "Dynamics", "Dynamics", U_PERCENT, trigger_metadata::DYNAMICS), \
             AMP_GAIN("dtr1", "Dynamics range 1", GAIN_AMP_P_6_DB, 20.0f), \
             AMP_GAIN("dtr2", "Dynamics range 2", GAIN_AMP_M_36_DB, 20.0f), \
-            CONTROL("react", "Reactivity", U_MSEC, trigger_metadata::REACTIVITY), \
+            CONTROL("react", "Reactivity", "Reactivity", U_MSEC, trigger_metadata::REACTIVITY), \
             METER_OUT_GAIN("rl", "Release level", 20.0f), \
             MESH("tfg", "Trigger function graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
             METER_GAIN20("tfm", "Trigger function meter"), \

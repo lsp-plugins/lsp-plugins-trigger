@@ -89,10 +89,10 @@ namespace lsp
         //-------------------------------------------------------------------------
         // Trigger
         #define T_FILE_GAIN_MONO \
-            AMP_GAIN10("mx", "Sample mix gain", 1.0f)
+            AMP_GAIN10("mx", "Sample mix gain", NULL, 1.0f)
         #define T_FILE_GAIN_STEREO \
-            PAN_CTL("pl", "Sample left channel panorama", -100.0f), \
-            PAN_CTL("pr", "Sample right channel panorama", 100.0f)
+            PAN_CTL("pl", "Sample left channel panorama", NULL, -100.0f), \
+            PAN_CTL("pr", "Sample right channel panorama", NULL, 100.0f)
 
         #define T_SAMPLE_FILE(gain)         \
             PATH("sf", "Sample file"),      \
@@ -101,7 +101,7 @@ namespace lsp
             CONTROL("tc", "Sample tail cut", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             CONTROL("fi", "Sample fade in", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             CONTROL("fo", "Sample fade out", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            AMP_GAIN10("mk", "Sample makeup gain", 1.0f), \
+            AMP_GAIN10("mk", "Sample makeup gain", NULL, 1.0f), \
             LOW_CONTROL("vl", "Sample velocity max", NULL, U_PERCENT, trigger_metadata::MAXVEL), \
             CONTROL("pd", "Sample pre-delay", NULL, U_MSEC, trigger_metadata::PREDELAY), \
             SWITCH("on", "Sample enabled", NULL, 1.0f), \
@@ -134,23 +134,23 @@ namespace lsp
             BYPASS,                 \
             DRY_GAIN(1.0f),         \
             WET_GAIN(1.0f),         \
-            PERCENTS("drywet", "Dry/Wet balance", 100.0f, 0.1f), \
+            DRYWET(100.0f), \
             OUT_GAIN, \
             COMBO("mode", "Detection mode", "Mode", trigger_metadata::MODE_DFL, trigger_modes), \
             SWITCH("pause", "Pause graph analysis", "Pause", 0.0f), \
             TRIGGER("clear", "Clear graph analysis", "Clear"), \
-            AMP_GAIN100("preamp", "Signal pre-amplification", 1.0f), \
+            AMP_GAIN100("preamp", "Signal pre-amplification", "Preamp", 1.0f), \
             COMBO("shpm", "High-pass filter mode", "HPF mode", 0, trigger_filter_slope),      \
             LOG_CONTROL("shpf", "High-pass filter frequency", "HPF freq", U_HZ, trigger_metadata::HPF),   \
             COMBO("slpm", "Low-pass filter mode", "LPF mode", 0, trigger_filter_slope),      \
             LOG_CONTROL("slpf", "Low-pass filter frequency", "LPF freq", U_HZ, trigger_metadata::LPF), \
-            AMP_GAIN10("dl", "Detect level", trigger_metadata::DETECT_LEVEL_DFL), \
+            AMP_GAIN10("dl", "Detect level", "Detect", trigger_metadata::DETECT_LEVEL_DFL), \
             CONTROL("dt", "Detect time", "Det time", U_MSEC, trigger_metadata::DETECT_TIME), \
-            AMP_GAIN1("rrl", "Relative release level", trigger_metadata::RELEASE_LEVEL_DFL), \
+            AMP_GAIN1("rrl", "Relative release level", "Rel level", trigger_metadata::RELEASE_LEVEL_DFL), \
             CONTROL("rt", "Release time", "Rel time", U_MSEC, trigger_metadata::RELEASE_TIME), \
             CONTROL("dyna", "Dynamics", "Dynamics", U_PERCENT, trigger_metadata::DYNAMICS), \
-            AMP_GAIN("dtr1", "Dynamics range 1", GAIN_AMP_P_6_DB, 20.0f), \
-            AMP_GAIN("dtr2", "Dynamics range 2", GAIN_AMP_M_36_DB, 20.0f), \
+            AMP_GAIN("dtr1", "Dynamics range 1", "Dynamics 1", GAIN_AMP_P_6_DB, 20.0f), \
+            AMP_GAIN("dtr2", "Dynamics range 2", "Dynamics 2", GAIN_AMP_M_36_DB, 20.0f), \
             CONTROL("react", "Reactivity", "Reactivity", U_MSEC, trigger_metadata::REACTIVITY), \
             METER_OUT_GAIN("rl", "Release level", 20.0f), \
             MESH("tfg", "Trigger function graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \

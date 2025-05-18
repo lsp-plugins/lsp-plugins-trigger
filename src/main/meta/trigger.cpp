@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_TRIGGER_VERSION_MAJOR                   1
 #define LSP_PLUGINS_TRIGGER_VERSION_MINOR                   0
-#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   26
+#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   27
 
 #define LSP_PLUGINS_TRIGGER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -89,85 +89,84 @@ namespace lsp
         //-------------------------------------------------------------------------
         // Trigger
         #define T_FILE_GAIN_MONO \
-            AMP_GAIN10("mx", "Sample mix gain", 1.0f)
+            AMP_GAIN10("mx", "Sample mix gain", NULL, 1.0f)
         #define T_FILE_GAIN_STEREO \
-            PAN_CTL("pl", "Sample left channel panorama", -100.0f), \
-            PAN_CTL("pr", "Sample right channel panorama", 100.0f)
+            PAN_CTL("pl", "Sample left channel panorama", NULL, -100.0f), \
+            PAN_CTL("pr", "Sample right channel panorama", NULL, 100.0f)
 
         #define T_SAMPLE_FILE(gain)         \
             PATH("sf", "Sample file"),      \
-            CONTROL("pi", "Sample pitch", U_SEMITONES, trigger_metadata::SAMPLE_PITCH), \
-            CONTROL("hc", "Sample head cut", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            CONTROL("tc", "Sample tail cut", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            CONTROL("fi", "Sample fade in", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            CONTROL("fo", "Sample fade out", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
-            AMP_GAIN10("mk", "Sample makeup gain", 1.0f), \
-            { "vl", "Sample velocity max",  U_PERCENT, R_CONTROL, F_LOWER | F_UPPER | F_STEP | F_LOWERING, 0.0f, 100.0f, 0.0f, 0.25, NULL }, \
-            CONTROL("pd", "Sample pre-delay", U_MSEC, trigger_metadata::PREDELAY), \
-            SWITCH("on", "Sample enabled", 1.0f), \
-            TRIGGER("ls", "Sample listen"), \
-            TRIGGER("lc", "Sample listen stop"), \
-            SWITCH("rs", "Sample reverse", 0.0f), \
+            CONTROL("pi", "Sample pitch", NULL, U_SEMITONES, trigger_metadata::SAMPLE_PITCH), \
+            CONTROL("hc", "Sample head cut", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            CONTROL("tc", "Sample tail cut", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            CONTROL("fi", "Sample fade in", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            CONTROL("fo", "Sample fade out", NULL, U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
+            AMP_GAIN10("mk", "Sample makeup gain", NULL, 1.0f), \
+            LOW_CONTROL("vl", "Sample velocity max", NULL, U_PERCENT, trigger_metadata::MAXVEL), \
+            CONTROL("pd", "Sample pre-delay", NULL, U_MSEC, trigger_metadata::PREDELAY), \
+            SWITCH("on", "Sample enabled", NULL, 1.0f), \
+            TRIGGER("ls", "Sample listen", NULL), \
+            TRIGGER("lc", "Sample listen stop", NULL), \
+            SWITCH("rs", "Sample reverse", NULL, 0.0f), \
             gain, \
             BLINK("ac", "Sample activity"), \
             BLINK("no", "Sample note on event"), \
-            { "fl", "Sample length", U_MSEC, R_METER, F_LOWER | F_UPPER | F_STEP, \
-                    trigger_metadata::SAMPLE_LENGTH_MIN, trigger_metadata::SAMPLE_LENGTH_MAX, 0, trigger_metadata::SAMPLE_LENGTH_STEP, NULL }, \
+            METER("fl", "Sample length", U_MSEC, trigger_metadata::SAMPLE_LENGTH), \
             STATUS("fs", "Sample load status"), \
             MESH("fd", "Sample file contents", trigger_metadata::TRACKS_MAX, trigger_metadata::MESH_SIZE)
 
         #define T_METERS_MONO                   \
             MESH("isg", "Input signal graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             METER_GAIN20("ism", "Input signal meter"), \
-            SWITCH("isv", "Input signal display", 1.0f)
+            SWITCH("isv", "Input signal display", "Show in", 1.0f)
 
         #define T_METERS_STEREO                 \
-            COMBO("ssrc", "Signal source", 0, trigger_sources), \
+            COMBO("ssrc", "Signal source", "Source", 0, trigger_sources), \
             MESH("isgl", "Input signal graph left", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             MESH("isgr", "Input signal graph right", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 2), \
             METER_GAIN20("isml", "Input signal meter left"), \
             METER_GAIN20("ismr", "Input signal meter right"), \
-            SWITCH("isvl", "Input signal left display", 1.0f), \
-            SWITCH("isvr", "Input signal right display", 1.0f)
+            SWITCH("isvl", "Input signal left display", "Show in L", 1.0f), \
+            SWITCH("isvr", "Input signal right display", "Show in R", 1.0f)
 
         #define T_PORTS_GLOBAL(sample)  \
-            COMBO("asel", "Area selector", 0, trigger_areas), \
+            COMBO("asel", "Area selector", "Area", 0, trigger_areas), \
             BYPASS,                 \
             DRY_GAIN(1.0f),         \
             WET_GAIN(1.0f),         \
-            PERCENTS("drywet", "Dry/Wet balance", 100.0f, 0.1f), \
+            DRYWET(100.0f), \
             OUT_GAIN, \
-            COMBO("mode", "Detection mode", trigger_metadata::MODE_DFL, trigger_modes), \
-            SWITCH("pause", "Pause graph analysis", 0.0f), \
-            TRIGGER("clear", "Clear graph analysis"), \
-            AMP_GAIN100("preamp", "Signal pre-amplification", 1.0f), \
-            COMBO("shpm", "High-pass filter mode", 0, trigger_filter_slope),      \
-            LOG_CONTROL("shpf", "High-pass filter frequency", U_HZ, trigger_metadata::HPF),   \
-            COMBO("slpm", "Low-pass filter mode", 0, trigger_filter_slope),      \
-            LOG_CONTROL("slpf", "Low-pass filter frequency", U_HZ, trigger_metadata::LPF), \
-            AMP_GAIN10("dl", "Detect level", trigger_metadata::DETECT_LEVEL_DFL), \
-            CONTROL("dt", "Detect time", U_MSEC, trigger_metadata::DETECT_TIME), \
-            AMP_GAIN1("rrl", "Relative release level", trigger_metadata::RELEASE_LEVEL_DFL), \
-            CONTROL("rt", "Release time", U_MSEC, trigger_metadata::RELEASE_TIME), \
-            CONTROL("dyna", "Dynamics", U_PERCENT, trigger_metadata::DYNAMICS), \
-            AMP_GAIN("dtr1", "Dynamics range 1", GAIN_AMP_P_6_DB, 20.0f), \
-            AMP_GAIN("dtr2", "Dynamics range 2", GAIN_AMP_M_36_DB, 20.0f), \
-            CONTROL("react", "Reactivity", U_MSEC, trigger_metadata::REACTIVITY), \
+            COMBO("mode", "Detection mode", "Mode", trigger_metadata::MODE_DFL, trigger_modes), \
+            SWITCH("pause", "Pause graph analysis", "Pause", 0.0f), \
+            TRIGGER("clear", "Clear graph analysis", "Clear"), \
+            AMP_GAIN100("preamp", "Signal pre-amplification", "Preamp", 1.0f), \
+            COMBO("shpm", "High-pass filter mode", "HPF mode", 0, trigger_filter_slope),      \
+            LOG_CONTROL("shpf", "High-pass filter frequency", "HPF freq", U_HZ, trigger_metadata::HPF),   \
+            COMBO("slpm", "Low-pass filter mode", "LPF mode", 0, trigger_filter_slope),      \
+            LOG_CONTROL("slpf", "Low-pass filter frequency", "LPF freq", U_HZ, trigger_metadata::LPF), \
+            AMP_GAIN10("dl", "Detect level", "Detect", trigger_metadata::DETECT_LEVEL_DFL), \
+            CONTROL("dt", "Detect time", "Det time", U_MSEC, trigger_metadata::DETECT_TIME), \
+            AMP_GAIN1("rrl", "Relative release level", "Rel level", trigger_metadata::RELEASE_LEVEL_DFL), \
+            CONTROL("rt", "Release time", "Rel time", U_MSEC, trigger_metadata::RELEASE_TIME), \
+            CONTROL("dyna", "Dynamics", "Dynamics", U_PERCENT, trigger_metadata::DYNAMICS), \
+            AMP_GAIN("dtr1", "Dynamics range 1", "Dynamics 1", GAIN_AMP_P_6_DB, 20.0f), \
+            AMP_GAIN("dtr2", "Dynamics range 2", "Dynamics 2", GAIN_AMP_M_36_DB, 20.0f), \
+            CONTROL("react", "Reactivity", "Reactivity", U_MSEC, trigger_metadata::REACTIVITY), \
             METER_OUT_GAIN("rl", "Release level", 20.0f), \
             MESH("tfg", "Trigger function graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE), \
             METER_GAIN20("tfm", "Trigger function meter"), \
-            SWITCH("tfv", "Trigger function display", 1.0f), \
+            SWITCH("tfv", "Trigger function display", "Show func", 1.0f), \
             BLINK("tla", "Trigger activity"), \
             MESH("tlg", "Trigger level graph", trigger_metadata::TRACKS_MAX, trigger_metadata::HISTORY_MESH_SIZE + 4), \
             METER_GAIN20("tlm", "Trigger level meter"), \
-            SWITCH("tlv", "Trigger level display", 1.0f), \
+            SWITCH("tlv", "Trigger level display", "Show lvl", 1.0f), \
             PORT_SET("ssel", "Sample selector", trigger_sample_selectors, sample)
 
         #define T_MIDI_PORTS                    \
-            COMBO("chan", "Channel", trigger_metadata::MIDI_CHANNEL_DFL, midi_channels), \
-            COMBO("note", "Note", trigger_metadata::MIDI_NOTE_DFL, notes), \
-            COMBO("oct", "Octave", trigger_metadata::MIDI_OCTAVE_DFL, octaves), \
-            { "mn", "MIDI Note #", U_NONE, R_METER, F_LOWER | F_UPPER | F_INT, 0, 127, 0, 0, NULL }
+            COMBO("chan", "Channel", "MIDI channel", trigger_metadata::MIDI_CHANNEL_DFL, midi_channels), \
+            COMBO("note", "Note", "Note", trigger_metadata::MIDI_NOTE_DFL, notes), \
+            COMBO("oct", "Octave", "Octave", trigger_metadata::MIDI_OCTAVE_DFL, octaves), \
+            INT_METER("mn", "MIDI Note #", U_NONE, trigger_metadata::MIDINOTE)
 
         static const port_t sample_file_mono_ports[] =
         {

@@ -294,7 +294,7 @@
 					</cell>
 
 					<ui:for id="i" first="0" last="7">
-						<ui:with bg.color="bg_schema" expand="true">
+						<ui:with bg.color="bg_schema" expand="true" activity=":fs_${i} ieq 0">
 							<label text="${:i+1}"/>
 							<button id="on_${i}" width="32" height="12" ui:inject="Button_yellow" led="true" padding="6"/>
 							<knob id="vl_${i}" size="20" scolor="velocity"/>

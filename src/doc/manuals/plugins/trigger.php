@@ -81,7 +81,7 @@ There are up to eight samples available to play for different note velocities.</
 	<?php } ?>
 	<li><b>Listen</b> - the button that plays preview of the corresponding sample.</li>
 	<li><b>Stop</b> - the button that stops preview of the sample preview.</li>
-	<li><b>Note on</b> - indicates that the playback event of the correponding sample has triggered.</li>
+	<li><b>Note on</b> - indicates that the playback event of the corresponding sample has triggered.</li>
 </ul>
 <p><b>'Audio channel' section:</b></p>
 <ul>

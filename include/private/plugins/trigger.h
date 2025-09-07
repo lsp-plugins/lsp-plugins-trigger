@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -101,6 +101,7 @@ namespace lsp
                 dspu::Blink             sActive;                // Activity blink
                 channel_t               vChannels[meta::trigger_metadata::TRACKS_MAX];  // Output channels
                 float                  *vTimePoints;            // Time points buffer
+                float                  *vIDisplay;              // Buffer for inline display
 
                 // Processing variables
                 ssize_t                 nCounter;               // Counter for detect/release

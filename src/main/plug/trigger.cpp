@@ -314,6 +314,7 @@ namespace lsp
             BIND_PORT(pWet);
             BIND_PORT(pDryWet);
             BIND_PORT(pGain);
+            SKIP_PORT("Show Dry/Wet mix");
 
             lsp_trace("Binding mode port...");
             BIND_PORT(pMode);

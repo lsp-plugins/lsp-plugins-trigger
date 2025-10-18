@@ -4,6 +4,7 @@
 
 === 1.0.29 ===
 * Optimized code for updated implementation of dspu::MeterGraph.
+* Moved Dry, Wet and Dry/Wet knobs into separate Mix Overlay.
 
 === 1.0.28 ===
 * Updated build scripts and dependencies.

@@ -100,6 +100,7 @@
 						<hbox spacing="8">
 							<button id="pause" text="labels.pause" size="16" ui:inject="Button_green" led="true"/>
 							<button id="clear" text="labels.clear" size="16" ui:inject="Button_red" led="true"/>
+							<button ui:id="mix_trigger" id="showmx" text="labels.mix" size="22" pad.v="4"/>
 						</hbox>
 					</align>
 				</hbox>
@@ -422,31 +423,39 @@
 			</group>
 
 			<group text="groups.audio_channel" ipadding="0">
-				<grid rows="3" cols="6">
-					<ui:with padding="6">
-						<label text="labels.signal.dry"/>
-						<label text="labels.signal.wet"/>
-					</ui:with>
-
-					<cell rows="3"><vsep hreduce="true" pad.h="2"/></cell>
-					<label text="labels.signal.drywet" padding="6"/>
-					<cell rows="3"><vsep hreduce="true" pad.h="2"/></cell>
-
+				<grid rows="3" cols="1">
 					<ui:with padding="6">
 						<label text="labels.output"/>
-
-						<knob id="dry" scolor="dry"/>
-						<knob id="wet" scolor="wet"/>
-						<knob id="drywet" scolor="drywet"/>
 						<knob id="g_out"/>
-
-						<value id="dry"/>
-						<value id="wet"/>
-						<value id="drywet"/>
 						<value id="g_out"/>
 					</ui:with>
 				</grid>
 			</group>
 		</hbox>
 	</vbox>
+	
+	<!-- Mix overlay -->
+	<overlay id="showmx" trigger="mix_trigger" hpos="1" vpos="1" halign="-1" valign="1" ipadding.t="4">
+		<group text="groups.mix" vexpand="false" ipadding="0">
+			<grid rows="3" cols="4">
+				<ui:with padding="6">
+					<label text="labels.signal.dry"/>
+					<label text="labels.signal.wet"/>
+				</ui:with>
+
+				<cell rows="3"><vsep hreduce="true" pad.h="2"/></cell>
+				<label text="labels.signal.drywet" padding="6"/>
+
+				<ui:with padding="6">
+					<knob id="dry" scolor="dry"/>
+					<knob id="wet" scolor="wet"/>
+					<knob id="drywet" scolor="drywet"/>
+
+					<value id="dry"/>
+					<value id="wet"/>
+					<value id="drywet"/>
+				</ui:with>
+			</grid>
+		</group>
+	</overlay>
 </plugin>

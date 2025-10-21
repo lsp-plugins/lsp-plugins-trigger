@@ -277,7 +277,7 @@
 			<group text="groups.sample_matrix" expand="true" ipadding="0">
 				<!-- Sample matrix -->
 				<grid rows="11" cols="17" transpose="true" hspacing="2" bg.color="bg">
-					<ui:with bg.color="bg_schema" fill="true" halign="0">
+					<ui:with bg.color="bg_schema" fill="true" halign="0" pad.h="6">
 						<label text="labels.sedit.sample" padding="6"/>
 						<label text="labels.sedit.enabled"/>
 						<label text="labels.midi.velocity"/>
@@ -443,7 +443,7 @@
 			</group>
 		</hbox>
 	</vbox>
-	
+
 	<!-- Mix overlay -->
 	<overlay id="showmx" trigger="mix_trigger" hpos="1" vpos="1" halign="-1" valign="1" ipadding.t="4">
 		<group text="groups.mix" vexpand="false" ipadding="0">

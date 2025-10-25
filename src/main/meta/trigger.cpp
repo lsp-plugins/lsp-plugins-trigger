@@ -26,7 +26,7 @@
 
 #define LSP_PLUGINS_TRIGGER_VERSION_MAJOR                   1
 #define LSP_PLUGINS_TRIGGER_VERSION_MINOR                   0
-#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   28
+#define LSP_PLUGINS_TRIGGER_VERSION_MICRO                   29
 
 #define LSP_PLUGINS_TRIGGER_VERSION  \
     LSP_MODULE_VERSION( \
@@ -136,6 +136,7 @@ namespace lsp
             WET_GAIN(1.0f),         \
             DRYWET(100.0f), \
             OUT_GAIN, \
+            SWITCH("showmx", "Show mix overlay", "Show mix bar", 0.0f), \
             COMBO("mode", "Detection mode", "Mode", trigger_metadata::MODE_DFL, trigger_modes), \
             SWITCH("pause", "Pause graph analysis", "Pause", 0.0f), \
             TRIGGER("clear", "Clear graph analysis", "Clear"), \

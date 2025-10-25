@@ -85,6 +85,7 @@ namespace lsp
 
             // Processors and buffers
             vTimePoints         = NULL;
+            vIDisplay           = NULL;
 
             // Processing variables
             nCounter            = 0;
@@ -243,13 +244,14 @@ namespace lsp
             }
 
             // Allocate buffer for time coordinates
-            size_t allocate     = meta::trigger_metadata::HISTORY_MESH_SIZE + meta::trigger_metadata::BUFFER_SIZE*3;
+            size_t allocate     = meta::trigger_metadata::HISTORY_MESH_SIZE*2 + meta::trigger_metadata::BUFFER_SIZE*3;
             float *ctlbuf       = new float[allocate];
             if (ctlbuf == NULL)
                 return;
             dsp::fill_zero(ctlbuf, allocate);
 
             vTimePoints         = advance_ptr<float>(ctlbuf, meta::trigger_metadata::HISTORY_MESH_SIZE);
+            vIDisplay           = advance_ptr<float>(ctlbuf, meta::trigger_metadata::HISTORY_MESH_SIZE);
             vTmp                = advance_ptr<float>(ctlbuf, meta::trigger_metadata::BUFFER_SIZE);
 
             // Fill time dots with values
@@ -312,6 +314,7 @@ namespace lsp
             BIND_PORT(pWet);
             BIND_PORT(pDryWet);
             BIND_PORT(pGain);
+            SKIP_PORT("Show Dry/Wet mix");
 
             lsp_trace("Binding mode port...");
             BIND_PORT(pMode);
@@ -736,7 +739,7 @@ namespace lsp
 
                     // Clear data if requested
                     if (bClear)
-                        dsp::fill_zero(c->sGraph.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        c->sGraph.clear();
 
                     // Get mesh
                     plug::mesh_t *mesh  = c->pGraph->buffer<plug::mesh_t>();
@@ -747,7 +750,7 @@ namespace lsp
 
                         // Fill mesh with new values
                         dsp::copy(&x[1], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(&y[1], c->sGraph.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        c->sGraph.read(&y[1], meta::trigger_metadata::HISTORY_MESH_SIZE);
 
                         x[0] = x[1];
                         y[0] = 0.0f;
@@ -764,14 +767,14 @@ namespace lsp
                 {
                     // Clear data if requested
                     if (bClear)
-                        dsp::fill_zero(sFunction.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        sFunction.clear();
 
                     // Fill mesh if needed
                     plug::mesh_t *mesh = pFunction->buffer<plug::mesh_t>();
                     if ((mesh != NULL) && (mesh->isEmpty()))
                     {
                         dsp::copy(mesh->pvData[0], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(mesh->pvData[1], sFunction.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        sFunction.read(mesh->pvData[1], meta::trigger_metadata::HISTORY_MESH_SIZE);
                         mesh->data(2, meta::trigger_metadata::HISTORY_MESH_SIZE);
                     }
                 }
@@ -781,7 +784,7 @@ namespace lsp
                 {
                     // Clear data if requested
                     if (bClear)
-                        dsp::fill_zero(sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        sVelocity.clear();
 
                     // Fill mesh if needed
                     plug::mesh_t *mesh = pVelocity->buffer<plug::mesh_t>();
@@ -791,7 +794,7 @@ namespace lsp
                         float *y = mesh->pvData[1];
 
                         dsp::copy(&x[2], vTimePoints, meta::trigger_metadata::HISTORY_MESH_SIZE);
-                        dsp::copy(&y[2], sVelocity.data(), meta::trigger_metadata::HISTORY_MESH_SIZE);
+                        sVelocity.read(&y[2], meta::trigger_metadata::HISTORY_MESH_SIZE);
 
                         x[0] = x[2] + 0.5f;
                         x[1] = x[0];
@@ -886,9 +889,9 @@ namespace lsp
                     continue;
 
                 // Initialize values
-                float *ft       = c->sGraph.data();
+                c->sGraph.read(vIDisplay, meta::trigger_metadata::HISTORY_MESH_SIZE);
                 for (size_t j=0; j<width; ++j)
-                    b->v[1][j]      = ft[size_t(r*j)];
+                    b->v[1][j]      = vIDisplay[size_t(r*j)];
 
                 // Initialize coords
                 dsp::fill(b->v[2], width, width);
@@ -904,9 +907,9 @@ namespace lsp
             // Draw function (if present)
             if (bFunctionActive)
             {
-                float *ft       = sFunction.data();
+                sFunction.read(vIDisplay, meta::trigger_metadata::HISTORY_MESH_SIZE);
                 for (size_t j=0; j<width; ++j)
-                    b->v[1][j]      = ft[size_t(r*j)];
+                    b->v[1][j]      = vIDisplay[size_t(r*j)];
 
                 // Initialize coords
                 dsp::fill(b->v[2], width, width);
@@ -922,9 +925,9 @@ namespace lsp
             // Draw events (if present)
             if (bVelocityActive)
             {
-                float *ft       = sVelocity.data();
+                sVelocity.read(vIDisplay, meta::trigger_metadata::HISTORY_MESH_SIZE);
                 for (size_t j=0; j<width; ++j)
-                    b->v[1][j]      = ft[size_t(r*j)];
+                    b->v[1][j]      = vIDisplay[size_t(r*j)];
 
                 // Initialize coords
                 dsp::fill(b->v[2], width, width);
@@ -990,6 +993,7 @@ namespace lsp
             }
             v->end_array();
             v->write("vTimePoints", vTimePoints);
+            v->write("vIDisplay", vIDisplay);
 
             v->write("nCounter", nCounter);
             v->write("nState", nState);

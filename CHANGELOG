@@ -2,6 +2,9 @@
 * RECENT CHANGES
 *******************************************************************************
 
+=== 1.0.30 ===
+* Updated build scripts and dependencies.
+
 === 1.0.29 ===
 * Optimized code for updated implementation of dspu::MeterGraph.
 * Moved Dry, Wet and Dry/Wet knobs into separate Mix Overlay.

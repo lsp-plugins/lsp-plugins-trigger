@@ -48,6 +48,10 @@ namespace lsp
 
         status_t trigger_kernel::AFLoader::run()
         {
+            dsp::context_t ctx;
+            dsp::start(&ctx);
+            lsp_finally { dsp::finish(&ctx); };
+
             return pCore->load_file(pFile);
         };
 
@@ -72,6 +76,10 @@ namespace lsp
 
         status_t trigger_kernel::AFRenderer::run()
         {
+            dsp::context_t ctx;
+            dsp::start(&ctx);
+            lsp_finally { dsp::finish(&ctx); };
+
             return pCore->render_sample(pFile);
         };
 

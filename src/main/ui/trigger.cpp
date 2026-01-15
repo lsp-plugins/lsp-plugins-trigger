@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2026 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2026 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -55,9 +55,9 @@ namespace lsp
         {
         }
 
-        status_t trigger::init(ui::IWrapper *wrapper, tk::Display *dpy)
+        status_t trigger::init(ui::IWrapper *wrapper)
         {
-            status_t res = ui::Module::init(wrapper, dpy);
+            status_t res = ui::Module::init(wrapper);
             if (res != STATUS_OK)
                 return res;
 

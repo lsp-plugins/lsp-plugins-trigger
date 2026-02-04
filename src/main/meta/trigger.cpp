@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2025 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2025 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2026 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2026 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 31 июл. 2021 г.
@@ -20,6 +20,7 @@
  */
 
 #include <lsp-plug.in/plug-fw/meta/ports.h>
+#include <lsp-plug.in/plug-fw/meta/registry.h>
 #include <lsp-plug.in/shared/meta/developers.h>
 #include <lsp-plug.in/common/status.h>
 #include <private/meta/trigger.h>
@@ -265,6 +266,7 @@ namespace lsp
             mono_plugin_port_groups,
             &trigger_bundle
         };
+        LSP_REGISTER_METADATA(trigger_mono);
 
         const plugin_t trigger_stereo =
         {
@@ -295,6 +297,7 @@ namespace lsp
             stereo_plugin_port_groups,
             &trigger_bundle
         };
+        LSP_REGISTER_METADATA(trigger_stereo);
 
         const plugin_t trigger_midi_mono =
         {
@@ -325,6 +328,7 @@ namespace lsp
             mono_plugin_port_groups,
             &trigger_bundle
         };
+        LSP_REGISTER_METADATA(trigger_midi_mono);
 
         const plugin_t trigger_midi_stereo =
         {
@@ -355,6 +359,7 @@ namespace lsp
             stereo_plugin_port_groups,
             &trigger_bundle
         };
+        LSP_REGISTER_METADATA(trigger_midi_stereo);
 
     } /* namespace meta */
 } /* namespace lsp */

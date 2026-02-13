@@ -261,7 +261,7 @@ namespace lsp
             clap_features_mono,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_mono_ports,
-            "trigger/single/mono.xml",
+            "plugins/trigger/single/mono.xml",
             NULL,
             mono_plugin_port_groups,
             &trigger_bundle
@@ -292,7 +292,7 @@ namespace lsp
             clap_features_stereo,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_stereo_ports,
-            "trigger/single/stereo.xml",
+            "plugins/trigger/single/stereo.xml",
             NULL,
             stereo_plugin_port_groups,
             &trigger_bundle
@@ -323,7 +323,7 @@ namespace lsp
             clap_features_mono,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_mono_midi_ports,
-            "trigger/single/mono.xml",
+            "plugins/trigger/single/mono.xml",
             NULL,
             mono_plugin_port_groups,
             &trigger_bundle
@@ -354,7 +354,7 @@ namespace lsp
             clap_features_stereo,
             E_INLINE_DISPLAY | E_DUMP_STATE | E_FILE_PREVIEW,
             trigger_stereo_midi_ports,
-            "trigger/single/stereo.xml",
+            "plugins/trigger/single/stereo.xml",
             NULL,
             stereo_plugin_port_groups,
             &trigger_bundle

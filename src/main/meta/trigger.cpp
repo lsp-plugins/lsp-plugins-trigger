@@ -264,7 +264,8 @@ namespace lsp
             "plugins/trigger/single/mono.xml",
             NULL,
             mono_plugin_port_groups,
-            &trigger_bundle
+            &trigger_bundle,
+            3
         };
         LSP_REGISTER_METADATA(trigger_mono);
 
@@ -295,7 +296,8 @@ namespace lsp
             "plugins/trigger/single/stereo.xml",
             NULL,
             stereo_plugin_port_groups,
-            &trigger_bundle
+            &trigger_bundle,
+            1
         };
         LSP_REGISTER_METADATA(trigger_stereo);
 
@@ -326,7 +328,8 @@ namespace lsp
             "plugins/trigger/single/mono.xml",
             NULL,
             mono_plugin_port_groups,
-            &trigger_bundle
+            &trigger_bundle,
+            4
         };
         LSP_REGISTER_METADATA(trigger_midi_mono);
 
@@ -357,10 +360,10 @@ namespace lsp
             "plugins/trigger/single/stereo.xml",
             NULL,
             stereo_plugin_port_groups,
-            &trigger_bundle
+            &trigger_bundle,
+            2
         };
         LSP_REGISTER_METADATA(trigger_midi_stereo);
 
     } /* namespace meta */
 } /* namespace lsp */
-

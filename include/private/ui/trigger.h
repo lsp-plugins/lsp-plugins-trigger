@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2024 Linux Studio Plugins Project <https://lsp-plug.in/>
- *           (C) 2024 Vladimir Sadovnikov <sadko4u@gmail.com>
+ * Copyright (C) 2026 Linux Studio Plugins Project <https://lsp-plug.in/>
+ *           (C) 2026 Vladimir Sadovnikov <sadko4u@gmail.com>
  *
  * This file is part of lsp-plugins-trigger
  * Created on: 18 февр. 2024 г.
@@ -33,9 +33,14 @@ namespace lsp
         {
             public:
                 explicit trigger(const meta::plugin_t *meta);
+                trigger(const trigger &) = delete;
+                trigger(trigger &&) = delete;
                 virtual ~trigger() override;
 
-                virtual status_t    init(ui::IWrapper *wrapper, tk::Display *dpy) override;
+                trigger & operator = (const trigger &) = delete;
+                trigger & operator = (trigger &&) = delete;
+
+                virtual status_t    init(ui::IWrapper *wrapper) override;
         };
     } /* namespace plugui */
 } /* namespace lsp */

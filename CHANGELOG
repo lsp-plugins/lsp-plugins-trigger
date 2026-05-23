@@ -3,6 +3,7 @@
 *******************************************************************************
 
 === 1.0.34 ===
+* Added possibility to reveal played sample on 'Listen' button press.
 * Updated build scripts and dependencies.
 
 === 1.0.33 ===

@@ -297,6 +297,7 @@
 							<knob id="mx_${i}" size="20"/>
 							<value id="mx_${i}" detailed="false" pad.b="6"/>
 							<button id="ls_${i}"
+								ui:id="trg_listen_sample_${i}"
 								font.name="lsp-icons" font.size="10"
 								text="icons.playback_big.play"
 								size="32" ui:inject="Button_cyan" toggle="false" pad.b="6"/>

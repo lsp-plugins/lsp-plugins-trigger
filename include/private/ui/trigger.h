@@ -34,10 +34,15 @@ namespace lsp
             protected:
                 ui::IPort                  *pCurrentSample;         // Current sample
                 ui::IPort                  *pRevealSampleOnListen;  // Reveal sample on listen option
-                tk::Button                 *wSampleListen[meta::trigger_metadata::SAMPLE_FILES];  // Listen buttons for files
+                tk::Button                 *wSampleListen[meta::trigger_metadata::SAMPLE_FILES];    // Listen buttons for files
+                tk::Button                 *wSampleStop[meta::trigger_metadata::SAMPLE_FILES];      // Stop buttons for files
 
             protected:
                 static status_t     slot_submit_listen_sample(tk::Widget *sender, void *ptr, void *data);
+                static status_t     slot_submit_stop_sample(tk::Widget *sender, void *ptr, void *data);
+
+            protected:
+                status_t            show_sample(size_t index);
 
             public:
                 explicit trigger(const meta::plugin_t *meta);

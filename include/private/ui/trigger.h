@@ -31,6 +31,19 @@ namespace lsp
     {
         class trigger: public ui::Module
         {
+            protected:
+                ui::IPort                  *pCurrentSample;         // Current sample
+                ui::IPort                  *pRevealSampleOnListen;  // Reveal sample on listen option
+                tk::Button                 *wSampleListen[meta::trigger_metadata::SAMPLE_FILES];    // Listen buttons for files
+                tk::Button                 *wSampleStop[meta::trigger_metadata::SAMPLE_FILES];      // Stop buttons for files
+
+            protected:
+                static status_t     slot_submit_listen_sample(tk::Widget *sender, void *ptr, void *data);
+                static status_t     slot_submit_stop_sample(tk::Widget *sender, void *ptr, void *data);
+
+            protected:
+                status_t            show_sample(size_t index);
+
             public:
                 explicit trigger(const meta::plugin_t *meta);
                 trigger(const trigger &) = delete;
@@ -40,7 +53,9 @@ namespace lsp
                 trigger & operator = (const trigger &) = delete;
                 trigger & operator = (trigger &&) = delete;
 
+            public:
                 virtual status_t    init(ui::IWrapper *wrapper) override;
+                virtual status_t    post_init() override;
         };
     } /* namespace plugui */
 } /* namespace lsp */

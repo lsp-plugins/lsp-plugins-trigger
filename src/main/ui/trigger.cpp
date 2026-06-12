@@ -49,6 +49,13 @@ namespace lsp
         // Trigger UI implementation
         trigger::trigger(const meta::plugin_t *meta): ui::Module(meta)
         {
+            pCurrentSample          = NULL;
+            pRevealSampleOnListen   = NULL;
+
+            for (size_t i=0; i<meta::trigger_metadata::SAMPLE_FILES; ++i)
+                wSampleListen[i]        = NULL;
+            for (size_t i=0; i<meta::trigger_metadata::SAMPLE_FILES; ++i)
+                wSampleStop[i]          = NULL;
         }
 
         trigger::~trigger()
@@ -91,5 +98,92 @@ namespace lsp
 
             return STATUS_OK;
         }
+
+        status_t trigger::post_init()
+        {
+            ui::IWrapper *const w   = wrapper();
+
+            pCurrentSample          = w->port("ssel");
+            pRevealSampleOnListen   = w->port(UI_REVEAL_SAMPLE_ON_LISTEN_PORT);
+
+            for (size_t i=0; i<meta::trigger_metadata::SAMPLE_FILES; ++i)
+            {
+                tk::Button * const listen   = w->get_widgetf<tk::Button>("trg_listen_sample_%d", int(i));
+                if (listen != NULL)
+                    listen->slots()->bind(tk::SLOT_CHANGE, slot_submit_listen_sample, this);
+
+                tk::Button * const stop     = w->get_widgetf<tk::Button>("trg_stop_sample_%d", int(i));
+                if (stop != NULL)
+                    stop->slots()->bind(tk::SLOT_CHANGE, slot_submit_stop_sample, this);
+
+                wSampleListen[i]            = listen;
+                wSampleStop[i]              = stop;
+            }
+
+            return STATUS_OK;
+        }
+
+        status_t trigger::show_sample(size_t index)
+        {
+            if (pCurrentSample == NULL)
+                return STATUS_OK;
+
+            pCurrentSample->begin_edit();
+            pCurrentSample->set_value(index);
+            pCurrentSample->notify_all(ui::PORT_USER_EDIT);
+            pCurrentSample->end_edit();
+            return STATUS_OK;
+        }
+
+        status_t trigger::slot_submit_listen_sample(tk::Widget *sender, void *ptr, void *data)
+        {
+            trigger * const self = static_cast<trigger *>(ptr);
+            if (self == NULL)
+                return STATUS_OK;
+            if (self->pCurrentSample == NULL)
+                return STATUS_OK;
+            if ((self->pRevealSampleOnListen == NULL) || (self->pRevealSampleOnListen->value() < 0.5f))
+                return STATUS_OK;
+
+            // Ensure that button has been pushed down
+            tk::Button * const btn = tk::widget_cast<tk::Button>(sender);
+            if ((btn == NULL) || (!btn->down()->get()))
+                return STATUS_OK;
+
+            // Find the related sample and activate it
+            for (size_t i=0; i<meta::trigger_metadata::SAMPLE_FILES; ++i)
+            {
+                if (sender == self->wSampleListen[i])
+                    return self->show_sample(i);
+            }
+
+            return STATUS_OK;
+        }
+
+        status_t trigger::slot_submit_stop_sample(tk::Widget *sender, void *ptr, void *data)
+        {
+            trigger * const self = static_cast<trigger *>(ptr);
+            if (self == NULL)
+                return STATUS_OK;
+            if (self->pCurrentSample == NULL)
+                return STATUS_OK;
+            if ((self->pRevealSampleOnListen == NULL) || (self->pRevealSampleOnListen->value() < 0.5f))
+                return STATUS_OK;
+
+            // Ensure that button has been pushed down
+            tk::Button * const btn = tk::widget_cast<tk::Button>(sender);
+            if ((btn == NULL) || (!btn->down()->get()))
+                return STATUS_OK;
+
+            // Find the related sample and activate it
+            for (size_t i=0; i<meta::trigger_metadata::SAMPLE_FILES; ++i)
+            {
+                if (sender == self->wSampleStop[i])
+                    return self->show_sample(i);
+            }
+
+            return STATUS_OK;
+        }
+
     } /* namespace plugui */
 } /* namespace lsp */

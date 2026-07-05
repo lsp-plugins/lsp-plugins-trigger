@@ -276,7 +276,10 @@
 							<label text="labels.sedit.sample" padding="6"/>
 							<label text="labels.sedit.enabled" />
 							<label text="labels.midi.velocity" />
-							<label text="labels.midi.:code" />
+							<vbox vfill="false" pad.b="6">
+								<label text="labels.midi.code"/>
+								<label text="labels.midi.pc"/>
+							</vbox>
 							<label text="labels.gain" />
 							<label text="labels.units.:db" pad.b="6"/>
 							<label text="labels.sedit.listen" />

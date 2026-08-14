@@ -283,7 +283,10 @@
 							<label text="labels.sedit.sample" padding="6"/>
 							<label text="labels.sedit.enabled"/>
 							<label text="labels.midi.velocity"/>
-							<label text="labels.midi.:code"/>
+							<vbox vfill="false" pad.b="6">
+								<label text="labels.midi.code"/>
+								<label text="labels.midi.pc"/>
+							</vbox>
 							<label text="labels.signal.pan_left"/>
 							<label text="labels.units.:pc"/>
 							<label text="labels.signal.pan_right"/>
@@ -297,7 +300,7 @@
 						</cell>
 	
 						<ui:for id="i" first="0" last="7">
-							<ui:with bg.color="bg_schema" expand="true" activity=":fs_${i} ieq 0">
+							<ui:with bg.color="bg_schema" expand="true" activity="(:fs_${i} ieq 0) or (:fs_${i} ieq 2)">
 								<label text="${:i+1}"/>
 								<button id="on_${i}" width="32" height="12" ui:inject="Button_yellow" led="true" padding="6"/>
 								<knob id="vl_${i}" size="20" scolor="velocity"/>
